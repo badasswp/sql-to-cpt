@@ -25,9 +25,9 @@ define( 'SQL_CPT_AUTOLOAD', __DIR__ . '/vendor/autoload.php' );
 // Composer Check.
 if ( ! file_exists( SQL_CPT_AUTOLOAD ) ) {
 	add_action( 'admin_notices', function() {
-		printf(
+		vprintf(
 			esc_html__( 'Fatal Error: Composer not setup in %s', 'sql-to-cpt' ),
-			__DIR__
+			[ __DIR__ ]
 		);
 	} );
 
