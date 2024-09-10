@@ -11,10 +11,10 @@
  * Text Domain: sql-to-cpt
  * Domain Path: /languages
  *
- * @package SQLToCPT
+ * @package SqlToCpt
  */
 
-namespace badasswp\SQLToCPT;
+namespace badasswp\SqlToCpt;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -36,4 +36,4 @@ if ( ! file_exists( SQL_CPT_AUTOLOAD ) ) {
 
 // Run Plugin.
 require_once SQL_CPT_AUTOLOAD;
-( \SQLToCPT\Plugin::get_instance() )->run();
+( \SqlToCpt\Plugin::get_instance() )->run();

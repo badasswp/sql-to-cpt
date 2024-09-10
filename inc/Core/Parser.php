@@ -1,19 +1,19 @@
 <?php
 /**
  * Parser.
- * 
+ *
  * This engine is responsible for parsing the SQL
  * file containg records and fields.
- * 
- * @package SQLToCPT
+ *
+ * @package SqlToCpt
  */
 
-namespace SQLToCPT\Core;
+namespace SqlToCpt\Core;
 
 class Parser {
 	/**
 	 * Set up.
-	 * 
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param string $sql
@@ -25,10 +25,10 @@ class Parser {
 
 	/**
 	 * Get SQL.
-	 * 
+	 *
 	 * This method is responsible for grabbing the
 	 * SQL file contents.
-	 * 
+	 *
 	 * @since 1.0.0
 	 *
 	 * @return string
@@ -49,10 +49,10 @@ class Parser {
 
 	/**
 	 * Get SQL Fields.
-	 * 
+	 *
 	 * This method is responsible for parsing the
 	 * SQL column names.
-	 * 
+	 *
 	 * @since 1.0.0
 	 *
 	 * @return string[]

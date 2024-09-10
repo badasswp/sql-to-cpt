@@ -5,12 +5,12 @@
  * This class is responsible for establishing
  * and managing the singleton instance of the plugin.
  *
- * @package SQLToCPT
+ * @package SqlToCpt
  */
 
-namespace SQLToCPT;
+namespace SqlToCpt;
 
-use SQLToCPT\Core\Container;
+use SqlToCpt\Core\Container;
 
 class Plugin {
 	/**

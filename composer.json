@@ -5,8 +5,8 @@
   "license": "GPL-2.0-or-later",
   "autoload": {
     "psr-4": {
-      "SQLToCPT\\": "inc/",
-      "SQLToCPT\\Tests\\": "tests/"
+      "SqlToCpt\\": "inc/",
+      "SqlToCpt\\Tests\\": "tests/"
     }
   },
   "authors": [
