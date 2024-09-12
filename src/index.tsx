@@ -1,6 +1,16 @@
-import ReactDOM from 'react-dom/client';
+import { getRoot } from './utils'
+import { createRoot } from 'react-dom/client';
+
 import App from './app/App';
 
-const sql = document.getElementById( 'sql-to-cpt' );
-const app = ReactDOM.createRoot( sql );
-app.render(<App />);
+const run = async () => {
+  try {
+    const root = await getRoot('sql');
+    createRoot(root).render(<App/>)
+  } catch {
+    throw new Error('Unable to get Root Container');
+  }
+}
+
+run();
+
