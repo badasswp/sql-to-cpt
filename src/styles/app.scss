@@ -1,0 +1,16 @@
+#sql-to-cpt {
+	button {
+		color: #FFF;
+		background: #7F54B3;
+		padding: 11.5px 15px;
+		border-radius: 2px;
+		border: none;
+		font-size: 13px;
+		font-weight: 400 !important;
+		cursor: pointer;
+
+		&:hover {
+			background: #1e6ba1;
+		}
+	}
+}
