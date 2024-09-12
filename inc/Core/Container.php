@@ -11,6 +11,7 @@
 namespace SqlToCpt\Core;
 
 use SqlToCpt\Services\Admin;
+use SqlToCpt\Services\Boot;
 use SqlToCpt\Services\Routes;
 use SqlToCpt\Interfaces\Kernel;
 
@@ -32,6 +33,7 @@ class Container implements Kernel {
 	public function __construct() {
 		static::$services = [
 			Admin::class,
+			Boot::class,
 			Routes::class,
 		];
 	}
