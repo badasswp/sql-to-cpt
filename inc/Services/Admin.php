@@ -60,7 +60,7 @@ class Admin extends Service implements Kernel {
 			'<section class="wrap">
 				<h1>%s</h1>
 				<p>%s</p>
-				<div id="sql-to-cpt">%s</div>
+				<div id="sql-to-cpt"></div>
 			</section>',
 			[
 				esc_html__( 'SQL To CPT', 'sql-to-cpt' ),
