@@ -35,15 +35,6 @@ abstract class Route implements Router {
 	public string $endpoint;
 
 	/**
-	 * Response Data.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var mixed[]
-	 */
-	public array $data;
-
-	/**
 	 * WP_REST_Request object.
 	 *
 	 * @since 1.0.0
@@ -51,6 +42,45 @@ abstract class Route implements Router {
 	 * @var \WP_REST_Request
 	 */
 	public \WP_REST_Request $request;
+
+	/**
+	 * Permissions callback for endpoints.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return bool
+	 */
+	abstract public function is_user_permissible(): bool;
+
+	/**
+	 * Response Callback.
+	 *
+	 * This is solely for preparing the response array
+	 * before it is passed via the callback.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	abstract public function response();
+
+	/**
+	 * Request Callback.
+	 *
+	 * Also known as the REST Callback. This method is
+	 * responsible for getting the $request data and passing it along
+	 * to the response method.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param \WP_REST_Request $request Request object.
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function request( $request ) {
+		$this->request = $request;
+
+		return $this->response();
+	}
 
 	/**
 	 * Register REST Route.
@@ -69,24 +99,6 @@ abstract class Route implements Router {
 				'permission_callback' => $this->is_user_permissible() ? '__return_true' : '__return_false',
 			]
 		);
-	}
-
-	/**
-	 * Request Callback.
-	 *
-	 * Also known as the REST Callback. This method is
-	 * responsible for getting the $request data and passing it along
-	 * to the response method.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param \WP_REST_Request $request Request object.
-	 * @return \WP_REST_Response|\WP_Error
-	 */
-	public function request( $request ) {
-		$this->request = $request;
-
-		return $this->response();
 	}
 
 	/**
@@ -115,25 +127,4 @@ abstract class Route implements Router {
 			]
 		);
 	}
-
-	/**
-	 * Response Callback.
-	 *
-	 * This is solely for preparing the response array
-	 * before it is passed via the callback.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return \WP_REST_Response|\WP_Error
-	 */
-	abstract public function response();
-
-	/**
-	 * Permissions callback for endpoints.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return bool
-	 */
-	abstract public function is_user_permissible(): bool;
 }
