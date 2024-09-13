@@ -1,4 +1,5 @@
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 import { Button } from '@wordpress/components';
 
 import { getModalParams } from '../utils';
@@ -6,14 +7,20 @@ import '../styles/app.scss';
 
 const App = () => {
   const handleUpload = (e) => {
-    e.preventDefault();
     const wpMediaModal = wp.media( getModalParams() );
 
-    const doImport = () => {
-      const attachment = wpMediaModal.state().get('selection').first().toJSON();
-      if ( 'application/json' !== attachment.mime ) {
-        console.log( 'Selected file:', attachment );
-      }
+    const doImport = async () => {
+      const { id, url, mime, filename } = wpMediaModal.state().get('selection').first().toJSON();
+
+      const headings = await apiFetch(
+        {
+          path: '/your-custom-endpoint',
+          method: 'POST',
+          data: {
+            id, url, mime, filename
+          },
+        }
+      )
     };
 
     wpMediaModal.on( 'select', doImport ).open();
