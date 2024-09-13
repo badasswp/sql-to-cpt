@@ -62,7 +62,7 @@ class Parser {
 		preg_match( '/INSERT INTO `([^`]+)` \(([^)]+)\)/', $this->get_sql_string(), $matches );
 
 		return array_map(
-			function( $field ) {
+			function ( $field ) {
 				return trim( $field, '`' );
 			},
 			array_map( 'trim', explode( ',', $matches[2] ) )

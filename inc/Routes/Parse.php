@@ -67,7 +67,7 @@ class Parse extends Route implements Router {
 		}
 
 		//Bail out, if it is not SQL.
-		if ( ! $this->is_sql ( $args ) ) {
+		if ( ! $this->is_sql( $args ) ) {
 			return $this->get_400_response(
 				sprintf(
 					'Wrong file type has been received: %s',

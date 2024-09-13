@@ -123,7 +123,7 @@ abstract class Route implements Router {
 			),
 			[
 				'status'  => 400,
-				'request' => $args
+				'request' => $args,
 			]
 		);
 	}

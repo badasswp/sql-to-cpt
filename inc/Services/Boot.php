@@ -92,7 +92,7 @@ class Boot extends Service implements Kernel {
 	public function register_mimes( $mimes ): array {
 		return wp_parse_args(
 			[
-				'sql' => 'application/octet-stream'
+				'sql' => 'application/octet-stream',
 			],
 			$mimes
 		);
