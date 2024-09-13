@@ -8,5 +8,4 @@ jest.setup.js
 README.md
 tsconfig.json
 webpack.config.js
-assets
 src
