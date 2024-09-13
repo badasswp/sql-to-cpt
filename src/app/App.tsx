@@ -20,7 +20,9 @@ const App = () => {
             id, url, mime, filename
           },
         }
-      )
+      );
+
+      console.log( headings );
     };
 
     wpMediaModal.on( 'select', doImport ).open();
