@@ -90,6 +90,33 @@ abstract class Route implements Router {
 	}
 
 	/**
+	 * Get 400 Response.
+	 *
+	 * This method returns a 400 response for Bad
+	 * requests submitted.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $message Error Msg.
+	 * @return \WP_Error
+	 */
+	public function get_400_response( $message ): \WP_Error {
+		$args = $this->request->get_json_params();
+
+		return new \WP_Error(
+			'sql-to-cpt-bad-request',
+			sprintf(
+				'Fatal Error: Bad Request, %s',
+				$message
+			),
+			[
+				'status'  => 400,
+				'request' => $args
+			]
+		);
+	}
+
+	/**
 	 * Response Callback.
 	 *
 	 * This is solely for preparing the response array
