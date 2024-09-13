@@ -65,37 +65,29 @@ abstract class Route implements Router {
 			$this->endpoint,
 			[
 				'methods'             => $this->method,
-				'callback'            => [ $this, 'callback' ],
+				'callback'            => [ $this, 'request' ],
 				'permission_callback' => $this->is_user_permissible() ? '__return_true' : '__return_false',
 			]
 		);
 	}
 
 	/**
-	 * REST Callback.
+	 * Request Callback.
+	 *
+	 * Also known as the REST Callback. This method is
+	 * responsible for getting the $request data and passing it along
+	 * to the response method.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param \WP_REST_Request $request Request object.
-	 * @return \WP_REST_Response
+	 * @return \WP_REST_Response|\WP_Error
 	 */
-	public function callback( $request ): \WP_REST_Response {
+	public function request( $request ) {
 		$this->request = $request;
 
-		return $this->request();
+		return $this->response();
 	}
-
-	/**
-	 * Request Callback.
-	 *
-	 * This is solely for data processing before passing
-	 * to the Response method.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return \WP_REST_Response
-	 */
-	abstract public function request(): \WP_REST_Response;
 
 	/**
 	 * Response Callback.
@@ -105,9 +97,9 @@ abstract class Route implements Router {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return \WP_REST_Response
+	 * @return \WP_REST_Response|\WP_Error
 	 */
-	abstract public function response(): \WP_REST_Response;
+	abstract public function response();
 
 	/**
 	 * Permissions callback for endpoints.
