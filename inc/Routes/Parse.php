@@ -36,15 +36,6 @@ class Parse extends Route implements Router {
 	public string $endpoint = '/parse';
 
 	/**
-	 * WP User.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var mixed[]
-	 */
-	public array $user;
-
-	/**
 	 * WP_REST_Request object.
 	 *
 	 * @since 1.0.0
