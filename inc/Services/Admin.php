@@ -41,7 +41,7 @@ class Admin extends Service implements Kernel {
 			'manage_options',
 			'sql-to-cpt',
 			[ $this, 'register_admin_page' ],
-			'dashicons-welcome-widgets-menus',
+			'dashicons-database',
 			90
 		);
 	}
