@@ -23,6 +23,7 @@ class Boot extends Service implements Kernel {
 	 */
 	public function register(): void {
 		add_action( 'init', [ $this, 'register_translation' ] );
+		add_filter( 'upload_mimes', [ $this, 'register_mimes' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'register_scripts' ] );
 	}
 
@@ -73,5 +74,20 @@ class Boot extends Service implements Kernel {
 			false,
 			dirname( plugin_basename( __FILE__ ) ) . '/languages'
 		);
+	}
+
+	/**
+	 * Register Mimes.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string[]
+	 *
+	 * @wp-hook 'upload_mimes'
+	 */
+	public function register_mimes(): array {
+		$mimes['sql'] = 'application/sql';
+
+		return $mimes;
 	}
 }
