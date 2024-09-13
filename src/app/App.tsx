@@ -14,7 +14,7 @@ const App = () => {
 
       const headings = await apiFetch(
         {
-          path: '/your-custom-endpoint',
+          path: '/sql-to-cpt/v1/parse',
           method: 'POST',
           data: {
             id, url, mime, filename
