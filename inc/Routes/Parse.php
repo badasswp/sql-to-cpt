@@ -10,6 +10,7 @@
 
 namespace SqlToCpt\Routes;
 
+use SqlToCpt\Core\Parser;
 use SqlToCpt\Abstracts\Route;
 use SqlToCpt\Interfaces\Router;
 
@@ -52,26 +53,25 @@ class Parse extends Route implements Router {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function response() {
-		$args = $this->request->get_json_params();
-
-		$sql = get_attached_file( $args['id'] ?? '' );
+		$this->args = $this->request->get_json_params();
+		$this->file = get_attached_file( $this->args['id'] ?? '' );
 
 		//Bail out, if it does NOT exists.
-		if ( ! file_exists( $sql ) ) {
+		if ( ! file_exists( $this->file ) ) {
 			return $this->get_400_response(
 				sprintf(
 					'File does not exists for ID: %s',
-					$args['id'] ?? ''
+					$this->args['id'] ?? ''
 				)
 			);
 		}
 
 		//Bail out, if it is not SQL.
-		if ( ! $this->is_sql( $args ) ) {
+		if ( ! $this->is_sql( $this->args ) ) {
 			return $this->get_400_response(
 				sprintf(
 					'Wrong file type has been received: %s',
-					$args['filename'] ?? ''
+					$this->args['filename'] ?? ''
 				)
 			);
 		}
@@ -90,7 +90,9 @@ class Parse extends Route implements Router {
 	 * @return mixed[]
 	 */
 	protected function get_response(): array {
-		return [];
+		$parser = new Parser( $this->file );
+
+		return $parser->get_sql_fields();
 	}
 
 	/**
