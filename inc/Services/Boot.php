@@ -35,10 +35,12 @@ class Boot extends Service implements Kernel {
 	 * @wp-hook 'admin_enqueue_scripts'
 	 */
 	public function register_scripts() {
-		if ( 'sql-to-cpt' !== $_GET['page'] ) {
+		// Bail out, if not plugin Admin page.
+		if ( 'sql-to-cpt' !== $_GET['page'] ?? '' ) {
 			return;
 		}
 
+		// Load Script.
 		wp_enqueue_script(
 			'sql-to-cpt',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . '../../dist/app.js',
@@ -58,6 +60,10 @@ class Boot extends Service implements Kernel {
 			false,
 		);
 
+		// Handle undefined (reading 'limitExceeded') issue.
+		wp_enqueue_media();
+
+		// Set Translation.
 		wp_set_script_translations(
 			'sql-to-cpt',
 			'sql-to-cpt',
