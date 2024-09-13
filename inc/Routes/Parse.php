@@ -45,39 +45,30 @@ class Parse extends Route implements Router {
 	public \WP_REST_Request $request;
 
 	/**
-	 * Request Callback.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return \WP_REST_Response
-	 */
-	public function request(): \WP_REST_Response {
-		$this->sql = $this->request->get_json_params()['sql'] ?? '';
-
-		return $this->response();
-	}
-
-	/**
 	 * Response Callback.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return \WP_REST_Response
+	 * @return \WP_REST_Response|\WP_Error
 	 */
-	public function response(): \WP_REST_Response {
-		if ( true ) {
+	public function response() {
+		$args = $this->request->get_json_params();
+
+		$sql = get_attached_file( $args['id'] ?? '' );
+
+		if ( ! file_exists( $sql ) || ! $this->is_sql ( $args ) ) {
 			return new \WP_Error(
 				'sql-to-cpt-bad-request',
 				sprintf(
 					'Fatal Error: Bad Request, %s',
-					wp_json_encode( $this->request->get_json_params() )
+					wp_json_encode( $args )
 				),
 				[
-					'status' => 400,
+					'status'  => 400,
+					'request' => $args
 				]
 			);
 		}
-
 
 		return new \WP_REST_Response( $this->get_response() );
 	}
