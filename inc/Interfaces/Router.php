@@ -17,18 +17,19 @@ interface Router {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return \WP_REST_Response
+	 * @param \WP_REST_Request $request Request object.
+	 * @return \WP_REST_Response|\WP_Error
 	 */
-	public function request(): \WP_REST_Response;
+	public function request( $request );
 
 	/**
 	 * Response Callback.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return \WP_REST_Response
+	 * @return \WP_REST_Response|\WP_Error
 	 */
-	public function response(): \WP_REST_Response;
+	public function response();
 
 	/**
 	 * Permissions callback for endpoints.
