@@ -56,7 +56,7 @@ class Parse extends Route implements Router {
 
 		$sql = get_attached_file( $args['id'] ?? '' );
 
-		//Bail out if it does NOT exists.
+		//Bail out, if it does NOT exists.
 		if ( ! file_exists( $sql ) ) {
 			return $this->get_400_response(
 				sprintf(
@@ -66,7 +66,7 @@ class Parse extends Route implements Router {
 			);
 		}
 
-		//Bail out if it is not SQL.
+		//Bail out, if it is not SQL.
 		if ( ! $this->is_sql ( $args ) ) {
 			return $this->get_400_response(
 				sprintf(
