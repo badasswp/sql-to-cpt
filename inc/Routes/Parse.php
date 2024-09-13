@@ -90,7 +90,7 @@ class Parse extends Route implements Router {
 	 * @return mixed[]
 	 */
 	protected function get_response(): array {
-		// Send back response from Parsing here...
+		return [];
 	}
 
 	/**
@@ -113,11 +113,11 @@ class Parse extends Route implements Router {
 	 * @return boolean
 	 */
 	public function is_sql( $args ): bool {
-		if ( ! in_array( $args['mime'] ?? '', [ 'application/sql', 'application/octet-stream' ], true ) ) {
+		if ( 'sql' !== pathinfo( ( $args['filename'] ?? '' ), PATHINFO_EXTENSION ) ) {
 			return false;
 		}
 
-		if ( 'sql' !== pathinfo( ( $args['filename'] ?? '' ), PATHINFO_EXTENSION ) ) {
+		if ( ! in_array( $args['mime'] ?? '', [ 'application/sql', 'application/octet-stream' ], true ) ) {
 			return false;
 		}
 
