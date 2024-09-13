@@ -35,6 +35,10 @@ class Boot extends Service implements Kernel {
 	 * @wp-hook 'admin_enqueue_scripts'
 	 */
 	public function register_scripts() {
+		if ( 'sql-to-cpt' !== $_GET['page'] ) {
+			return;
+		}
+
 		wp_enqueue_script(
 			'sql-to-cpt',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . '../../dist/app.js',
