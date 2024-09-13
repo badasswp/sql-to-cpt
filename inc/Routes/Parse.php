@@ -56,17 +56,23 @@ class Parse extends Route implements Router {
 
 		$sql = get_attached_file( $args['id'] ?? '' );
 
-		if ( ! file_exists( $sql ) || ! $this->is_sql ( $args ) ) {
-			return new \WP_Error(
-				'sql-to-cpt-bad-request',
+		//Bail out if it does NOT exists.
+		if ( ! file_exists( $sql ) ) {
+			return $this->get_400_response(
 				sprintf(
-					'Fatal Error: Bad Request, %s',
-					wp_json_encode( $args )
-				),
-				[
-					'status'  => 400,
-					'request' => $args
-				]
+					'File does not exists for ID: %s',
+					$args['id'] ?? ''
+				)
+			);
+		}
+
+		//Bail out if it is not SQL.
+		if ( ! $this->is_sql ( $args ) ) {
+			return $this->get_400_response(
+				sprintf(
+					'Wrong file type has been received: %s',
+					$args['filename'] ?? ''
+				)
 			);
 		}
 
@@ -96,5 +102,25 @@ class Parse extends Route implements Router {
 	 */
 	public function is_user_permissible(): bool {
 		return in_array( wp_get_current_user()->roles[0] ?? '', [ 'administrator' ], true );
+	}
+
+	/**
+	 * Verify SQL file.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param mixed[] $args Array containing ID, Mime, Filename, URL.
+	 * @return boolean
+	 */
+	public function is_sql( $args ): bool {
+		if ( ! in_array( $args['mime'] ?? '', [ 'application/sql', 'application/octet-stream' ], true ) ) {
+			return false;
+		}
+
+		if ( 'sql' !== pathinfo( ( $args['filename'] ?? '' ), PATHINFO_EXTENSION ) ) {
+			return false;
+		}
+
+		return true;
 	}
 }
