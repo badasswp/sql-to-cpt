@@ -49,8 +49,5 @@ export const getModalParams = () => {
       text: 'Use SQL'
     },
     multiple: false,
-    library: {
-      type: 'sql'
-    }
   };
 }
