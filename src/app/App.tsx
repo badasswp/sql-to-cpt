@@ -9,7 +9,8 @@ import { getModalParams } from '../utils';
 import '../styles/app.scss';
 
 interface SQLProps {
-  columns: string[];
+  tableName: string;
+  tableColumns: string[];
 }
 
 /**
@@ -23,7 +24,10 @@ interface SQLProps {
  * @returns {JSX.Element}
  */
 const App = () => {
-  const [parsedSQL, setParsedSQL] = useState<SQLProps>({columns: []});
+  const [parsedSQL, setParsedSQL] = useState<SQLProps>({
+    tableName: '',
+    tableColumns: [],
+  });
 
   /**
    * Handle Upload.
@@ -77,13 +81,23 @@ const App = () => {
       </Button>
       <div>
         {
-          parsedSQL.columns.length > 0 && (
+          parsedSQL.tableName && (
+            <>
+              <h3>Table</h3>
+              <Disabled name={parsedSQL.tableName} />
+            </>
+          )
+        }
+      </div>
+      <div>
+        {
+          parsedSQL.tableColumns.length > 0 && (
             <>
               <h3>Columns</h3>
               {
-                parsedSQL.columns.map((name) => {
+                parsedSQL.tableColumns.map((name) => {
                   return (
-                    <Disabled name/>
+                    <Disabled name={name} />
                   )
                 })
               }
