@@ -58,7 +58,20 @@ class Parser {
 	 * @return string
 	 */
 	protected function get_sql_table_name(): string {
-		return $this->matches[1] ?? '';
+		$name = $this->matches[1] ?? '';
+
+		/**
+		 * Filter SQL Table name.
+		 *
+		 * Modify table name for the table that
+		 * is being imported.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string Table name.
+		 * @return string
+		 */
+		return (string) apply_filters( 'sql_to_cpt_table_name', $name );
 	}
 
 	/**
