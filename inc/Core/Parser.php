@@ -48,6 +48,20 @@ class Parser {
 	}
 
 	/**
+	 * Get SQL Table.
+	 *
+	 * This method is responsible for retrieving
+	 * the SQL table name.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string
+	 */
+	protected function get_sql_table_name(): string {
+		return $this->matches[1] ?? '';
+	}
+
+	/**
 	 * Get SQL Fields.
 	 *
 	 * This method is responsible for parsing the
