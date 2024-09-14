@@ -34,7 +34,7 @@ class Parser {
 	 * @return string
 	 * @throws Exception $e If SQL file does not exist.
 	 */
-	public function get_sql_string(): string {
+	protected function get_sql_string(): string {
 		if ( ! file_exists( $this->sql ) ) {
 			throw new \Exception(
 				sprintf(
@@ -57,7 +57,7 @@ class Parser {
 	 *
 	 * @return string[]
 	 */
-	public function get_sql_fields(): array {
+	protected function get_sql_fields(): array {
 		// Match SQL string.
 		preg_match( '/INSERT INTO `([^`]+)` \(([^)]+)\)/', $this->get_sql_string(), $matches );
 
