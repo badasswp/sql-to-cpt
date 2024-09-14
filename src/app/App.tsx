@@ -3,6 +3,8 @@ import { useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 
+import Disabled from '../components/Disabled';
+
 import { getModalParams } from '../utils';
 import '../styles/app.scss';
 
@@ -61,26 +63,6 @@ const App = () => {
     );
   };
 
-  /**
-   * SQL Fields.
-   *
-   * This function is responsible for generating
-   * a list of SQL input fields.
-   *
-   * @since 1.0.0
-   *
-   * @returns {JSX.Element}
-   */
-  const Fields = () => {
-    return headings.map((name) => {
-      return (
-        <p>
-          <input type="text" value={name} disabled />
-        </p>
-      )
-    })
-  }
-
   return (
     <main>
       <Button
@@ -94,7 +76,13 @@ const App = () => {
           headings.length > 0 && (
             <>
               <h3>Columns</h3>
-              { Fields() }
+              {
+                headings.map((name) => {
+                  return (
+                    <Disabled name/>
+                  )
+                })
+              }
             </>
           )
         }
