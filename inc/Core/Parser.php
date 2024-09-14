@@ -71,6 +71,9 @@ class Parser {
 		/**
 		 * Filter Field/Column names.
 		 *
+		 * Modify field or column names for the table
+		 * that is being imported.
+		 *
 		 * @since 1.0.0
 		 *
 		 * @param string[] Field/Column names.
