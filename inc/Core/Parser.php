@@ -68,4 +68,20 @@ class Parser {
 			array_map( 'trim', explode( ',', $matches[2] ) )
 		);
 	}
+
+	/**
+	 * Get Parsed SQL.
+	 *
+	 * This method is responsible for sending the
+	 * Parsed SQL data back to the app.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array
+	 */
+	public function get_parsed_sql(): array {
+		return [
+			$this->get_sql_fields(),
+		];
+	}
 }
