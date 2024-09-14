@@ -64,8 +64,8 @@ class Parser {
 	/**
 	 * Get SQL Table columns.
 	 *
-	 * This method is responsible for parsing the
-	 * SQL column names.
+	 * This method is responsible for retrieving
+	 * the SQL column names.
 	 *
 	 * @since 1.0.0
 	 *
