@@ -8,6 +8,10 @@ import Disabled from '../components/Disabled';
 import { getModalParams } from '../utils';
 import '../styles/app.scss';
 
+interface SQLProps {
+  columns: string[];
+}
+
 /**
  * App Component.
  *
@@ -19,7 +23,7 @@ import '../styles/app.scss';
  * @returns {JSX.Element}
  */
 const App = () => {
-  const [headings, setHeadings] = useState([]);
+  const [parsedSQL, setParsedSQL] = useState<SQLProps>({columns: []});
 
   /**
    * Handle Upload.
@@ -50,7 +54,7 @@ const App = () => {
   const handleSelect = async (wpMediaModal) => {
     const args = wpMediaModal.state().get('selection').first().toJSON();
 
-    setHeadings(
+    setParsedSQL(
       await apiFetch(
         {
           path: '/sql-to-cpt/v1/parse',
@@ -73,11 +77,11 @@ const App = () => {
       </Button>
       <div>
         {
-          headings.length > 0 && (
+          parsedSQL.columns.length > 0 && (
             <>
               <h3>Columns</h3>
               {
-                headings.map((name) => {
+                parsedSQL.columns.map((name) => {
                   return (
                     <Disabled name/>
                   )
