@@ -61,12 +61,22 @@ class Parser {
 		// Match SQL string.
 		preg_match( '/INSERT INTO `([^`]+)` \(([^)]+)\)/', $this->get_sql_string(), $matches );
 
-		return array_map(
+		$fields = array_map(
 			function ( $field ) {
 				return trim( $field, '`' );
 			},
 			array_map( 'trim', explode( ',', $matches[2] ) )
 		);
+
+		/**
+		 * Filter Field/Column names.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param string[] Field/Column names.
+		 * @return string[]
+		 */
+		return (array) apply_filters( 'sql_to_cpt_fields', $fields );
 	}
 
 	/**
