@@ -48,7 +48,7 @@ class Parser {
 	}
 
 	/**
-	 * Get SQL Table.
+	 * Get SQL Table name.
 	 *
 	 * This method is responsible for retrieving
 	 * the SQL table name.
@@ -62,7 +62,7 @@ class Parser {
 	}
 
 	/**
-	 * Get SQL Fields.
+	 * Get SQL Table columns.
 	 *
 	 * This method is responsible for parsing the
 	 * SQL column names.
