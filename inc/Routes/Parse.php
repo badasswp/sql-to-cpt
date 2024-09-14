@@ -114,7 +114,7 @@ class Parse extends Route implements Router {
 	 * @param mixed[] $args Array containing ID, Mime, Filename, URL.
 	 * @return boolean
 	 */
-	public function is_sql( $args ): bool {
+	protected function is_sql( $args ): bool {
 		if ( 'sql' !== pathinfo( ( $args['filename'] ?? '' ), PATHINFO_EXTENSION ) ) {
 			return false;
 		}
