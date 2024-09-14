@@ -96,16 +96,19 @@ class Parser {
 	/**
 	 * Get Parsed SQL.
 	 *
-	 * This method is responsible for sending the
-	 * Parsed SQL data back to the app.
+	 * This method is responsible for parsing the SQL
+	 * and sending back the parsed data.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return array
 	 */
 	public function get_parsed_sql(): array {
+		preg_match( '/INSERT INTO `([^`]+)` \(([^)]+)\)/', $this->get_sql_string(), $this->matches );
+
 		return [
-			$this->get_sql_fields(),
+			'tableName'    => $this->get_sql_table_name(),
+			'tableColumns' => $this->get_sql_table_columns(),
 		];
 	}
 }
