@@ -6,9 +6,9 @@ import App from './app/App';
 const run = async () => {
   try {
     const root = await getRoot('sql-to-cpt');
-    createRoot(root).render(<App/>)
-  } catch {
-    throw new Error('Unable to get Root Container');
+    createRoot(root).render(<App />);
+  } catch (e) {
+    throw new Error(e);
   }
 }
 
