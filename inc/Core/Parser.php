@@ -90,7 +90,7 @@ class Parser {
 		 * @param string[] Field/Column names.
 		 * @return string[]
 		 */
-		return (array) apply_filters( 'sql_to_cpt_columns', $columns );
+		return (array) apply_filters( 'sql_to_cpt_table_columns', $columns );
 	}
 
 	/**
