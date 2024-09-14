@@ -83,7 +83,7 @@ const App = () => {
         {
           parsedSQL.tableName && (
             <>
-              <h3>Table</h3>
+              <h3>{ __('Table', 'sql-to-cpt') }</h3>
               <Disabled name={parsedSQL.tableName} />
             </>
           )
@@ -93,7 +93,7 @@ const App = () => {
         {
           parsedSQL.tableColumns.length > 0 && (
             <>
-              <h3>Columns</h3>
+              <h3>{ __('Columns', 'sql-to-cpt') }</h3>
               {
                 parsedSQL.tableColumns.map((name) => {
                   return (
