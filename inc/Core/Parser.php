@@ -71,10 +71,7 @@ class Parser {
 	 *
 	 * @return string[]
 	 */
-	protected function get_sql_fields(): array {
-		// Match SQL string.
-		preg_match( '/INSERT INTO `([^`]+)` \(([^)]+)\)/', $this->get_sql_string(), $matches );
-
+	protected function get_sql_table_columns(): array {
 		$columns = array_map(
 			function ( $field ) {
 				return trim( $field, '`' );
@@ -83,10 +80,10 @@ class Parser {
 		);
 
 		/**
-		 * Filter SQL Field/Column names.
+		 * Filter SQL Column names.
 		 *
-		 * Modify field or column names for the table
-		 * that is being imported.
+		 * Modify column names for the table that
+		 * is being imported.
 		 *
 		 * @since 1.0.0
 		 *
