@@ -61,7 +61,7 @@ class Parser {
 		// Match SQL string.
 		preg_match( '/INSERT INTO `([^`]+)` \(([^)]+)\)/', $this->get_sql_string(), $matches );
 
-		$fields = array_map(
+		$columns = array_map(
 			function ( $field ) {
 				return trim( $field, '`' );
 			},
@@ -69,7 +69,7 @@ class Parser {
 		);
 
 		/**
-		 * Filter Field/Column names.
+		 * Filter SQL Field/Column names.
 		 *
 		 * Modify field or column names for the table
 		 * that is being imported.
@@ -79,7 +79,7 @@ class Parser {
 		 * @param string[] Field/Column names.
 		 * @return string[]
 		 */
-		return (array) apply_filters( 'sql_to_cpt_fields', $fields );
+		return (array) apply_filters( 'sql_to_cpt_columns', $columns );
 	}
 
 	/**
