@@ -76,7 +76,7 @@ class Parser {
 			function ( $field ) {
 				return trim( $field, '`' );
 			},
-			array_map( 'trim', explode( ',', $matches[2] ) )
+			array_map( 'trim', explode( ',', $this->matches[2] ?? [] ) )
 		);
 
 		/**
