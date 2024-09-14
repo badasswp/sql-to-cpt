@@ -92,7 +92,7 @@ class Parse extends Route implements Router {
 	protected function get_response(): array {
 		$parser = new Parser( $this->file );
 
-		return $parser->get_sql_fields();
+		return $parser->get_parsed_sql();
 	}
 
 	/**
