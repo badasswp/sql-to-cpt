@@ -58,7 +58,9 @@ class Parser {
 	 * @return string
 	 */
 	protected function get_sql_table_name(): string {
-		$name = $this->matches[1] ?? '';
+		preg_match( '/INSERT INTO `([^`]+)`/', $this->get_sql_string(), $matches );
+
+		$name = $matches[1] ?? '';
 
 		/**
 		 * Filter SQL Table name.
@@ -85,11 +87,13 @@ class Parser {
 	 * @return string[]
 	 */
 	protected function get_sql_table_columns(): array {
+		preg_match( '/INSERT INTO `([^`]+)` \(([^)]+)\)/', $this->get_sql_string(), $matches );
+
 		$columns = array_map(
 			function ( $field ) {
 				return trim( $field, '`' );
 			},
-			array_map( 'trim', explode( ',', $this->matches[2] ?? [] ) )
+			array_map( 'trim', explode( ',', $matches[2] ?? [] ) )
 		);
 
 		/**
@@ -117,8 +121,6 @@ class Parser {
 	 * @return array
 	 */
 	public function get_parsed_sql(): array {
-		preg_match( '/INSERT INTO `([^`]+)` \(([^)]+)\)/', $this->get_sql_string(), $this->matches );
-
 		return [
 			'tableName'    => $this->get_sql_table_name(),
 			'tableColumns' => $this->get_sql_table_columns(),
