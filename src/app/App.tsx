@@ -11,6 +11,7 @@ import '../styles/app.scss';
 interface SQLProps {
   tableName: string;
   tableColumns: string[];
+  tableRows: any[];
 }
 
 /**
@@ -27,6 +28,7 @@ const App = () => {
   const [parsedSQL, setParsedSQL] = useState<SQLProps>({
     tableName: '',
     tableColumns: [],
+    tableRows: [],
   });
 
   /**
@@ -69,6 +71,8 @@ const App = () => {
         }
       )
     );
+
+    console.log(parsedSQL.tableRows);
   };
 
   return (
