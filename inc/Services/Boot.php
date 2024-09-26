@@ -36,7 +36,7 @@ class Boot extends Service implements Kernel {
 	 */
 	public function register_scripts() {
 		// Bail out, if not plugin Admin page.
-		if ( 'sql-to-cpt' !== $_GET['page'] ?? '' ) {
+		if ( 'sql-to-cpt' !== ( $_GET['page'] ?? '' ) ) {
 			return;
 		}
 
