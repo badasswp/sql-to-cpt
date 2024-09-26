@@ -3,6 +3,7 @@ import { useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 
+import Notice from '../components/Notice';
 import Disabled from '../components/Disabled';
 
 import { getModalParams } from '../utils';
@@ -25,11 +26,14 @@ interface SQLProps {
  * @returns {JSX.Element}
  */
 const App = () => {
-  const [parsedSQL, setParsedSQL] = useState<SQLProps>({
-    tableName: '',
-    tableColumns: [],
-    tableRows: [],
-  });
+  const [sqlNotice, setSqlNotice] = useState<string>('');
+  const [parsedSQL, setParsedSQL] = useState<SQLProps>(
+    {
+      tableName: '',
+      tableColumns: [],
+      tableRows: [],
+    }
+  );
 
   /**
    * Handle Upload.
@@ -60,19 +64,34 @@ const App = () => {
   const handleSelect = async (wpMediaModal) => {
     const args = wpMediaModal.state().get('selection').first().toJSON();
 
+    // Reset.
+    setSqlNotice( '' );
     setParsedSQL(
-      await apiFetch(
-        {
-          path: '/sql-to-cpt/v1/parse',
-          method: 'POST',
-          data: {
-            ...args
-          },
-        }
-      )
+      {
+        tableName: '',
+        tableColumns: [],
+        tableRows: [],
+      }
     );
 
-    console.log(parsedSQL.tableRows);
+    // Parse SQL.
+    try {
+      setParsedSQL(
+        await apiFetch(
+          {
+            path: '/sql-to-cpt/v1/parse',
+            method: 'POST',
+            data: {
+              ...args
+            },
+          }
+        )
+      );
+    } catch ( { message } ) {
+      setSqlNotice( message );
+    }
+
+    console.log( parsedSQL.tableRows );
   };
 
   return (
@@ -83,6 +102,13 @@ const App = () => {
       >
         { __('Import SQL File', 'sql-to-cpt') }
       </Button>
+      <div>
+        {
+          sqlNotice && (
+            <Notice message={sqlNotice} />
+          )
+        }
+      </div>
       <div>
         {
           parsedSQL.tableName && (
