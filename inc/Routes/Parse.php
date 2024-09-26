@@ -67,7 +67,7 @@ class Parse extends Route implements Router {
 		}
 
 		//Bail out, if it is not SQL.
-		if ( ! $this->is_sql( $this->args ) ) {
+		if ( ! $this->is_sql( $this->file ) ) {
 			return $this->get_400_response(
 				sprintf(
 					'Wrong file type has been received: %s',
@@ -111,15 +111,11 @@ class Parse extends Route implements Router {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param mixed[] $args Array containing ID, Mime, Filename, URL.
+	 * @param mixed[] $file File array.
 	 * @return boolean
 	 */
-	protected function is_sql( $args ): bool {
-		if ( 'sql' !== pathinfo( ( $args['filename'] ?? '' ), PATHINFO_EXTENSION ) ) {
-			return false;
-		}
-
-		if ( ! in_array( $args['mime'] ?? '', [ 'application/sql', 'application/octet-stream' ], true ) ) {
+	protected function is_sql( $file ): bool {
+		if ( 'sql' !== wp_check_filetype( $file )['ext'] ?? '' ) {
 			return false;
 		}
 
