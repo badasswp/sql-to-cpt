@@ -44,6 +44,7 @@ class Parser {
 			);
 		}
 
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		return file_get_contents( $this->sql );
 	}
 
