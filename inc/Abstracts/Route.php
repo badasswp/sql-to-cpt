@@ -96,7 +96,7 @@ abstract class Route implements Router {
 			[
 				'methods'             => $this->method,
 				'callback'            => [ $this, 'request' ],
-				'permission_callback' => $this->is_user_permissible() ? '__return_true' : '__return_false',
+				'permission_callback' => [ $this, 'is_user_permissible' ],
 			]
 		);
 	}

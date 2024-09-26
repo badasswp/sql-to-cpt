@@ -103,7 +103,25 @@ class Parse extends Route implements Router {
 	 * @return bool
 	 */
 	public function is_user_permissible(): bool {
-		return in_array( wp_get_current_user()->roles[0] ?? '', [ 'administrator' ], true );
+		$http_error = rest_authorization_required_code();
+
+		if ( ! current_user_can( 'administrator' ) ) {
+			return new \WP_Error(
+				'sql-to-cpt-rest-forbidden',
+				sprintf( 'Invalid User. Error: %s', $http_error ),
+				[ 'status' => $http_error ]
+			);
+		}
+
+		if ( ! wp_verify_nonce( $request->get_header( 'X-WP-Nonce' ), 'wp_rest' ) ) {
+			return new \WP_Error(
+				'sql-to-cpt-rest-forbidden',
+				sprintf( 'Invalid Nonce. Error: %s', $http_error ),
+				[ 'status' => $http_error ]
+			);
+		}
+
+		return true;
 	}
 
 	/**
