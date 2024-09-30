@@ -48,9 +48,10 @@ abstract class Route implements Router {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return bool
+	 * @param \WP_REST_Request $request Request Object.
+	 * @return bool|\WP_Error
 	 */
-	abstract public function is_user_permissible(): bool;
+	abstract public function is_user_permissible( $request ): bool;
 
 	/**
 	 * Response Callback.
