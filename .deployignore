@@ -9,3 +9,5 @@ README.md
 tsconfig.json
 webpack.config.js
 src
+assets
+phpcs.xml
