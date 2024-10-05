@@ -1,5 +1,8 @@
 # sql-to-cpt
+
 Import & Convert SQL files to Custom Post Types (CPT).
+
+<img width="528" alt="sql-to-cpt" src="https://github.com/user-attachments/assets/cf2a4015-bc64-463b-a655-6e1a12762ca3">
 
 ## Download
 
