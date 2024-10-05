@@ -23,7 +23,7 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'SQLT_CPT_AUTOLOAD', __DIR__ . '/vendor/autoload.php' );
 
 // Composer Check.
-if ( ! file_exists( SQL_CPT_AUTOLOAD ) ) {
+if ( ! file_exists( SQLT_CPT_AUTOLOAD ) ) {
 	add_action(
 		'admin_notices',
 		function () {
@@ -39,5 +39,5 @@ if ( ! file_exists( SQL_CPT_AUTOLOAD ) ) {
 }
 
 // Run Plugin.
-require_once SQL_CPT_AUTOLOAD;
+require_once SQLT_CPT_AUTOLOAD;
 ( \SqlToCpt\Plugin::get_instance() )->run();
