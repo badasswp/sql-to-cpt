@@ -36,8 +36,8 @@ class Admin extends Service implements Kernel {
 	 */
 	public function register_admin_menu(): void {
 		add_menu_page(
-			__( 'SQL To CPT', 'sql-to-cpt' ),
-			__( 'SQL To CPT', 'sql-to-cpt' ),
+			__( 'SQL to CPT', 'sql-to-cpt' ),
+			__( 'SQL to CPT', 'sql-to-cpt' ),
 			'manage_options',
 			'sql-to-cpt',
 			[ $this, 'register_admin_page' ],
@@ -63,7 +63,7 @@ class Admin extends Service implements Kernel {
 				<div id="sql-to-cpt"></div>
 			</section>',
 			[
-				esc_html__( 'SQL To CPT', 'sql-to-cpt' ),
+				esc_html__( 'SQL to CPT', 'sql-to-cpt' ),
 				esc_html__( 'Import & Convert SQL files to Custom Post Types (CPT).', 'sql-to-cpt' ),
 				esc_html__( 'Loading...', 'sql-to-cpt' ),
 			]
