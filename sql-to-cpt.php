@@ -28,6 +28,7 @@ if ( ! file_exists( SQL_CPT_AUTOLOAD ) ) {
 		'admin_notices',
 		function () {
 			vprintf(
+				/* translators: Plugin directory path. */
 				esc_html__( 'Fatal Error: Composer not setup in %s', 'sql-to-cpt' ),
 				[ __DIR__ ]
 			);
