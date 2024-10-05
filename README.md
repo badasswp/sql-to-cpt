@@ -52,3 +52,21 @@ public function custom_columns( $columns ): array {
 
 - columns _`{string[]}`_ By default this will be a string array of column names parsed from the table that is being imported.
 <br/>
+
+#### `sql_to_cpt_table_rows`
+
+This custom hook provides a simple way to filter the names of the table rows that is being imported.
+
+```php
+add_action( 'sql_to_cpt_table_rows', [ $this, 'custom_rows' ], 10, 1 );
+
+public function custom_rows( $rows ): array {
+    $rows = array_map( 'santize_text_field', $rows );
+    return $rows;
+}
+```
+
+**Parameters**
+
+- rows _`{string[]}`_ By default this will be a string array of row values parsed from the table that is being imported.
+<br/>
