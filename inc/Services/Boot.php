@@ -35,8 +35,11 @@ class Boot extends Service implements Kernel {
 	 * @wp-hook 'admin_enqueue_scripts'
 	 */
 	public function register_scripts() {
+		// Get the current screen object.
+		$screen = get_current_screen();
+
 		// Bail out, if not plugin Admin page.
-		if ( 'sql-to-cpt' !== ( $_GET['page'] ?? '' ) ) {
+		if ( ! is_object( $screen ) || $screen->id !== 'toplevel_page_sql-to-cpt' ) {
 			return;
 		}
 
