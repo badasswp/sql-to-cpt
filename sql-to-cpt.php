@@ -17,10 +17,10 @@
 namespace badasswp\SqlToCpt;
 
 if ( ! defined( 'WPINC' ) ) {
-	die;
+	exit;
 }
 
-define( 'SQL_CPT_AUTOLOAD', __DIR__ . '/vendor/autoload.php' );
+define( 'SQLT_CPT_AUTOLOAD', __DIR__ . '/vendor/autoload.php' );
 
 // Composer Check.
 if ( ! file_exists( SQL_CPT_AUTOLOAD ) ) {
