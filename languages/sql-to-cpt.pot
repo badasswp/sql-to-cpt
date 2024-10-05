@@ -24,28 +24,13 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 "X-Poedit-SearchPathExcluded-2: vendor\n"
 
-#: inc/Services/Admin.php:39 inc/Services/Admin.php:40
-#: inc/Services/Admin.php:66
-msgid "SQL To CPT"
+#. Plugin Name of the plugin/theme
+msgid "SQL to CPT"
 msgstr ""
 
 #. Description of the plugin/theme
 #: inc/Services/Admin.php:67
 msgid "Import & Convert SQL files to Custom Post Types (CPT)."
-msgstr ""
-
-#: inc/Services/Admin.php:68
-msgid "Loading..."
-msgstr ""
-
-#. translators: Plugin directory path.
-#: sql-to-cpt.php:32
-#, php-format
-msgid "Fatal Error: Composer not setup in %s"
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "SQL to CPT"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
@@ -58,6 +43,16 @@ msgstr ""
 
 #. Author URI of the plugin/theme
 msgid "https://github.com/badasswp"
+msgstr ""
+
+#: inc/Services/Admin.php:68
+msgid "Loading..."
+msgstr ""
+
+#. translators: Plugin directory path.
+#: sql-to-cpt.php:32
+#, php-format
+msgid "Fatal Error: Composer not setup in %s"
 msgstr ""
 
 #. dist/app.js
