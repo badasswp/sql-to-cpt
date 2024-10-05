@@ -2,7 +2,7 @@
 Contributors: badasswp
 Tags: sql, cpt, post, import, convert.
 Requires at least: 4.0
-Tested up to: 6.6.1
+Tested up to: 6.6.2
 Stable tag: 1.0.0
 Requires PHP: 7.4
 License: GPLv2 or later
@@ -22,7 +22,11 @@ TBD
 == Changelog ==
 
 = 1.0.0 =
-* TBD
+* Add ability to upload SQL file to Custom Post Type (CPT).
+* Custom Hooks `sql_to_cpt_table_name`, `sql_to_cpt_table_columns`, `sql_to_cpt_table_rows`.
+* Custom Options page.
+* Fix bugs & linting issues.
+* Tested up to WP 6.6.2.
 
 == Contribute ==
 
