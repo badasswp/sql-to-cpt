@@ -28,7 +28,7 @@ If you ever need to migrate a non-WordPress database table into WP, look no furt
 
 = 1.0.0 =
 * Add ability to upload SQL file to Custom Post Type (CPT).
-* Custom Hooks `sql_to_cpt_table_name`, `sql_to_cpt_table_columns`, `sql_to_cpt_table_rows`.
+* Custom Hooks `sqlt_cpt_table_name`, `sqlt_cpt_table_columns`, `sqlt_cpt_table_rows`.
 * Custom Options page.
 * Fix bugs & linting issues.
 * Tested up to WP 6.6.2.

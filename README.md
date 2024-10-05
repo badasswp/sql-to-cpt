@@ -16,12 +16,12 @@ If you ever need to migrate a non-WordPress database table into WP, look no furt
 
 ### Hooks
 
-#### `sql_to_cpt_table_name`
+#### `sqlt_cpt_table_name`
 
 This custom hook provides a simple way to filter the name of the custom post type where the table contents that is being imported will be stored.
 
 ```php
-add_filter( 'sql_to_cpt_table_name', [ $this, 'custom_post_type_name' ], 10, 1 );
+add_filter( 'sqlt_cpt_table_name', [ $this, 'custom_post_type_name' ], 10, 1 );
 
 public function custom_post_type_name( $table_name ): string {
     if ( 'student' === $table_name ) {
@@ -35,12 +35,12 @@ public function custom_post_type_name( $table_name ): string {
 - table_name _`{string}`_ By default this will be the name of the imported SQL table.
 <br/>
 
-#### `sql_to_cpt_table_columns`
+#### `sqlt_cpt_table_columns`
 
 This custom hook provides a simple way to filter the names of the table columns that is being imported.
 
 ```php
-add_action( 'sql_to_cpt_table_columns', [ $this, 'custom_columns' ], 10, 1 );
+add_action( 'sqlt_cpt_table_columns', [ $this, 'custom_columns' ], 10, 1 );
 
 public function custom_columns( $columns ): array {
     $columns = array_map( '__', $columns );
@@ -53,12 +53,12 @@ public function custom_columns( $columns ): array {
 - columns _`{string[]}`_ By default this will be a string array of column names parsed from the table that is being imported.
 <br/>
 
-#### `sql_to_cpt_table_rows`
+#### `sqlt_cpt_table_rows`
 
 This custom hook provides a simple way to filter the names of the table rows that is being imported.
 
 ```php
-add_action( 'sql_to_cpt_table_rows', [ $this, 'custom_rows' ], 10, 1 );
+add_action( 'sqlt_cpt_table_rows', [ $this, 'custom_rows' ], 10, 1 );
 
 public function custom_rows( $rows ): array {
     $rows = array_map( 'santize_text_field', $rows );

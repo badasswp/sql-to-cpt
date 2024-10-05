@@ -74,7 +74,7 @@ class Parser {
 		 * @param string Table name.
 		 * @return string
 		 */
-		return (string) apply_filters( 'sql_to_cpt_table_name', $name );
+		return (string) apply_filters( 'sqlt_cpt_table_name', $name );
 	}
 
 	/**
@@ -108,7 +108,7 @@ class Parser {
 		 * @param string[] Field/Column names.
 		 * @return string[]
 		 */
-		return (array) apply_filters( 'sql_to_cpt_table_columns', $columns );
+		return (array) apply_filters( 'sqlt_cpt_table_columns', $columns );
 	}
 
 	/**

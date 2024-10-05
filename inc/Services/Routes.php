@@ -65,7 +65,7 @@ class Routes extends Service implements Kernel {
 		 * @param mixed[] $routes WP REST Routes.
 		 * @return mixed[]
 		 */
-		$this->routes = (array) apply_filters( 'sql_to_cpt_rest_routes', $this->routes );
+		$this->routes = (array) apply_filters( 'sqlt_cpt_rest_routes', $this->routes );
 
 		/**
 		 * Specify Route Instance types.
