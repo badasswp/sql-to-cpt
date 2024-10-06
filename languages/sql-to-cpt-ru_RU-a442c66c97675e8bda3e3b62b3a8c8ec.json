@@ -1,0 +1,39 @@
+{
+  "translation-revision-date": "2024-08-29 02:16+0100",
+  "generator": "WP-CLI/2.6.0",
+  "source": "dist/app.js",
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "lang": "ru_RU\\n",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "SQL to CPT": [
+        "Из SQL в CPT"
+      ],
+      "Import SQL File": [
+        "Импорт файла SQL"
+      ],
+      "Select SQL File": [
+        "Выберите файл SQL"
+      ],
+      "Use SQL": [
+        "Использование SQL"
+      ],
+      "Table": [
+        "Таблица"
+      ],
+      "Columns": [
+        "Колонки"
+      ],
+      "Importing SQL...": [
+        "Импорт SQL..."
+      ],
+      "Import Completed!": [
+        "Импорт завершен!"
+      ]
+    }
+  }
+}
