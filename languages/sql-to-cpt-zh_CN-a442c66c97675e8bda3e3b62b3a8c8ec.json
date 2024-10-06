@@ -1,0 +1,39 @@
+{
+  "translation-revision-date": "2024-08-29 02:16+0100",
+  "generator": "WP-CLI/2.6.0",
+  "source": "dist/app.js",
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "lang": "zh_CN\\n",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "SQL to CPT": [
+        "SQL 到 CPT"
+      ],
+      "Import SQL File": [
+        "导入 SQL 文件"
+      ],
+      "Select SQL File": [
+        "选择 SQL 文件"
+      ],
+      "Use SQL": [
+        "使用 SQL"
+      ],
+      "Table": [
+        "表格"
+      ],
+      "Columns": [
+        "列"
+      ],
+      "Importing SQL...": [
+        "正在导入 SQL..."
+      ],
+      "Import Completed!": [
+        "导入完成！"
+      ]
+    }
+  }
+}
