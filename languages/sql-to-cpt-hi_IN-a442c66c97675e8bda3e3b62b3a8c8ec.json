@@ -1,0 +1,39 @@
+{
+  "translation-revision-date": "2024-08-29 02:16+0100",
+  "generator": "WP-CLI/2.6.0",
+  "source": "dist/app.js",
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "lang": "hi_IN\\n",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "SQL to CPT": [
+        "SQL से CPT"
+      ],
+      "Import SQL File": [
+        "SQL फ़ाइल आयात करें"
+      ],
+      "Select SQL File": [
+        "SQL फ़ाइल का चयन करें"
+      ],
+      "Use SQL": [
+        "SQL का उपयोग करें"
+      ],
+      "Table": [
+        "सारणी"
+      ],
+      "Columns": [
+        "स्तंभे"
+      ],
+      "Importing SQL...": [
+        "SQL आयात कर रहा है..."
+      ],
+      "Import Completed!": [
+        "आयात पूरा हुआ!"
+      ]
+    }
+  }
+}
