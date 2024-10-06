@@ -85,7 +85,7 @@ class Boot extends Service implements Kernel {
 		load_plugin_textdomain(
 			'sql-to-cpt',
 			false,
-			dirname( plugin_basename( __FILE__ ) ) . '/languages'
+			dirname( plugin_basename( __FILE__ ) ) . '/../../languages'
 		);
 	}
 
