@@ -35,11 +35,10 @@ class Boot extends Service implements Kernel {
 	 * @wp-hook 'admin_enqueue_scripts'
 	 */
 	public function register_scripts() {
-		// Get the current screen object.
 		$screen = get_current_screen();
 
 		// Bail out, if not plugin Admin page.
-		if ( ! is_object( $screen ) || $screen->id !== 'toplevel_page_sql-to-cpt' ) {
+		if ( ! is_object( $screen ) || 'toplevel_page_sql-to-cpt' !== $screen->id ) {
 			return;
 		}
 
@@ -59,7 +58,7 @@ class Boot extends Service implements Kernel {
 				'wp-edit-post',
 				'wp-edit-site',
 			],
-			'1.0.0',
+			'1.0.1',
 			false,
 		);
 
@@ -70,7 +69,7 @@ class Boot extends Service implements Kernel {
 		wp_set_script_translations(
 			'sql-to-cpt',
 			'sql-to-cpt',
-			plugin_dir_path( __FILE__ ) . '/../../languages'
+			plugin_dir_path( __FILE__ ) . '../../languages'
 		);
 	}
 
