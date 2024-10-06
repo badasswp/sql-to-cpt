@@ -1,0 +1,39 @@
+{
+  "translation-revision-date": "2024-08-29 02:16+0100",
+  "generator": "WP-CLI/2.6.0",
+  "source": "dist/app.js",
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "lang": "ar\\n",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "SQL to CPT": [
+        "SQL إلى CPT"
+      ],
+      "Import SQL File": [
+        "استيراد ملف SQL"
+      ],
+      "Select SQL File": [
+        "حدد ملف SQL"
+      ],
+      "Use SQL": [
+        "استخدام SQL"
+      ],
+      "Table": [
+        "جدول"
+      ],
+      "Columns": [
+        "اعمدة"
+      ],
+      "Importing SQL...": [
+        "جاري استيراد SQL..."
+      ],
+      "Import Completed!": [
+        "اكتمل الاستيراد!"
+      ]
+    }
+  }
+}
