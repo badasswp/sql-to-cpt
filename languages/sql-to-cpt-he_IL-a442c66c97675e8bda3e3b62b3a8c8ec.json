@@ -1,0 +1,39 @@
+{
+  "translation-revision-date": "2024-08-29 02:16+0100",
+  "generator": "WP-CLI/2.6.0",
+  "source": "dist/app.js",
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "lang": "he_IL\\n",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "SQL to CPT": [
+        "SQL ל CPT"
+      ],
+      "Import SQL File": [
+        "ייבוא קובץ SQL"
+      ],
+      "Select SQL File": [
+        "בחר קובץ SQL"
+      ],
+      "Use SQL": [
+        "שימוש ב- SQL"
+      ],
+      "Table": [
+        "טבלה"
+      ],
+      "Columns": [
+        "עמודות"
+      ],
+      "Importing SQL...": [
+        "ייבוא SQL..."
+      ],
+      "Import Completed!": [
+        "הייבוא הושלם!"
+      ]
+    }
+  }
+}
