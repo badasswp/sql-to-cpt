@@ -6,6 +6,8 @@ Import & Convert SQL files to Custom Post Types (CPT).
 
 ## Download
 
+Download from [WordPress plugin repository](https://wordpress.org/plugins/sql-to-cpt/).
+
 You can also get the latest version from any of our [release tags](https://github.com/badasswp/sql-to-cpt/releases).
 
 ## Why SQL to CPT?
