@@ -1,3 +1,5 @@
+import { __ } from '@wordpress/i18n';
+
 /**
  * Get Root.
  *
@@ -44,9 +46,9 @@ export const getRoot = (id: string): Promise<HTMLElement> => {
  */
 export const getModalParams = () => {
   return {
-    title: 'Select SQL File',
+    title: __( 'Select SQL File', 'sql-to-cpt' ),
     button: {
-      text: 'Use SQL'
+      text: __( 'Use SQL', 'sql-to-cpt' )
     },
     multiple: false,
   };
