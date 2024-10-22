@@ -11,7 +11,7 @@
 const TextInput = ({ name }) => {
   return (
     <p>
-      <input type="text" value={name} />
+      <input type="text" defaultValue={name} />
     </p>
   );
 }
