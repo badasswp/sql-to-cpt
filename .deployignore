@@ -8,6 +8,8 @@ jest.setup.js
 README.md
 tsconfig.json
 webpack.config.js
+phpcs.xml
+phpunit.xml
 src
 assets
-phpcs.xml
+tests
