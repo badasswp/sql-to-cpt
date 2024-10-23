@@ -10,6 +10,7 @@ tsconfig.json
 webpack.config.js
 phpcs.xml
 phpunit.xml
+phpstan.neon
 src
 assets
 tests
