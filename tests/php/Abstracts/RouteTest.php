@@ -7,7 +7,9 @@ use WP_Mock\Tools\TestCase;
 use SqlToCpt\Abstracts\Route;
 
 /**
- * @covers \SqlToCpt\Abstracts\Route::response
+ * @covers \SqlToCpt\Abstracts\Route::request
+ * @covers \SqlToCpt\Abstracts\Route::register_route
+ * @covers \SqlToCpt\Abstracts\Route::get_400_response
  */
 class RouteTest extends TestCase {
 	public Route $route;
