@@ -11,6 +11,7 @@ use SqlToCpt\Abstracts\Service;
  * @covers \SqlToCpt\Services\Boot::register
  * @covers \SqlToCpt\Services\Boot::register_translation
  * @covers \SqlToCpt\Services\Boot::register_mimes
+ * @covers \SqlToCpt\Services\Boot::register_scripts
  */
 class BootTest extends TestCase {
 	public Boot $boot;
@@ -108,6 +109,69 @@ class BootTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_current_screen' )
 			->andReturn( $screen );
+
+		$this->assertConditionsMet();
+	}
+
+	public function test_register_scripts() {
+		$screen = Mockery::mock( \WP_Screen::class )->makePartial();
+		$screen->shouldAllowMockingProtectedMethods();
+
+		$screen->id = 'toplevel_page_sql-to-cpt';
+
+		\WP_Mock::userFunction( 'get_current_screen' )
+			->andReturn( $screen );
+
+		$boot = new \ReflectionClass( Boot::class );
+
+		\WP_Mock::userFunction( 'plugin_dir_url' )
+			->with( $boot->getFileName() )
+			->andReturn( 'https://example.com/wp-content/plugins/sql-to-cpt/inc/Services/Boot.php' );
+
+		\WP_Mock::userFunction( 'plugin_dir_path' )
+			->with( $boot->getFileName() )
+			->andReturn( '/var/www/html/wp-content/plugins/sql-to-cpt/inc/Services/Boot.php/' );
+
+		\WP_Mock::userFunction(
+			'trailingslashit',
+			[
+				'return' => function ( $text ) {
+					return rtrim( $text, '/' ). '/';
+				}
+			]
+		);
+
+		\WP_Mock::userFunction( 'wp_enqueue_script' )
+			->with(
+				'sql-to-cpt',
+				'https://example.com/wp-content/plugins/sql-to-cpt/inc/Services/Boot.php/../../dist/app.js',
+				[
+					'wp-i18n',
+					'wp-element',
+					'wp-blocks',
+					'wp-components',
+					'wp-editor',
+					'wp-hooks',
+					'wp-compose',
+					'wp-plugins',
+					'wp-edit-post',
+					'wp-edit-site',
+				],
+				'1.0.1',
+				false,
+			);
+
+		\WP_Mock::userFunction( 'wp_enqueue_media' )
+			->with()
+			->andReturn( null );
+
+		\WP_Mock::userFunction( 'wp_set_script_translations' )
+			->with(
+				'sql-to-cpt',
+				'sql-to-cpt',
+				'/var/www/html/wp-content/plugins/sql-to-cpt/inc/Services/Boot.php/../../languages'
+			)
+			->andReturn( null );
 
 		$this->assertConditionsMet();
 	}
