@@ -90,4 +90,25 @@ class BootTest extends TestCase {
 		);
 		$this->assertConditionsMet();
 	}
+
+	public function test_register_scripts_bails_out_if_screen_is_null() {
+		$screen = null;
+
+		\WP_Mock::userFunction( 'get_current_screen' )
+			->andReturn( $screen );
+
+		$this->assertConditionsMet();
+	}
+
+	public function test_register_scripts_bails_out_if_it_is_not_plugin_page() {
+		$screen = Mockery::mock( \WP_Screen::class )->makePartial();
+		$screen->shouldAllowMockingProtectedMethods();
+
+		$screen->id = 'toplevel_page_hello-world';
+
+		\WP_Mock::userFunction( 'get_current_screen' )
+			->andReturn( $screen );
+
+		$this->assertConditionsMet();
+	}
 }
