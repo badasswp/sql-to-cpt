@@ -54,4 +54,39 @@ class BootTest extends TestCase {
 
 		$this->assertConditionsMet();
 	}
+
+	public function test_register_mimes() {
+		\WP_Mock::userFunction(
+			'wp_parse_args',
+			[
+				'times'  => 1,
+				'return' => function ( $args, $default ) {
+					return array_merge( $default, $args );
+				},
+			]
+		);
+
+		$mimes = $this->boot->register_mimes(
+			[
+				'mp4'  => 'video/mp4',
+				'html' => 'text/html',
+				'json' => 'application/json',
+				'jpeg' => 'image/jpeg',
+				'pdf'  => 'application/pdf',
+			]
+		);
+
+		$this->assertSame(
+			$mimes,
+			[
+				'mp4'  => 'video/mp4',
+				'html' => 'text/html',
+				'json' => 'application/json',
+				'jpeg' => 'image/jpeg',
+				'pdf'  => 'application/pdf',
+				'sql'  => 'application/octet-stream',
+			]
+		);
+		$this->assertConditionsMet();
+	}
 }
