@@ -136,8 +136,8 @@ class BootTest extends TestCase {
 			'trailingslashit',
 			[
 				'return' => function ( $text ) {
-					return rtrim( $text, '/' ). '/';
-				}
+					return rtrim( $text, '/' ) . '/';
+				},
 			]
 		);
 
