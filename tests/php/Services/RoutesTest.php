@@ -9,6 +9,7 @@ use SqlToCpt\Abstracts\Service;
 
 /**
  * @covers \SqlToCpt\Services\Routes::register
+ * @covers \SqlToCpt\Services\Routes::__construct
  */
 class RoutesTest extends TestCase {
 	public Routes $routes;
