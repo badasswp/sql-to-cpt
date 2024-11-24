@@ -112,6 +112,36 @@ class Parser {
 	}
 
 	/**
+	 * Get SQL Table rows.
+	 *
+	 * This method is responsible for retrieving
+	 * the SQL rows.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return mixed[]
+	 */
+	protected function get_sql_table_rows(): array {
+		// Match string starting from `VALUES` to end.
+		preg_match_all( '/VALUES\s*(.*);/s', $this->get_sql_string(), $matches );
+
+		// Bail out, if there are no VALUES in SQL.
+		if ( empty( $matches[1] ) ) {
+			return [];
+		}
+
+		// Match individual rows obtained from SQL.
+		preg_match_all( '/\(([^)]+)\)/', $matches[1][0], $rows_matches );
+
+		// Bail out, if there are no rows in SQL.
+		if ( empty( $rows_matches[1] ) ) {
+			return [];
+		}
+
+		return $matches[1];
+	}
+
+	/**
 	 * Get Parsed SQL.
 	 *
 	 * This method is responsible for parsing the SQL
@@ -125,6 +155,7 @@ class Parser {
 		return [
 			'tableName'    => $this->get_sql_table_name(),
 			'tableColumns' => $this->get_sql_table_columns(),
+			'tableRows'    => $this->get_sql_table_rows(),
 		];
 	}
 }
