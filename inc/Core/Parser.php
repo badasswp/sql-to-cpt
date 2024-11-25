@@ -138,7 +138,7 @@ class Parser {
 			return [];
 		}
 
-		return $matches[1];
+		return $rows_matches[1];
 	}
 
 	/**
