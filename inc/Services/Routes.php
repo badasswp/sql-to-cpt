@@ -12,6 +12,7 @@
 namespace SqlToCpt\Services;
 
 use SqlToCpt\Routes\Parse;
+use SqlToCpt\Routes\Import;
 use SqlToCpt\Abstracts\Service;
 use SqlToCpt\Interfaces\Kernel;
 
@@ -35,6 +36,7 @@ class Routes extends Service implements Kernel {
 	public function __construct() {
 		$this->routes = [
 			Parse::class,
+			Import::class,
 		];
 	}
 
