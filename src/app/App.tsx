@@ -94,14 +94,39 @@ const App = () => {
     console.log( parsedSQL.tableRows );
   };
 
+  const handleImport = async() => {
+    try {
+      await apiFetch(
+        {
+          path: '/sql-to-cpt/v1/import',
+          method: 'POST',
+          data: {
+            ...parsedSQL
+          },
+        }
+      );
+    } catch ( { message } ) {
+      setSqlNotice( message );
+    }
+  }
+
   return (
     <main>
-      <Button
-        variant="primary"
-        onClick={handleModal}
-      >
-        { __('Import SQL File', 'sql-to-cpt') }
-      </Button>
+      {parsedSQL.tableRows.length < 1 ? (
+        <Button
+          variant="primary"
+          onClick={handleModal}
+        >
+          {__('Import SQL File', 'sql-to-cpt')}
+        </Button>
+      ) : (
+        <Button
+          variant="primary"
+          onClick={handleImport}
+        >
+          {__('Convert to CPT', 'sql-to-cpt')}
+        </Button>
+      )}
       <div>
         {
           sqlNotice && (
