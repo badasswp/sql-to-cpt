@@ -138,7 +138,18 @@ class Parser {
 			return [];
 		}
 
-		return $rows_matches[1];
+		/**
+		 * Filter SQL Rows.
+		 *
+		 * Modify rows/records for the table that
+		 * is being imported.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param mixed[] Rows/Records.
+		 * @return mixed[]
+		 */
+		return (array) apply_filters( 'sqlt_cpt_table_rows', $rows_matches[1] );
 	}
 
 	/**
