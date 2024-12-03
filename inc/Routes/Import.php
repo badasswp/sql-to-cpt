@@ -116,11 +116,26 @@ class Import extends Route implements Router {
 				explode( ',', $table_row )
 			);
 
+			/**
+			 * Filter Post Title.
+			 *
+			 * Modify the post title name that is being
+			 * used to save the post.
+			 *
+			 * @since 1.1.0
+			 *
+			 * @param string   Row field.
+			 * @param string[] Column names.
+			 *
+			 * @return string
+			 */
+			$post_title = apply_filters( 'sqlt_cpt_post_title', $table_row[1], $table_columns );
+
 			$posts[] = wp_insert_post(
 				[
 					'post_type'   => $table_name,
 					'post_status' => 'publish',
-					'post_title'  => $table_row[1],
+					'post_title'  => $post_title,
 					'meta_input'  => array_combine( $table_columns, $table_row ),
 				]
 			);
