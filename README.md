@@ -72,3 +72,24 @@ public function custom_rows( $rows ): array {
 
 - rows _`{string[]}`_ By default this will be a string array of row values parsed from the table that is being imported.
 <br/>
+
+#### `sqlt_cpt_post_title`
+
+This custom hook provides a way to filter the post title values being inserted into the post during import.
+
+```php
+add_action( 'sqlt_cpt_post_title', [ $this, 'custom_title' ], 10, 3 );
+
+public function custom_title( $post_title, $table_row, $table_columns ): array {
+    $key = array_search( 'first_name', $table_columns );
+
+    return sanitize_text_field( $table_row[ $key ] );
+}
+```
+
+**Parameters**
+
+- post_title _`string`_ By default this will be a string from the first column of the table row that is being parsed.
+- table_row _`{mixed[]}`_ By default this will be a string array of row values parsed from the table that is being imported.
+- table_columns _`{string[]}`_ By default this will be a string array of column names parsed from the table that is being imported.
+<br/>
