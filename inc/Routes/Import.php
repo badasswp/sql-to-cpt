@@ -124,8 +124,9 @@ class Import extends Route implements Router {
 			 *
 			 * @since 1.1.0
 			 *
-			 * @param string   Row field.
-			 * @param string[] Column names.
+			 * @param string   $post_title    Row field as Post Title.
+			 * @param mixed[]  $table_row     Row values.
+			 * @param string[] $table_columns Column names.
 			 *
 			 * @return string
 			 */

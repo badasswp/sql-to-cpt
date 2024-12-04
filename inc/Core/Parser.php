@@ -71,7 +71,7 @@ class Parser {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Table name.
+		 * @param string $name Table name.
 		 * @return string
 		 */
 		return (string) apply_filters( 'sqlt_cpt_table_name', $name );
@@ -105,7 +105,7 @@ class Parser {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string[] Field/Column names.
+		 * @param string[] $columns Field/Column names.
 		 * @return string[]
 		 */
 		return (array) apply_filters( 'sqlt_cpt_table_columns', $columns );
@@ -146,7 +146,7 @@ class Parser {
 		 *
 		 * @since 1.1.0
 		 *
-		 * @param mixed[] Rows/Records.
+		 * @param mixed[] $rows Rows/Records.
 		 * @return mixed[]
 		 */
 		return (array) apply_filters( 'sqlt_cpt_table_rows', $rows_matches[1] );
