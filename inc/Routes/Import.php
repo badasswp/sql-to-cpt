@@ -135,8 +135,8 @@ class Import extends Route implements Router {
 			$posts[] = wp_insert_post(
 				[
 					'post_type'   => $table_name,
-					'post_status' => 'publish',
 					'post_title'  => $post_title,
+					'post_status' => 'publish',
 					'meta_input'  => array_combine( $table_columns, $table_row ),
 				]
 			);
