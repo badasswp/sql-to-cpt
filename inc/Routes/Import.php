@@ -106,7 +106,8 @@ class Import extends Route implements Router {
 		$table_rows    = $this->args['tableRows'] ?? [];
 		$table_columns = $this->args['tableColumns'] ?? [];
 
-		$posts = [];
+		$posts     = [];
+		$post_type = $table_name;
 
 		foreach ( $table_rows as $table_row ) {
 			$table_row = array_map(
