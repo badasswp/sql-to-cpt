@@ -8,6 +8,7 @@ use WP_Mock\Tools\TestCase;
 use SqlToCpt\Core\Container;
 use SqlToCpt\Services\Admin;
 use SqlToCpt\Services\Boot;
+use SqlToCpt\Services\Post;
 use SqlToCpt\Services\Routes;
 
 /**
@@ -29,6 +30,7 @@ class ContainerTest extends TestCase {
 
 		$this->assertTrue( in_array( Admin::class, Container::$services, true ) );
 		$this->assertTrue( in_array( Boot::class, Container::$services, true ) );
+		$this->assertTrue( in_array( Post::class, Container::$services, true ) );
 		$this->assertTrue( in_array( Routes::class, Container::$services, true ) );
 	}
 }
