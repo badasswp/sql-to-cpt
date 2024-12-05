@@ -145,6 +145,13 @@ class Import extends Route implements Router {
 					'meta_input'  => array_combine( $table_columns, $table_row ),
 				]
 			);
+
+			$options = get_option( 'sql_to_cpt', [] );
+
+			if ( ! in_array( $post_type, $options['cpts'] ?? [], true ) ) {
+				$options['cpts'][] = $post_type;
+				update_option( 'sql_to_cpt', $options );
+			}
 		}
 
 		return $posts;
