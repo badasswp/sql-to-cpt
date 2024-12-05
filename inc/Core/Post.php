@@ -115,9 +115,7 @@ class Post {
 	 * @return void
 	 */
 	public function register_post_type(): void {
-		error_log( 'this fires...' );
 		if ( ! post_type_exists( $this->get_name() ) ) {
-			error_log( 'this_fires_again...' );
 			register_post_type( $this->get_name(), $this->get_options() );
 		}
 	}
