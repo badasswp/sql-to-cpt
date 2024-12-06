@@ -134,8 +134,6 @@ class Import extends Route implements Router {
 			$post_title = apply_filters( 'sqlt_cpt_post_title', $table_row[1], $table_row, $table_columns );
 
 			if ( count( $table_columns ) !== count( $table_row ) ) {
-				error_log( '|||||| ERROR: ' . wp_json_encode( $table_columns ) );
-				error_log( '|||||| ERROR: ' . wp_json_encode( $table_row ) );
 				continue;
 			}
 
