@@ -1,7 +1,8 @@
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
-import { Button } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
+import { Button } from '@wordpress/components';
+import { useState } from '@wordpress/element';
+import type { MediaFrame } from '@wordpress/media-utils';
 
 import Notice from '../components/Notice';
 import Disabled from '../components/Disabled';
@@ -58,10 +59,10 @@ const App = () => {
    *
    * @since 1.0.0
    *
-   * @param {Object} wpMediaModal WP Media Modal.
-   * @returns {void}
+   * @param {MediaFrame} wpMediaModal WP Media Modal.
+   * @returns Promise<void>
    */
-  const handleSelect = async (wpMediaModal) => {
+  const handleSelect = async (wpMediaModal: MediaFrame): Promise<void> => {
     const args = wpMediaModal.state().get('selection').first().toJSON();
 
     // Reset.
