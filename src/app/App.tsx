@@ -93,7 +93,17 @@ const App = (): JSX.Element => {
     }
   };
 
-  const handleImport = async() => {
+  /**
+   * Handle Import.
+   *
+   * This function is responsible for handling the
+   * import made by the user.
+   *
+   * @since 1.1.0
+   *
+   * @returns Promise<void>
+   */
+  const handleImport = async(): Promise<void> => {
     try {
       const url = await apiFetch(
         {
