@@ -1,8 +1,8 @@
 # Changelog
 
 ## 1.1.0
-* Fix missing import route class: `Import`.
-* Implement post class: `Post` for handling CPTs.
+* Fix missing `Import` route class.
+* Implement `Post` class for handling CPTs.
 * Add new Custom Hooks: `sqlt_cpt_post_title`, `sqlt_cpt_post_labels`, `sqlt_cpt_post_options`.
 * Add new screenshot images.
 * Update README notes.
