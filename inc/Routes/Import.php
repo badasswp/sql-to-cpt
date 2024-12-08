@@ -99,9 +99,9 @@ class Import extends Route implements Router {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @return mixed[]
+	 * @return string|null
 	 */
-	protected function get_response(): array {
+	protected function get_response() {
 		$table_name    = $this->args['tableName'] ?? '';
 		$table_rows    = $this->args['tableRows'] ?? [];
 		$table_columns = $this->args['tableColumns'] ?? [];
@@ -154,7 +154,16 @@ class Import extends Route implements Router {
 			}
 		}
 
-		return $posts;
+		if ( ! empty( $posts ) ) {
+			return add_query_arg(
+				[
+					'post_type' => $post_type
+				],
+				sprintf( '%s/%s', untrailingslashit( get_admin_url() ), 'edit.php' )
+			);
+		}
+
+		return null;
 	}
 
 	/**
