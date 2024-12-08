@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0
+* Fix missing import route class: `Import`.
+* Implement post class: `Post` for handling CPTs.
+* Add new Custom Hooks: `sqlt_cpt_post_title`, `sqlt_cpt_post_labels`, `sqlt_cpt_post_options`.
+* Add new screenshot images.
+* Update README notes.
+* Tested up to WP 6.6.2.
+
 ## 1.0.1
 * Change hook names to use `sqlt` prefix.
 * Custom Hooks now bear `sqlt_cpt_table_name`, `sqlt_cpt_table_columns`, `sqlt_cpt_table_rows`.
