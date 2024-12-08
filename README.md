@@ -93,3 +93,43 @@ public function custom_title( $post_title, $table_row, $table_columns ): array {
 - table_row _`{mixed[]}`_ By default this will be a string array of row values parsed from the table that is being imported.
 - table_columns _`{string[]}`_ By default this will be a string array of column names parsed from the table that is being imported.
 <br/>
+
+#### `sqlt_cpt_post_labels`
+
+This custom hook provides a way to filter the post labels of the CPT that is imported.
+
+```php
+add_action( 'sqlt_cpt_post_labels', [ $this, 'custom_labels' ], 10, 1 );
+
+public function custom_labels( $labels ): array {
+    if( 'Students' === $labels['singular_name'] ?? '' ) {
+        $labels['singular_name']  = 'Student'
+    }
+
+    return $labels;
+}
+```
+
+**Parameters**
+
+- labels _`{string[]}`_ By default this will be a string array of containing the label values of the CPT.
+<br/>
+
+#### `sqlt_cpt_post_options`
+
+This custom hook provides a way to filter the post options of the CPT that is imported.
+
+```php
+add_action( 'sqlt_cpt_post_options', [ $this, 'custom_options' ], 10, 1 );
+
+public function custom_options( $options ): array {
+    $options['show_in_menu'] = false;
+
+    return $options;
+}
+```
+
+**Parameters**
+
+- options _`{mixed[]}`_ By default this will be an array containing the post options of the CPT.
+<br/>
