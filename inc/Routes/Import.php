@@ -157,7 +157,7 @@ class Import extends Route implements Router {
 		if ( ! empty( $posts ) ) {
 			return add_query_arg(
 				[
-					'post_type' => $post_type
+					'post_type' => $post_type,
 				],
 				sprintf( '%s/%s', untrailingslashit( get_admin_url() ), 'edit.php' )
 			);
