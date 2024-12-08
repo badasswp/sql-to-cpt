@@ -82,7 +82,7 @@ class Post {
 	 * @return string[]
 	 */
 	public function get_supports(): array {
-		return [ 'title', 'thumbnail' ];
+		return [ 'title', 'thumbnail', 'custom-fields' ];
 	}
 
 	/**
