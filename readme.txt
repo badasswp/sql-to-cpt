@@ -75,7 +75,7 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 * Add new Custom Hooks: `sqlt_cpt_post_title`, `sqlt_cpt_post_labels`, `sqlt_cpt_post_options`.
 * Add new screenshot images.
 * Update README notes.
-* Tested up to WP 6.6.2.
+* Tested up to WP 6.7.1.
 
 = 1.0.1 =
 * Change hook names to use `sqlt` prefix.
