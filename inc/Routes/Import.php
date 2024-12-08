@@ -131,7 +131,7 @@ class Import extends Route implements Router {
 			 *
 			 * @return string
 			 */
-			$post_title = apply_filters( 'sqlt_cpt_post_title', $table_row[1], $table_row, $table_columns );
+			$post_title = apply_filters( 'sqlt_cpt_post_title', $table_row[1] ?? '', $table_row, $table_columns );
 
 			if ( count( $table_columns ) !== count( $table_row ) ) {
 				continue;
