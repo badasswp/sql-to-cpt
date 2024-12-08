@@ -90,13 +90,11 @@ const App = () => {
     } catch ( { message } ) {
       setSqlNotice( message );
     }
-
-    console.log( parsedSQL.tableRows );
   };
 
   const handleImport = async() => {
     try {
-      await apiFetch(
+      const url = await apiFetch(
         {
           path: '/sql-to-cpt/v1/import',
           method: 'POST',
@@ -105,6 +103,10 @@ const App = () => {
           },
         }
       );
+
+      if (url) {
+        window.location.href = `${url}`
+      }
     } catch ( { message } ) {
       setSqlNotice( message );
     }
