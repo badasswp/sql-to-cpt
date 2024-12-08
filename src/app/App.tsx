@@ -26,7 +26,7 @@ interface SQLProps {
  *
  * @returns {JSX.Element}
  */
-const App = () => {
+const App = (): JSX.Element => {
   const [sqlNotice, setSqlNotice] = useState<string>('');
   const [parsedSQL, setParsedSQL] = useState<SQLProps>(
     {
@@ -46,7 +46,7 @@ const App = () => {
    *
    * @returns {void}
    */
-  const handleModal = () => {
+  const handleModal = (): void => {
     const wpMediaModal = wp.media( getModalParams() );
     wpMediaModal.on( 'select', () => handleSelect(wpMediaModal) ).open();
   };
