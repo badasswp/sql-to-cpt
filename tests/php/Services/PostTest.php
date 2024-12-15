@@ -46,6 +46,11 @@ class PostTest extends TestCase {
 		\WP_Mock::tearDown();
 	}
 
+	public function test_post_objects_contains_instances_of_CPTs() {
+		$this->assertInstanceOf( CPT::class, $this->post->objects[0] );
+		$this->assertInstanceOf( CPT::class, $this->post->objects[1] );
+	}
+
 	public function test_register() {
 		\WP_Mock::expectActionAdded( 'init', [ $this->post, 'register_post_types' ] );
 
