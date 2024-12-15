@@ -10,9 +10,10 @@ use SqlToCpt\Abstracts\Service;
 use SqlToCpt\Core\Post as CPT;
 
 /**
- * @covers \SqlToCpt\Services\Post::get_name
+ * @covers \SqlToCpt\Core\Post::get_name
+ * @covers \SqlToCpt\Core\Post::register_post_type
+ * @covers \SqlToCpt\Core\Post::__construct
  * @covers \SqlToCpt\Services\Post::register
- * @covers \SqlToCpt\Services\Post::register_post_type
  * @covers \SqlToCpt\Services\Post::register_post_types
  * @covers \SqlToCpt\Services\Post::__construct
  */
