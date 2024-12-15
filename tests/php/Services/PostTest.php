@@ -45,4 +45,12 @@ class PostTest extends TestCase {
 	public function tearDown(): void {
 		\WP_Mock::tearDown();
 	}
+
+	public function test_register() {
+		\WP_Mock::expectActionAdded( 'init', [ $this->post, 'register_post_types' ] );
+
+		$this->post->register();
+
+		$this->assertConditionsMet();
+	}
 }
