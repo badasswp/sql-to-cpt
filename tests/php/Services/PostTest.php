@@ -79,4 +79,99 @@ class PostTest extends TestCase {
 
 		$this->assertConditionsMet();
 	}
+
+	public function test_registers_post_types() {
+		\WP_Mock::userFunction(
+			'post_type_exists',
+			[
+				'return' => function ( $post_type ) {
+					if ( in_array( $post_type, [ 'student', 'department' ], true ) ) {
+						return false;
+					}
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'__',
+			[
+				'return' => function ( $label, $text_domain = 'sql-to-cpt' ) {
+					return $label;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'sanitize_title',
+			[
+				'return' => function ( $text ) {
+					return join( '-', array_map( 'strtolower', explode( ' ', $text ) ) );
+				},
+			]
+		);
+
+		$student_post_labels = [
+			'name'          => 'Students',
+			'singular_name' => 'Student',
+			'add_new'       => 'Add New Student',
+			'add_new_item'  => 'Add New Student',
+			'new_item'      => 'New Student',
+			'edit_item'     => 'Edit Student',
+			'view_item'     => 'View Student',
+			'search_items'  => 'Search Students',
+			'menu_name'     => 'Students',
+		];
+
+		$department_post_labels = [
+			'name'          => 'Departments',
+			'singular_name' => 'Department',
+			'add_new'       => 'Add New Department',
+			'add_new_item'  => 'Add New Department',
+			'new_item'      => 'New Department',
+			'edit_item'     => 'Edit Department',
+			'view_item'     => 'View Department',
+			'search_items'  => 'Search Departments',
+			'menu_name'     => 'Departments',
+		];
+
+		$student_post_options = [
+			'name'         => 'student',
+			'labels'       => $student_post_labels,
+			'supports'     => [ 'title', 'thumbnail', 'custom-fields' ],
+			'show_in_rest' => true,
+			'show_in_menu' => true,
+			'public'       => true,
+			'rewrite'      => [
+				'slug' => 'student',
+			],
+		];
+
+		$department_post_options = [
+			'name'         => 'department',
+			'labels'       => $department_post_labels,
+			'supports'     => [ 'title', 'thumbnail', 'custom-fields' ],
+			'show_in_rest' => true,
+			'show_in_menu' => true,
+			'public'       => true,
+			'rewrite'      => [
+				'slug' => 'department',
+			],
+		];
+
+		\WP_Mock::expectFilter( 'sqlt_cpt_post_labels', $student_post_labels );
+		\WP_Mock::expectFilter( 'sqlt_cpt_post_labels', $department_post_labels );
+
+		\WP_Mock::expectFilter( 'sqlt_cpt_post_options', $student_post_options );
+		\WP_Mock::expectFilter( 'sqlt_cpt_post_options', $department_post_options );
+
+		\WP_Mock::userFunction( 'register_post_type' )
+			->with( 'student', $student_post_options );
+
+		\WP_Mock::userFunction( 'register_post_type' )
+			->with( 'department', $department_post_options );
+
+		$this->post->register_post_types();
+
+		$this->assertConditionsMet();
+	}
 }
