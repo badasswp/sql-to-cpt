@@ -59,4 +59,21 @@ class PostTest extends TestCase {
 
 		$this->assertConditionsMet();
 	}
+
+	public function test_register_post_types_does_nothing_if_post_types_are_already_registered() {
+		\WP_Mock::userFunction(
+			'post_type_exists',
+			[
+				'return' => function ( $post_type ) {
+					if ( in_array( $post_type, [ 'student', 'department' ], true ) ) {
+						return true;
+					}
+				},
+			]
+		);
+
+		$this->post->register_post_types();
+
+		$this->assertConditionsMet();
+	}
 }
