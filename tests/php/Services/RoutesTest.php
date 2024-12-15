@@ -15,6 +15,7 @@ use SqlToCpt\Abstracts\Service;
  * @covers \SqlToCpt\Services\Routes::register
  * @covers \SqlToCpt\Services\Routes::register_rest_routes
  * @covers \SqlToCpt\Services\Routes::__construct
+ * @covers \SqlToCpt\Abstracts\Route::register_route
  */
 class RoutesTest extends TestCase {
 	public Routes $routes;
