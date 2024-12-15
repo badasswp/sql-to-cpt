@@ -48,4 +48,37 @@ class RoutesTest extends TestCase {
 
 		$this->assertConditionsMet();
 	}
+
+	public function test_register_rest_routes() {
+		\WP_Mock::onFilter( 'sqlt_cpt_rest_routes' )
+			->with(
+				[
+					Parse::class,
+					Import::class,
+				]
+			)
+			->reply(
+				[
+					Import::class,
+				]
+			);
+
+		$import = new Import();
+
+		\WP_Mock::userFunction( 'register_rest_route' )
+			->with(
+				'sql-to-cpt/v1',
+				'/import',
+				[
+					'methods'             => 'POST',
+					'callback'            => [ $import, 'request' ],
+					'permission_callback' => [ $import, 'is_user_permissible' ],
+				]
+			)
+			->andReturn( null );
+
+		$this->routes->register_rest_routes();
+
+		$this->assertConditionsMet();
+	}
 }
