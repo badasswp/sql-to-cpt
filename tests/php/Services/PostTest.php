@@ -26,8 +26,8 @@ class PostTest extends TestCase {
 				[
 					'cpts' => [
 						'student',
-						'department'
-					]
+						'department',
+					],
 				]
 			);
 
@@ -35,7 +35,7 @@ class PostTest extends TestCase {
 			'sqlt_cpt_post_types',
 			[
 				'student',
-				'department'
+				'department',
 			]
 		);
 
@@ -47,6 +47,7 @@ class PostTest extends TestCase {
 	}
 
 	public function test_post_objects_contains_instances_of_CPTs() {
+		$this->assertSame( count( $this->post->objects ), 2 );
 		$this->assertInstanceOf( CPT::class, $this->post->objects[0] );
 		$this->assertInstanceOf( CPT::class, $this->post->objects[1] );
 	}
