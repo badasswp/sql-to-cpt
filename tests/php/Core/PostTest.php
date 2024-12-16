@@ -34,4 +34,16 @@ class PostTest extends TestCase {
 	public function test_get_plural_label() {
 		$this->assertSame( $this->post->get_plural_label(), 'Students' );
 	}
+
+	public function test_get_supports() {
+		$this->assertSame( $this->post->get_supports(), [ 'title', 'thumbnail', 'custom-fields' ] );
+	}
+
+	public function test_is_post_visible_in_rest() {
+		$this->assertSame( $this->post->is_post_visible_in_rest(), true );
+	}
+
+	public function test_is_post_visible_in_menu() {
+		$this->assertSame( $this->post->is_post_visible_in_menu(), true );
+	}
 }
