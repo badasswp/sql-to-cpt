@@ -9,6 +9,16 @@ use SqlToCpt\Core\Post;
 
 /**
  * @covers \SqlToCpt\Core\Post::__construct
+ * @covers \SqlToCpt\Core\Post::get_name
+ * @covers \SqlToCpt\Core\Post::get_labels
+ * @covers \SqlToCpt\Core\Post::get_options
+ * @covers \SqlToCpt\Core\Post::get_plural_label
+ * @covers \SqlToCpt\Core\Post::get_singular_label
+ * @covers \SqlToCpt\Core\Post::get_slug
+ * @covers \SqlToCpt\Core\Post::get_supports
+ * @covers \SqlToCpt\Core\Post::register_post_type
+ * @covers \SqlToCpt\Core\Post::is_post_visible_in_menu
+ * @covers \SqlToCpt\Core\Post::is_post_visible_in_rest
  */
 class PostTest extends TestCase {
 	public Post $post;
