@@ -46,4 +46,69 @@ class PostTest extends TestCase {
 	public function test_is_post_visible_in_menu() {
 		$this->assertSame( $this->post->is_post_visible_in_menu(), true );
 	}
+
+	public function test_registers_post_type() {
+		\WP_Mock::userFunction(
+			'post_type_exists',
+			[
+				'return' => function ( $post_type ) {
+					if ( in_array( $post_type, [ 'student', 'department' ], true ) ) {
+						return false;
+					}
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'__',
+			[
+				'return' => function ( $label, $text_domain = 'sql-to-cpt' ) {
+					return $label;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'sanitize_title',
+			[
+				'return' => function ( $text ) {
+					return join( '-', array_map( 'strtolower', explode( ' ', $text ) ) );
+				},
+			]
+		);
+
+		$student_post_labels = [
+			'name'          => 'Students',
+			'singular_name' => 'Student',
+			'add_new'       => 'Add New Student',
+			'add_new_item'  => 'Add New Student',
+			'new_item'      => 'New Student',
+			'edit_item'     => 'Edit Student',
+			'view_item'     => 'View Student',
+			'search_items'  => 'Search Students',
+			'menu_name'     => 'Students',
+		];
+
+		$student_post_options = [
+			'name'         => 'student',
+			'labels'       => $student_post_labels,
+			'supports'     => [ 'title', 'thumbnail', 'custom-fields' ],
+			'show_in_rest' => true,
+			'show_in_menu' => true,
+			'public'       => true,
+			'rewrite'      => [
+				'slug' => 'student',
+			],
+		];
+
+		\WP_Mock::expectFilter( 'sqlt_cpt_post_labels', $student_post_labels );
+		\WP_Mock::expectFilter( 'sqlt_cpt_post_options', $student_post_options );
+
+		\WP_Mock::userFunction( 'register_post_type' )
+			->with( 'student', $student_post_options );
+
+		$this->post->register_post_type();
+
+		$this->assertConditionsMet();
+	}
 }
