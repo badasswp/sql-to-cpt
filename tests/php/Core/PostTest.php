@@ -118,6 +118,8 @@ class PostTest extends TestCase {
 				],
 			]
 		);
+
+		$this->assertConditionsMet();
 	}
 
 	public function test_get_labels() {
