@@ -120,6 +120,59 @@ class PostTest extends TestCase {
 		);
 	}
 
+	public function test_get_labels() {
+		\WP_Mock::userFunction(
+			'__',
+			[
+				'return' => function ( $label, $text_domain = 'sql-to-cpt' ) {
+					return $label;
+				},
+			]
+		);
+
+		$student_post_labels = [
+			'name'          => 'Students',
+			'singular_name' => 'Student',
+			'add_new'       => 'Add New Student',
+			'add_new_item'  => 'Add New Student',
+			'new_item'      => 'New Student',
+			'edit_item'     => 'Edit Student',
+			'view_item'     => 'View Student',
+			'search_items'  => 'Search Students',
+			'menu_name'     => 'Students',
+		];
+
+		\WP_Mock::onFilter( 'sqlt_cpt_post_labels' )
+			->with( $student_post_labels )
+			->reply(
+				array_merge(
+					$student_post_labels,
+					[
+						'name'          => 'Candidates',
+						'singular_name' => 'Candidate',
+						'search_items'  => 'Search Candidates',
+					]
+				)
+			);
+
+		$this->assertSame(
+			$this->post->get_labels(),
+			[
+				'name'          => 'Candidates',
+				'singular_name' => 'Candidate',
+				'add_new'       => 'Add New Student',
+				'add_new_item'  => 'Add New Student',
+				'new_item'      => 'New Student',
+				'edit_item'     => 'Edit Student',
+				'view_item'     => 'View Student',
+				'search_items'  => 'Search Candidates',
+				'menu_name'     => 'Students',
+			]
+		);
+
+		$this->assertConditionsMet();
+	}
+
 	public function test_register_post_type() {
 		\WP_Mock::userFunction(
 			'post_type_exists',
