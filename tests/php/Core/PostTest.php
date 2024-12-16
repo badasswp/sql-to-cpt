@@ -47,7 +47,80 @@ class PostTest extends TestCase {
 		$this->assertSame( $this->post->is_post_visible_in_menu(), true );
 	}
 
-	public function test_registers_post_type() {
+	public function test_get_options() {
+		\WP_Mock::userFunction(
+			'__',
+			[
+				'return' => function ( $label, $text_domain = 'sql-to-cpt' ) {
+					return $label;
+				},
+			]
+		);
+
+		\WP_Mock::userFunction(
+			'sanitize_title',
+			[
+				'return' => function ( $text ) {
+					return join( '-', array_map( 'strtolower', explode( ' ', $text ) ) );
+				},
+			]
+		);
+
+		$student_post_labels = [
+			'name'          => 'Students',
+			'singular_name' => 'Student',
+			'add_new'       => 'Add New Student',
+			'add_new_item'  => 'Add New Student',
+			'new_item'      => 'New Student',
+			'edit_item'     => 'Edit Student',
+			'view_item'     => 'View Student',
+			'search_items'  => 'Search Students',
+			'menu_name'     => 'Students',
+		];
+
+		$student_post_options = [
+			'name'         => 'student',
+			'labels'       => $student_post_labels,
+			'supports'     => [ 'title', 'thumbnail', 'custom-fields' ],
+			'show_in_rest' => true,
+			'show_in_menu' => true,
+			'public'       => true,
+			'rewrite'      => [
+				'slug' => 'student',
+			],
+		];
+
+		\WP_Mock::expectFilter( 'sqlt_cpt_post_labels', $student_post_labels );
+
+		\WP_Mock::onFilter( 'sqlt_cpt_post_options' )
+			->with( $student_post_options )
+			->reply(
+				array_merge(
+					$student_post_options,
+					[
+						'show_in_rest' => false,
+						'show_in_menu' => false,
+					]
+				)
+			);
+
+		$this->assertSame(
+			$this->post->get_options(),
+			[
+				'name'         => 'student',
+				'labels'       => $student_post_labels,
+				'supports'     => [ 'title', 'thumbnail', 'custom-fields' ],
+				'show_in_rest' => false,
+				'show_in_menu' => false,
+				'public'       => true,
+				'rewrite'      => [
+					'slug' => 'student',
+				],
+			]
+		);
+	}
+
+	public function test_register_post_type() {
 		\WP_Mock::userFunction(
 			'post_type_exists',
 			[
