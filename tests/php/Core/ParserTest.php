@@ -20,4 +20,10 @@ class ParserTest extends TestCase {
 	public function tearDown(): void {
 		\WP_Mock::tearDown();
 	}
+
+	public function test_sql_contains_file_path() {
+		$this->parser = new Parser( '/var/www/html/wp-content/uploads/import.sql' );
+
+		$this->assertSame( $this->parser->sql, '/var/www/html/wp-content/uploads/import.sql' );
+	}
 }
