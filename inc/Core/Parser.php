@@ -12,6 +12,17 @@ namespace SqlToCpt\Core;
 
 class Parser {
 	/**
+	 * SQL.
+	 *
+	 * The absolute path where the file resides.
+	 *
+	 * @since 1.1.1
+	 *
+	 * @var string
+	 */
+	public string $sql;
+
+	/**
 	 * Set up.
 	 *
 	 * @since 1.0.0
