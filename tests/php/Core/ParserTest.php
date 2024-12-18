@@ -26,4 +26,16 @@ class ParserTest extends TestCase {
 
 		$this->assertSame( $this->parser->sql, '/var/www/html/wp-content/uploads/import.sql' );
 	}
+
+	public function test_get_sql_string_throws_exception() {
+		$parser = Mockery::mock( Parser::class );
+		$parser->shouldAllowMockingProtectedMethods();
+
+		$parser->shouldReceive( '__construct' )
+			->with( '/var/www/html/wp-content/uploads/import.sql' );
+
+		$parser->get_sql_string( '/var/www/html/wp-content/uploads/import.sql' );
+
+		$this->assertConditionsMet();
+	}
 }
