@@ -28,11 +28,17 @@ class ParserTest extends TestCase {
 	}
 
 	public function test_get_sql_string_throws_exception() {
-		$parser = Mockery::mock( Parser::class );
+		$parser = Mockery::mock( Parser::class )->makePartial();
 		$parser->shouldAllowMockingProtectedMethods();
 
-		$parser->shouldReceive( '__construct' )
-			->with( '/var/www/html/wp-content/uploads/import.sql' );
+		$parser->sql = '/var/www/html/wp-content/uploads/import.sql';
+
+		\WP_Mock::userFunction( 'esc_url' )
+			->with( '/var/www/html/wp-content/uploads/import.sql' )
+			->andReturn( '/var/www/html/wp-content/uploads/import.sql' );
+
+		$this->expectException( \Exception::class );
+		$this->expectExceptionMessage( 'Fatal Error: File does not exist: /var/www/html/wp-content/uploads/import.sql' );
 
 		$parser->get_sql_string( '/var/www/html/wp-content/uploads/import.sql' );
 
