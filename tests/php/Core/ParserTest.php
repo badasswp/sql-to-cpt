@@ -45,4 +45,16 @@ class ParserTest extends TestCase {
 
 		$this->assertConditionsMet();
 	}
+
+	public function create_mock_file( $mock_file ) {
+		file_put_contents( $mock_file, 'INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES', FILE_APPEND );
+
+		return $mock_file;
+	}
+
+	public function destroy_mock_file( $mock_file ) {
+		if ( file_exists( $mock_file ) ) {
+			unlink( $mock_file );
+		}
+	}
 }
