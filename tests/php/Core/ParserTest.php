@@ -9,6 +9,7 @@ use SqlToCpt\Core\Parser;
 
 /**
  * @covers \SqlToCpt\Core\Parser::__construct
+ * @covers \SqlToCpt\Core\Parser::get_sql_string
  */
 class ParserTest extends TestCase {
 	public Parser $parser;
