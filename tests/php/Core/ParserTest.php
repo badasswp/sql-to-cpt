@@ -41,7 +41,7 @@ class ParserTest extends TestCase {
 		$this->expectException( \Exception::class );
 		$this->expectExceptionMessage( 'Fatal Error: File does not exist: /var/www/html/wp-content/uploads/import.sql' );
 
-		$parser->get_sql_string( '/var/www/html/wp-content/uploads/import.sql' );
+		$parser->get_sql_string();
 
 		$this->assertConditionsMet();
 	}
