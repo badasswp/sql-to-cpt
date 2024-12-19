@@ -46,6 +46,21 @@ class ParserTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
+	public function test_get_sql_returns_file_contents() {
+		$sql_file = __DIR__ . '/import.sql';
+		$this->create_mock_file( $sql_file );
+
+		$parser = Mockery::mock( Parser::class )->makePartial();
+		$parser->shouldAllowMockingProtectedMethods();
+
+		$parser->sql = $sql_file;
+
+		$this->assertSame( $parser->get_sql_string(), 'INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES' );
+		$this->assertConditionsMet();
+
+		$this->destroy_mock_file( $sql_file );
+	}
+
 	public function create_mock_file( $mock_file ) {
 		file_put_contents( $mock_file, 'INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES', FILE_APPEND );
 
