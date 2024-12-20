@@ -74,6 +74,19 @@ class ParserTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
+	public function test_get_sql_table_columns() {
+		$parser = Mockery::mock( Parser::class )->makePartial();
+		$parser->shouldAllowMockingProtectedMethods();
+
+		$parser->shouldReceive( 'get_sql_string' )
+			->andReturn( 'INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES' );
+
+		\WP_Mock::expectFilter( 'sqlt_cpt_table_columns', [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ] );
+
+		$this->assertSame( $parser->get_sql_table_columns(), [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ] );
+		$this->assertConditionsMet();
+	}
+
 	public function create_mock_file( $mock_file ) {
 		file_put_contents( $mock_file, 'INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES', FILE_APPEND );
 
