@@ -72,9 +72,9 @@ class ImportTest extends TestCase {
 			'wp_json_encode',
 			[
 				'times'  => 1,
-				'return' => function( $arg ) {
+				'return' => function ( $arg ) {
 					return json_encode( $arg );
-				}
+				},
 			]
 		);
 
@@ -106,9 +106,9 @@ class ImportTest extends TestCase {
 			'wp_json_encode',
 			[
 				'times'  => 1,
-				'return' => function( $arg ) {
+				'return' => function ( $arg ) {
 					return json_encode( $arg );
-				}
+				},
 			]
 		);
 
