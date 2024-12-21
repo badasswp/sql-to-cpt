@@ -64,8 +64,8 @@ class ImportTest extends TestCase {
 			->andReturn(
 				[
 					'tableName'    => 'student',
-					'tableRows'    => [],
 					'tableColumns' => [],
+					'tableRows'    => [],
 				]
 			);
 
@@ -98,8 +98,8 @@ class ImportTest extends TestCase {
 			->andReturn(
 				[
 					'tableName'    => 'student',
-					'tableRows'    => [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ],
-					'tableColumns' => [],
+					'tableColumns' => [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ],
+					'tableRows'    => [],
 				]
 			);
 
