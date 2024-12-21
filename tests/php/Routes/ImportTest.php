@@ -22,4 +22,9 @@ class ImportTest extends TestCase {
 	public function tearDown(): void {
 		\WP_Mock::tearDown();
 	}
+
+	public function test_route_initial_values() {
+		$this->assertSame( $this->import->method, 'POST' );
+		$this->assertSame( $this->import->endpoint, '/import' );
+	}
 }
