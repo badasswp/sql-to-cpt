@@ -9,6 +9,7 @@ use SqlToCpt\Abstracts\Service;
 
 /**
  * @covers \SqlToCpt\Routes\Import::response
+ * @covers \SqlToCpt\Abstracts\Route::get_400_response
  */
 class ImportTest extends TestCase {
 	public Import $import;
