@@ -39,8 +39,8 @@ class ImportTest extends TestCase {
 			->andReturn(
 				[
 					'tableName'    => '',
-					'tableRows'    => '',
-					'tableColumns' => '',
+					'tableRows'    => [],
+					'tableColumns' => [],
 				]
 			);
 
@@ -49,5 +49,6 @@ class ImportTest extends TestCase {
 		$response = $import->response();
 
 		$this->assertInstanceOf( \WP_Error::class, $response );
+		$this->assertConditionsMet();
 	}
 }
