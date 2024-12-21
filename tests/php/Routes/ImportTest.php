@@ -28,7 +28,7 @@ class ImportTest extends TestCase {
 		$this->assertSame( $this->import->endpoint, '/import' );
 	}
 
-	public function test_response() {
+	public function test_response_bails_out_on_empty_table_name() {
 		$import = Mockery::mock( Import::class )->makePartial();
 		$import->shouldAllowMockingProtectedMethods();
 
