@@ -8,7 +8,7 @@ use SqlToCpt\Routes\Import;
 use SqlToCpt\Abstracts\Service;
 
 /**
- * @covers \SqlToCpt\Routes\Import::__construct
+ * @covers \SqlToCpt\Routes\Import::response
  */
 class ImportTest extends TestCase {
 	public Import $import;
