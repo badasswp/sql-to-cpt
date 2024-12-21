@@ -27,4 +27,27 @@ class ImportTest extends TestCase {
 		$this->assertSame( $this->import->method, 'POST' );
 		$this->assertSame( $this->import->endpoint, '/import' );
 	}
+
+	public function test_response() {
+		$import = Mockery::mock( Import::class )->makePartial();
+		$import->shouldAllowMockingProtectedMethods();
+
+		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request->shouldAllowMockingProtectedMethods();
+
+		$request->shouldReceive( 'get_json_params' )
+			->andReturn(
+				[
+					'tableName'    => '',
+					'tableRows'    => '',
+					'tableColumns' => '',
+				]
+			);
+
+		$import->request = $request;
+
+		$response = $import->response();
+
+		$this->assertInstanceOf( \WP_Error::class, $response );
+	}
 }
