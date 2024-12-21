@@ -51,4 +51,38 @@ class ImportTest extends TestCase {
 		$this->assertInstanceOf( \WP_Error::class, $response );
 		$this->assertConditionsMet();
 	}
+
+	public function test_response_bails_out_on_empty_column_names() {
+		$import = Mockery::mock( Import::class )->makePartial();
+		$import->shouldAllowMockingProtectedMethods();
+
+		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request->shouldAllowMockingProtectedMethods();
+
+		$request->shouldReceive( 'get_json_params' )
+			->andReturn(
+				[
+					'tableName'    => 'student',
+					'tableRows'    => [],
+					'tableColumns' => [],
+				]
+			);
+
+		\WP_Mock::userFunction(
+			'wp_json_encode',
+			[
+				'times'  => 1,
+				'return' => function( $arg ) {
+					return json_encode( $arg );
+				}
+			]
+		);
+
+		$import->request = $request;
+
+		$response = $import->response();
+
+		$this->assertInstanceOf( \WP_Error::class, $response );
+		$this->assertConditionsMet();
+	}
 }
