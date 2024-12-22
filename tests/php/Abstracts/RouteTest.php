@@ -10,6 +10,7 @@ use SqlToCpt\Abstracts\Route;
  * @covers \SqlToCpt\Abstracts\Route::request
  * @covers \SqlToCpt\Abstracts\Route::register_route
  * @covers \SqlToCpt\Abstracts\Route::get_400_response
+ * @covers \SqlToCpt\Abstracts\Route::is_user_permissible
  */
 class RouteTest extends TestCase {
 	public Route $route;
