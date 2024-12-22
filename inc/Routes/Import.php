@@ -165,34 +165,4 @@ class Import extends Route implements Router {
 
 		return null;
 	}
-
-	/**
-	 * Permissions callback for endpoints.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param \WP_REST_Request $request Request Object.
-	 * @return bool|\WP_Error
-	 */
-	public function is_user_permissible( $request ): bool {
-		$http_error = rest_authorization_required_code();
-
-		if ( ! current_user_can( 'administrator' ) ) {
-			return new \WP_Error(
-				'sql-to-cpt-rest-forbidden',
-				sprintf( 'Invalid User. Error: %s', $http_error ),
-				[ 'status' => $http_error ]
-			);
-		}
-
-		if ( ! wp_verify_nonce( $request->get_header( 'X-WP-Nonce' ), 'wp_rest' ) ) {
-			return new \WP_Error(
-				'sql-to-cpt-rest-forbidden',
-				sprintf( 'Invalid Nonce. Error: %s', $http_error ),
-				[ 'status' => $http_error ]
-			);
-		}
-
-		return true;
-	}
 }
