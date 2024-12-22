@@ -93,8 +93,4 @@ class ConcreteRoute extends Route {
 	public function response() {
 		return $this->request;
 	}
-
-	public function is_user_permissible( $request ): bool {
-		return true;
-	}
 }
