@@ -82,6 +82,30 @@ class RouteTest extends TestCase {
 		$this->assertInstanceOf( \WP_Error::class, $error_response );
 		$this->assertConditionsMet();
 	}
+
+	public function test_is_user_permissible_returns_error_if_not_administrator() {
+		\WP_Mock::userFunction( 'rest_authorization_required_code' )
+			->andReturn( 403 );
+
+		\WP_Mock::userFunction( 'current_user_can' )
+			->with( 'administrator' )
+			->andReturn( false );
+
+		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request->shouldAllowMockingProtectedMethods();
+
+		$request->shouldReceive( 'get_json_params' )
+			->andReturn(
+				[
+					'id' => 1,
+				]
+			);
+
+		$this->assertInstanceOf(
+			\WP_Error::class,
+			$this->route->is_user_permissible( $request )
+		);
+	}
 }
 
 class ConcreteRoute extends Route {
