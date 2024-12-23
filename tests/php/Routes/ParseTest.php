@@ -49,9 +49,7 @@ class ParseTest extends TestCase {
 
 		$parse->request = $request;
 
-		$response = $parse->response();
-
-		$this->assertInstanceOf( \WP_Error::class, $response );
+		$this->assertInstanceOf( \WP_Error::class, $parse->response() );
 		$this->assertConditionsMet();
 	}
 
