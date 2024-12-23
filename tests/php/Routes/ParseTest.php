@@ -8,6 +8,7 @@ use SqlToCpt\Routes\Parse;
 use SqlToCpt\Abstracts\Service;
 
 /**
+ * @covers \SqlToCpt\Routes\Parse::is_sql
  * @covers \SqlToCpt\Routes\Parse::response
  * @covers \SqlToCpt\Abstracts\Route::get_400_response
  */
@@ -136,6 +137,26 @@ class ParseTest extends TestCase {
 		$this->assertConditionsMet();
 
 		$this->destroy_mock_file( $sql_file );
+	}
+
+	public function test_is_sql_returns_true() {
+		$file_path = '/var/www/html/wp-content/uploads/import.sql';
+
+		$parse = Mockery::mock( Parse::class )->makePartial();
+		$parse->shouldAllowMockingProtectedMethods();
+
+		\WP_Mock::userFunction( 'wp_check_filetype' )
+			->with( $file_path )
+			->andReturnUsing(
+				function ( $path ) {
+					return [
+						'ext' => pathinfo( $path, PATHINFO_EXTENSION ),
+					];
+				}
+			);
+
+		$this->assertTrue( $parse->is_sql( $file_path ) );
+		$this->assertConditionsMet();
 	}
 
 	public function create_mock_file( $mock_file ) {
