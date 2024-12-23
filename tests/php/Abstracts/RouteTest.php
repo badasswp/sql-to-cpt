@@ -136,12 +136,16 @@ class RouteTest extends TestCase {
 			->with( 'administrator' )
 			->andReturn( true );
 
+		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request->shouldAllowMockingProtectedMethods();
+
+		$request->shouldReceive( 'get_header' )
+			->with( 'X-WP-Nonce' )
+			->andReturn( 'a8ceg59jeqwvk' );
+
 		\WP_Mock::userFunction( 'wp_verify_nonce' )
 			->with( 'a8ceg59jeqwvk', 'wp_rest' )
 			->andReturn( true );
-
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
-		$request->shouldAllowMockingProtectedMethods();
 
 		$this->assertTrue( $this->route->is_user_permissible( $request ) );
 		$this->assertConditionsMet();
