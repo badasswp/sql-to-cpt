@@ -95,13 +95,6 @@ class RouteTest extends TestCase {
 		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
-		$request->shouldReceive( 'get_json_params' )
-			->andReturn(
-				[
-					'id' => 1,
-				]
-			);
-
 		$this->assertInstanceOf(
 			\WP_Error::class,
 			$this->route->is_user_permissible( $request )
