@@ -90,6 +90,54 @@ class ParseTest extends TestCase {
 		$this->destroy_mock_file( $txt_file );
 	}
 
+	public function test_response_passes_correctly() {
+		$sql_file = __DIR__ . '/import.sql';
+		$this->create_mock_file( $sql_file );
+
+		$parse = Mockery::mock( Parse::class )->makePartial();
+		$parse->shouldAllowMockingProtectedMethods();
+
+		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request->shouldAllowMockingProtectedMethods();
+
+		$request->shouldReceive( 'get_json_params' )
+			->andReturn(
+				[
+					'id' => 1,
+				]
+			);
+
+		$parse->request = $request;
+
+		\WP_Mock::userFunction( 'get_attached_file' )
+			->with( 1 )
+			->andReturn( $sql_file );
+
+		$parse->shouldReceive( 'is_sql' )
+			->with( $sql_file )
+			->andReturnUsing(
+				function ( $path ) {
+					return 'sql' === pathinfo( $path, PATHINFO_EXTENSION );
+				}
+			);
+
+		$parse->shouldReceive( 'get_response' )
+			->andReturn(
+				[
+					'tableName'    => 'student',
+					'tableColumns' => [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ],
+					'tableRows'    => [
+						[ 1, 'John Doe', 37, 'M', 'john@doe.com', '00:00:00' ],
+					],
+				]
+			);
+
+		$this->assertInstanceOf( \WP_REST_Response::class, $parse->response() );
+		$this->assertConditionsMet();
+
+		$this->destroy_mock_file( $sql_file );
+	}
+
 	public function create_mock_file( $mock_file ) {
 		file_put_contents( $mock_file, 'INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES', FILE_APPEND );
 
