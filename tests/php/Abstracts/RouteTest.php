@@ -125,6 +125,25 @@ class RouteTest extends TestCase {
 			$this->route->is_user_permissible( $request )
 		);
 	}
+
+	public function test_is_user_permissible_passes_correctly() {
+		\WP_Mock::userFunction( 'rest_authorization_required_code' )
+			->andReturn( 403 );
+
+		\WP_Mock::userFunction( 'current_user_can' )
+			->with( 'administrator' )
+			->andReturn( true );
+
+		\WP_Mock::userFunction( 'wp_verify_nonce' )
+			->with( 'a8ceg59jeqwvk', 'wp_rest' )
+			->andReturn( true );
+
+		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request->shouldAllowMockingProtectedMethods();
+
+		$this->assertTrue( $this->route->is_user_permissible( $request ) );
+		$this->assertConditionsMet();
+	}
 }
 
 class ConcreteRoute extends Route {
