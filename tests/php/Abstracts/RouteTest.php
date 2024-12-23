@@ -99,6 +99,7 @@ class RouteTest extends TestCase {
 			\WP_Error::class,
 			$this->route->is_user_permissible( $request )
 		);
+		$this->assertConditionsMet();
 	}
 
 	public function test_is_user_permissible_returns_error_if_nonce_fails() {
@@ -124,6 +125,7 @@ class RouteTest extends TestCase {
 			\WP_Error::class,
 			$this->route->is_user_permissible( $request )
 		);
+		$this->assertConditionsMet();
 	}
 
 	public function test_is_user_permissible_passes_correctly() {
