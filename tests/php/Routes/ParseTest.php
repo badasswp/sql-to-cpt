@@ -159,6 +159,26 @@ class ParseTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
+	public function test_is_sql_returns_false() {
+		$file_path = '/var/www/html/wp-content/uploads/import.txt';
+
+		$parse = Mockery::mock( Parse::class )->makePartial();
+		$parse->shouldAllowMockingProtectedMethods();
+
+		\WP_Mock::userFunction( 'wp_check_filetype' )
+			->with( $file_path )
+			->andReturnUsing(
+				function ( $path ) {
+					return [
+						'ext' => pathinfo( $path, PATHINFO_EXTENSION ),
+					];
+				}
+			);
+
+		$this->assertFalse( $parse->is_sql( $file_path ) );
+		$this->assertConditionsMet();
+	}
+
 	public function create_mock_file( $mock_file ) {
 		file_put_contents( $mock_file, 'INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES', FILE_APPEND );
 
