@@ -30,4 +30,29 @@ class AdminTest extends TestCase {
 
 		$this->assertConditionsMet();
 	}
+
+	public function test_register_admin_menu() {
+		\WP_Mock::userFunction( '__' )
+			->andReturnUsing(
+				function( $arg ) {
+					return $arg;
+				}
+			);
+
+		\WP_Mock::userFunction( 'add_menu_page' )
+			->with(
+				'SQL to CPT',
+				'SQL to CPT',
+				'manage_options',
+				'sql-to-cpt',
+				[ $this->admin, 'register_admin_page' ],
+				'dashicons-database',
+				90
+			)
+			->andReturn( null );
+
+		$this->admin->register_admin_menu();
+
+		$this->assertConditionsMet();
+	}
 }
