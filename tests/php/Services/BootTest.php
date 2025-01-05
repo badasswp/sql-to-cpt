@@ -101,6 +101,15 @@ class BootTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
+	public function test_register_scripts_bails_out_if_it_is_not_an_object() {
+		$screen = 1;
+
+		\WP_Mock::userFunction( 'get_current_screen' )
+			->andReturn( $screen );
+
+		$this->assertConditionsMet();
+	}
+
 	public function test_register_scripts_bails_out_if_it_is_not_plugin_page() {
 		$screen = Mockery::mock( \WP_Screen::class )->makePartial();
 		$screen->shouldAllowMockingProtectedMethods();
