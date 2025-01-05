@@ -166,7 +166,7 @@ class BootTest extends TestCase {
 					'wp-edit-post',
 					'wp-edit-site',
 				],
-				'1.0.1',
+				'1.1.0',
 				false,
 			);
 
