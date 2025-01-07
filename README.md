@@ -1,5 +1,7 @@
 # sql-to-cpt
 
+[![Coverage Status](https://coveralls.io/repos/github/badasswp/sql-to-cpt/badge.svg?branch=master)](https://coveralls.io/github/badasswp/sql-to-cpt?branch=master)
+
 Import & Convert SQL files to Custom Post Types (CPT).
 
 <img width="528" alt="sql-to-cpt" src="https://github.com/user-attachments/assets/cf2a4015-bc64-463b-a655-6e1a12762ca3">
