@@ -34,7 +34,7 @@ class AdminTest extends TestCase {
 	public function test_register_admin_menu() {
 		\WP_Mock::userFunction( '__' )
 			->andReturnUsing(
-				function( $arg ) {
+				function ( $arg ) {
 					return $arg;
 				}
 			);
