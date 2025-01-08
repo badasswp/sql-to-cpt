@@ -315,4 +315,90 @@ class ImportTest extends TestCase {
 		$this->assertSame( null, $response );
 		$this->assertConditionsMet();
 	}
+
+	public function test_get_response_passes_and_returns_wp_page_link() {
+		$import = Mockery::mock( Import::class )->makePartial();
+		$import->shouldAllowMockingProtectedMethods();
+
+		$import->args = [
+			'tableName'    => 'student',
+			'tableColumns' => [
+				'id',
+				'name',
+				'age',
+				'sex',
+				'email_address',
+				'date_created',
+			],
+			'tableRows'    => [
+				[
+					1,
+					'John Doe',
+					37,
+					'M',
+					'john@doe.com',
+					'00:00:00',
+				],
+			],
+		];
+
+		\WP_Mock::expectFilter(
+			'sqlt_cpt_post_title',
+			'John Doe',
+			[
+				1,
+				'John Doe',
+				37,
+				'M',
+				'john@doe.com',
+				'00:00:00',
+			],
+			[
+				'id',
+				'name',
+				'age',
+				'sex',
+				'email_address',
+				'date_created',
+			]
+		);
+
+		\WP_Mock::userFunction( 'wp_insert_post' )
+			->andReturn( 1 );
+
+		\WP_Mock::userFunction( 'is_wp_error' )
+			->andReturnUsing(
+				function ( $arg ) {
+					return $arg instanceof \WP_Error;
+				}
+			);
+
+		\WP_Mock::userFunction( 'add_query_arg' )
+			->andReturnUsing(
+				function ( $arg1, $arg2 ) {
+					return sprintf( '%s?%s', $arg2, http_build_query( $arg1 ) );
+				}
+			);
+
+		\WP_Mock::userFunction( 'untrailingslashit' )
+			->andReturnUsing(
+				function ( $arg ) {
+					return mb_strrchr( $arg, '/', true );
+				}
+			);
+
+		\WP_Mock::userFunction( 'get_admin_url' )
+			->andReturn( 'https://example.com/wp-admin/' );
+
+		$import->shouldReceive( 'get_post_type' )
+			->andReturn( 'student' );
+
+		$response = $import->get_response();
+
+		$this->assertSame(
+			'https://example.com/wp-admin/edit.php?post_type=student',
+			$response
+		);
+		$this->assertConditionsMet();
+	}
 }
