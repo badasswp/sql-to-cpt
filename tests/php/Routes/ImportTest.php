@@ -401,4 +401,28 @@ class ImportTest extends TestCase {
 		);
 		$this->assertConditionsMet();
 	}
+
+	public function test_get_post_type() {
+		$import = Mockery::mock( Import::class )->makePartial();
+		$import->shouldAllowMockingProtectedMethods();
+
+		$import->args['tableName'] = 'student';
+
+		\WP_Mock::userFunction( 'get_option' )
+			->with( 'sql_to_cpt', [] )
+			->andReturn(
+				[
+					'cpts' => [
+						'student',
+						'department',
+						'course'
+					]
+				]
+			);
+
+		$response = $import->get_post_type();
+
+		$this->assertSame( 'student', $response );
+		$this->assertConditionsMet();
+	}
 }
