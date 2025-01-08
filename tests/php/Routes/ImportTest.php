@@ -133,9 +133,23 @@ class ImportTest extends TestCase {
 			->andReturn(
 				[
 					'tableName'    => 'student',
-					'tableColumns' => [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ],
+					'tableColumns' => [
+						'id',
+						'name',
+						'age',
+						'sex',
+						'email_address',
+						'date_created',
+					],
 					'tableRows'    => [
-						[ 1, 'John Doe', 37, 'M', 'john@doe.com', '00:00:00' ],
+						[
+							1,
+							'John Doe',
+							37,
+							'M',
+							'john@doe.com',
+							'00:00:00',
+						],
 					],
 				]
 			);
