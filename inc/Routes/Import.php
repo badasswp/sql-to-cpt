@@ -136,6 +136,14 @@ class Import extends Route implements Router {
 			$post_title = apply_filters( 'sqlt_cpt_post_title', $table_row[1] ?? '', $table_row, $table_columns );
 
 			if ( count( $table_columns ) !== count( $table_row ) ) {
+				error_log(
+					sprintf(
+						'SQL to CPT | Error: Table rows do not match columns. Columns: %s, Rows: %s',
+						wp_json_encode( $table_columns ),
+						wp_json_encode( $table_rows ),
+					)
+				);
+
 				continue;
 			}
 
