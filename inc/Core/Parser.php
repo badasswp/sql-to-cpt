@@ -101,6 +101,11 @@ class Parser {
 	protected function get_sql_table_columns(): array {
 		preg_match( '/INSERT INTO `([^`]+)` \(([^)]+)\)/', $this->get_sql_string(), $matches );
 
+		// Bail out, if there are no VALUES in SQL.
+		if ( empty( $matches[2] ) ) {
+			return [];
+		}
+
 		$columns = array_map(
 			function ( $field ) {
 				return trim( $field, '`' );
