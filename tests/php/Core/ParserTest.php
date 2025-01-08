@@ -12,6 +12,7 @@ use SqlToCpt\Core\Parser;
  * @covers \SqlToCpt\Core\Parser::get_sql_string
  * @covers \SqlToCpt\Core\Parser::get_sql_table_name
  * @covers \SqlToCpt\Core\Parser::get_sql_table_columns
+ * @covers \SqlToCpt\Core\Parser::get_sql_table_rows
  * @covers \SqlToCpt\Core\Parser::get_parsed_sql
  */
 class ParserTest extends TestCase {
@@ -87,6 +88,51 @@ class ParserTest extends TestCase {
 		\WP_Mock::expectFilter( 'sqlt_cpt_table_columns', [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ] );
 
 		$this->assertSame( $parser->get_sql_table_columns(), [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ] );
+		$this->assertConditionsMet();
+	}
+
+	public function test_get_sql_table_rows() {
+		$parser = Mockery::mock( Parser::class )->makePartial();
+		$parser->shouldAllowMockingProtectedMethods();
+
+		$parser->shouldReceive( 'get_sql_string' )
+			->andReturn( "INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES
+(1, 'Alice Smith', '20', 'Female', 'alice.smith@example.com', '2024-07-03 21:45:23');" );
+
+		\WP_Mock::userFunction( 'sanitize_text_field' )
+			->andReturnUsing(
+				function( $arg ) {
+					return $arg;
+				}
+			);
+
+		\WP_Mock::expectFilter(
+			'sqlt_cpt_table_rows',
+			[
+				[
+					'1',
+					'Alice Smith',
+					'20',
+					'Female',
+					'alice.smith@example.com',
+					'2024-07-03 21:45:23'
+				]
+			]
+		);
+
+		$this->assertSame(
+			$parser->get_sql_table_rows(),
+			[
+				[
+					'1',
+					'Alice Smith',
+					'20',
+					'Female',
+					'alice.smith@example.com',
+					'2024-07-03 21:45:23'
+				]
+			]
+		);
 		$this->assertConditionsMet();
 	}
 

@@ -133,6 +133,8 @@ class Parser {
 	 * @return mixed[]
 	 */
 	protected function get_sql_table_rows(): array {
+		$table_rows = [];
+
 		// Match string starting from `VALUES` to end.
 		preg_match_all( '/VALUES\s*(.*);/s', $this->get_sql_string(), $matches );
 
@@ -149,6 +151,18 @@ class Parser {
 			return [];
 		}
 
+		// Clean up rows, format correctly in readiness for post insertion.
+		foreach ( $rows_matches[1] as $table_row ) {
+			$table_row = array_map(
+				function ( $row ) {
+					return sanitize_text_field( trim( trim( $row ), "'" ) );
+				},
+				explode( ',', $table_row )
+			);
+
+			$table_rows[] = $table_row;
+		}
+
 		/**
 		 * Filter SQL Rows.
 		 *
@@ -160,7 +174,7 @@ class Parser {
 		 * @param mixed[] $rows Rows/Records.
 		 * @return mixed[]
 		 */
-		return (array) apply_filters( 'sqlt_cpt_table_rows', $rows_matches[1] );
+		return (array) apply_filters( 'sqlt_cpt_table_rows', $table_rows );
 	}
 
 	/**
