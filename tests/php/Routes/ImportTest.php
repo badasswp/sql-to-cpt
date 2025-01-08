@@ -170,7 +170,58 @@ class ImportTest extends TestCase {
 
 		$response = $import->get_response();
 
-		$this->assertSame( NULL, $response );
+		$this->assertSame( null, $response );
+		$this->assertConditionsMet();
+	}
+
+	public function test_get_response_returns_null_on_incorrect_number_of_rows_to_columns() {
+		$import = Mockery::mock( Import::class )->makePartial();
+		$import->shouldAllowMockingProtectedMethods();
+
+		$import->args = [
+			'tableName'    => 'student',
+			'tableColumns' => [
+				'id',
+				'name',
+				'age',
+				'sex',
+				'email_address',
+				'date_created',
+			],
+			'tableRows'    => [
+				[
+					1,
+					'John Doe',
+					37,
+					'M',
+					'john@doe.com',
+				],
+			],
+		];
+
+		\WP_Mock::expectFilter(
+			'sqlt_cpt_post_title',
+			'John Doe',
+			[
+				1,
+				'John Doe',
+				37,
+				'M',
+				'john@doe.com',
+			],
+			[
+				'id',
+				'name',
+				'age',
+				'sex',
+				'email_address',
+				'date_created',
+			]
+		);
+
+		$response = $import->get_response();
+
+		$this->assertSame( null, $response );
 		$this->assertConditionsMet();
 	}
 }
