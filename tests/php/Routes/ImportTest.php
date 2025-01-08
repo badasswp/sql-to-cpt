@@ -415,8 +415,42 @@ class ImportTest extends TestCase {
 					'cpts' => [
 						'student',
 						'department',
-						'course'
-					]
+						'course',
+					],
+				]
+			);
+
+		$response = $import->get_post_type();
+
+		$this->assertSame( 'student', $response );
+		$this->assertConditionsMet();
+	}
+
+	public function test_get_post_type_returns_string_and_updates_plugin_options() {
+		$import = Mockery::mock( Import::class )->makePartial();
+		$import->shouldAllowMockingProtectedMethods();
+
+		$import->args['tableName'] = 'student';
+
+		\WP_Mock::userFunction( 'get_option' )
+			->with( 'sql_to_cpt', [] )
+			->andReturn(
+				[
+					'cpts' => [
+						'department',
+						'course',
+					],
+				]
+			);
+
+		\WP_Mock::userFunction( 'update_option' )
+			->andReturn(
+				[
+					'cpts' => [
+						'student',
+						'department',
+						'course',
+					],
 				]
 			);
 
