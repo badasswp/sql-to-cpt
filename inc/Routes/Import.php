@@ -147,7 +147,7 @@ class Import extends Route implements Router {
 				continue;
 			}
 
-			$posts[] = wp_insert_post(
+			$response = wp_insert_post(
 				[
 					'post_type'   => $post_type,
 					'post_title'  => $post_title,
@@ -155,6 +155,19 @@ class Import extends Route implements Router {
 					'meta_input'  => array_combine( $table_columns, $table_row ),
 				]
 			);
+
+			if ( is_wp_error( $response ) ) {
+				error_log(
+					sprintf(
+						'SQL to CPT | Error: Insert post error: %s',
+						$response->get_error_message()
+					)
+				);
+
+				continue;
+			}
+
+			$posts[] = $response;
 		}
 
 		if ( ! empty( $posts ) ) {
