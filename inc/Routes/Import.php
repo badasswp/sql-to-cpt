@@ -147,24 +147,39 @@ class Import extends Route implements Router {
 					'meta_input'  => array_combine( $table_columns, $table_row ),
 				]
 			);
-
-			$options = get_option( 'sql_to_cpt', [] );
-
-			if ( ! in_array( $post_type, $options['cpts'] ?? [], true ) ) {
-				$options['cpts'][] = $post_type;
-				update_option( 'sql_to_cpt', $options );
-			}
 		}
 
 		if ( ! empty( $posts ) ) {
 			return add_query_arg(
 				[
-					'post_type' => $post_type,
+					'post_type' => $this->get_post_type(),
 				],
 				sprintf( '%s/%s', untrailingslashit( get_admin_url() ), 'edit.php' )
 			);
 		}
 
 		return null;
+	}
+
+	/**
+	 * Get Post Type.
+	 *
+	 * This method stores the post type of the saved posts
+	 * in the plugin options and returns same.
+	 *
+	 * @since 1.1.1
+	 *
+	 * @return string
+	 */
+	protected function get_post_type(): string {
+		$options   = get_option( 'sql_to_cpt', [] );
+		$post_type = $this->args['tableName'] ?? '';
+
+		if ( ! in_array( $post_type, $options['cpts'] ?? [], true ) ) {
+			$options['cpts'][] = $post_type;
+			update_option( 'sql_to_cpt', $options );
+		}
+
+		return $post_type;
 	}
 }
