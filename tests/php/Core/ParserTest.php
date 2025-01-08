@@ -158,6 +158,34 @@ class ParserTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
+	public function test_get_sql_table_rows_returns_empty_array_on_empty_string() {
+		$parser = Mockery::mock( Parser::class )->makePartial();
+		$parser->shouldAllowMockingProtectedMethods();
+
+		$parser->shouldReceive( 'get_sql_string' )
+			->andReturn( 'Invalid SQL string, no rows presented here.' );
+
+		$this->assertSame(
+			$parser->get_sql_table_rows(),
+			[]
+		);
+		$this->assertConditionsMet();
+	}
+
+	public function test_get_sql_table_rows_returns_empty_array_on_invalid_sql_string() {
+		$parser = Mockery::mock( Parser::class )->makePartial();
+		$parser->shouldAllowMockingProtectedMethods();
+
+		$parser->shouldReceive( 'get_sql_string' )
+			->andReturn( '' );
+
+		$this->assertSame(
+			$parser->get_sql_table_rows(),
+			[]
+		);
+		$this->assertConditionsMet();
+	}
+
 	public function test_get_parsed_sql() {
 		$parser = Mockery::mock( Parser::class )->makePartial();
 		$parser->shouldAllowMockingProtectedMethods();
