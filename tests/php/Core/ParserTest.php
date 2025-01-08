@@ -85,9 +85,29 @@ class ParserTest extends TestCase {
 		$parser->shouldReceive( 'get_sql_string' )
 			->andReturn( 'INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES' );
 
-		\WP_Mock::expectFilter( 'sqlt_cpt_table_columns', [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ] );
+		\WP_Mock::expectFilter(
+			'sqlt_cpt_table_columns',
+			[
+				'id',
+				'name',
+				'age',
+				'sex',
+				'email_address',
+				'date_created',
+			]
+		);
 
-		$this->assertSame( $parser->get_sql_table_columns(), [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ] );
+		$this->assertSame(
+			$parser->get_sql_table_columns(),
+			[
+				'id',
+				'name',
+				'age',
+				'sex',
+				'email_address',
+				'date_created',
+			]
+		);
 		$this->assertConditionsMet();
 	}
 
@@ -96,12 +116,14 @@ class ParserTest extends TestCase {
 		$parser->shouldAllowMockingProtectedMethods();
 
 		$parser->shouldReceive( 'get_sql_string' )
-			->andReturn( "INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES
-(1, 'Alice Smith', '20', 'Female', 'alice.smith@example.com', '2024-07-03 21:45:23');" );
+			->andReturn(
+				"INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES
+(1, 'Alice Smith', '20', 'Female', 'alice.smith@example.com', '2024-07-03 21:45:23');"
+			);
 
 		\WP_Mock::userFunction( 'sanitize_text_field' )
 			->andReturnUsing(
-				function( $arg ) {
+				function ( $arg ) {
 					return $arg;
 				}
 			);
@@ -115,8 +137,8 @@ class ParserTest extends TestCase {
 					'20',
 					'Female',
 					'alice.smith@example.com',
-					'2024-07-03 21:45:23'
-				]
+					'2024-07-03 21:45:23',
+				],
 			]
 		);
 
@@ -129,8 +151,8 @@ class ParserTest extends TestCase {
 					'20',
 					'Female',
 					'alice.smith@example.com',
-					'2024-07-03 21:45:23'
-				]
+					'2024-07-03 21:45:23',
+				],
 			]
 		);
 		$this->assertConditionsMet();
