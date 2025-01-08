@@ -110,13 +110,6 @@ class Import extends Route implements Router {
 		$post_type = $table_name;
 
 		foreach ( $table_rows as $table_row ) {
-			$table_row = array_map(
-				function ( $row ) {
-					return sanitize_text_field( trim( trim( $row ), "'" ) );
-				},
-				explode( ',', $table_row )
-			);
-
 			/**
 			 * Filter Post Title.
 			 *
