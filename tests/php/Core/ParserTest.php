@@ -12,6 +12,7 @@ use SqlToCpt\Core\Parser;
  * @covers \SqlToCpt\Core\Parser::get_sql_string
  * @covers \SqlToCpt\Core\Parser::get_sql_table_name
  * @covers \SqlToCpt\Core\Parser::get_sql_table_columns
+ * @covers \SqlToCpt\Core\Parser::get_parsed_sql
  */
 class ParserTest extends TestCase {
 	public Parser $parser;
@@ -86,6 +87,30 @@ class ParserTest extends TestCase {
 		\WP_Mock::expectFilter( 'sqlt_cpt_table_columns', [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ] );
 
 		$this->assertSame( $parser->get_sql_table_columns(), [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ] );
+		$this->assertConditionsMet();
+	}
+
+	public function test_get_parsed_sql() {
+		$parser = Mockery::mock( Parser::class )->makePartial();
+		$parser->shouldAllowMockingProtectedMethods();
+
+		$parser->shouldReceive( 'get_sql_table_name' )
+			->once()->andReturn( 'student' );
+
+		$parser->shouldReceive( 'get_sql_table_columns' )
+			->once()->andReturn( [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ] );
+
+		$parser->shouldReceive( 'get_sql_table_rows' )
+			->once()->andReturn( [] );
+
+		$this->assertSame(
+			$parser->get_parsed_sql(),
+			[
+				'tableName'    => 'student',
+				'tableColumns' => [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ],
+				'tableRows'    => [],
+			]
+		);
 		$this->assertConditionsMet();
 	}
 
