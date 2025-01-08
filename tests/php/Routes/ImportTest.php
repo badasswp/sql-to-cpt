@@ -9,6 +9,7 @@ use SqlToCpt\Abstracts\Service;
 
 /**
  * @covers \SqlToCpt\Routes\Import::response
+ * @covers \SqlToCpt\Routes\Import::get_response
  * @covers \SqlToCpt\Abstracts\Route::get_400_response
  */
 class ImportTest extends TestCase {
@@ -158,6 +159,18 @@ class ImportTest extends TestCase {
 		$response = $import->response();
 
 		$this->assertInstanceOf( \WP_REST_Response::class, $response );
+		$this->assertConditionsMet();
+	}
+
+	public function test_get_response_returns_null_on_empty_args() {
+		$import = Mockery::mock( Import::class )->makePartial();
+		$import->shouldAllowMockingProtectedMethods();
+
+		$import->args = [];
+
+		$response = $import->get_response();
+
+		$this->assertSame( NULL, $response );
 		$this->assertConditionsMet();
 	}
 }
