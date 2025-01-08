@@ -213,6 +213,14 @@ class ImportTest extends TestCase {
 			],
 		];
 
+		\WP_Mock::userFunction( 'wp_json_encode' )
+			->twice()
+			->andReturnUsing(
+				function( $arg ) {
+					return json_encode( $arg );
+				}
+			);
+
 		\WP_Mock::expectFilter(
 			'sqlt_cpt_post_title',
 			'John Doe',
