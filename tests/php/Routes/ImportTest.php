@@ -216,7 +216,7 @@ class ImportTest extends TestCase {
 		\WP_Mock::userFunction( 'wp_json_encode' )
 			->twice()
 			->andReturnUsing(
-				function( $arg ) {
+				function ( $arg ) {
 					return json_encode( $arg );
 				}
 			);
@@ -240,6 +240,75 @@ class ImportTest extends TestCase {
 				'date_created',
 			]
 		);
+
+		$response = $import->get_response();
+
+		$this->assertSame( null, $response );
+		$this->assertConditionsMet();
+	}
+
+	public function test_get_response_returns_null_on_empty_posts() {
+		$import = Mockery::mock( Import::class )->makePartial();
+		$import->shouldAllowMockingProtectedMethods();
+
+		$import->args = [
+			'tableName'    => 'student',
+			'tableColumns' => [
+				'id',
+				'name',
+				'age',
+				'sex',
+				'email_address',
+				'date_created',
+			],
+			'tableRows'    => [
+				[
+					1,
+					'John Doe',
+					37,
+					'M',
+					'john@doe.com',
+					'00:00:00',
+				],
+			],
+		];
+
+		\WP_Mock::expectFilter(
+			'sqlt_cpt_post_title',
+			'John Doe',
+			[
+				1,
+				'John Doe',
+				37,
+				'M',
+				'john@doe.com',
+				'00:00:00',
+			],
+			[
+				'id',
+				'name',
+				'age',
+				'sex',
+				'email_address',
+				'date_created',
+			]
+		);
+
+		$wp_error = Mockery::mock( \WP_Error::class )->makePartial();
+		$wp_error->shouldAllowMockingProtectedMethods();
+
+		$wp_error->shouldReceive( 'get_error_message' )
+			->andReturn( 'Post ID: null' );
+
+		\WP_Mock::userFunction( 'wp_insert_post' )
+			->andReturn( $wp_error );
+
+		\WP_Mock::userFunction( 'is_wp_error' )
+			->andReturnUsing(
+				function ( $arg ) {
+					return $arg instanceof \WP_Error;
+				}
+			);
 
 		$response = $import->get_response();
 
