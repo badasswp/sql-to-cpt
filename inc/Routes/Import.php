@@ -45,7 +45,7 @@ class Import extends Route implements Router {
 	public \WP_REST_Request $request;
 
 	/**
-	 * JSON Params
+	 * JSON Params.
 	 *
 	 * @since 1.0.0
 	 *
