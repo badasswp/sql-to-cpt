@@ -10,6 +10,7 @@ use SqlToCpt\Abstracts\Service;
 /**
  * @covers \SqlToCpt\Routes\Parse::is_sql
  * @covers \SqlToCpt\Routes\Parse::response
+ * @covers \SqlToCpt\Routes\Parse::get_response
  * @covers \SqlToCpt\Abstracts\Route::get_400_response
  */
 class ParseTest extends TestCase {
@@ -177,6 +178,25 @@ class ParseTest extends TestCase {
 
 		$this->assertFalse( $parse->is_sql( $file_path ) );
 		$this->assertConditionsMet();
+	}
+
+	public function test_get_response_throws_exception(): array {
+		$parse = Mockery::mock( Parse::class )->makePartial();
+		$parse->shouldAllowMockingProtectedMethods();
+
+		$parse->file = '';
+
+		\WP_Mock::userFunction( 'esc_url' )
+			->andReturnUsing(
+				function( $arg ) {
+					return $arg;
+				}
+			);
+
+		$this->expectException( \Exception::class );
+		$this->expectExceptionMessage( 'Fatal Error: File does not exist: ' );
+
+		return $parse->get_response();
 	}
 
 	public function create_mock_file( $mock_file ) {
