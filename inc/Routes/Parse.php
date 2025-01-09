@@ -46,6 +46,24 @@ class Parse extends Route implements Router {
 	public \WP_REST_Request $request;
 
 	/**
+	 * JSON Params.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var array
+	 */
+	public array $args;
+
+	/**
+	 * Absolute URL.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @var string
+	 */
+	public string $file;
+
+	/**
 	 * Response Callback.
 	 *
 	 * @since 1.0.0
