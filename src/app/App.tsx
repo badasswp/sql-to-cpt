@@ -6,6 +6,7 @@ import type { MediaFrame } from '@wordpress/media-utils';
 
 import Notice from '../components/Notice';
 import Disabled from '../components/Disabled';
+import ProgressBar from '../components/ProgressBar';
 
 import { getModalParams } from '../utils';
 import '../styles/app.scss';
@@ -27,6 +28,8 @@ interface SQLProps {
  * @returns {JSX.Element}
  */
 const App = (): JSX.Element => {
+  const [progress, setProgress]   = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [sqlNotice, setSqlNotice] = useState<string>('');
   const [parsedSQL, setParsedSQL] = useState<SQLProps>(
     {
@@ -103,8 +106,15 @@ const App = (): JSX.Element => {
    *
    * @returns Promise<void>
    */
-  const handleImport = async(): Promise<void> => {
+  const handleImport = async (): Promise<void> => {
+    setProgress( 0 );
+    setIsLoading( true );
+
     try {
+      const progressInterval = setInterval(() => {
+        setProgress((prev) => (prev < 90 ? prev + 10 : prev));
+      }, 500);
+
       const url = await apiFetch(
         {
           path: '/sql-to-cpt/v1/import',
@@ -114,6 +124,9 @@ const App = (): JSX.Element => {
           },
         }
       );
+
+      clearInterval( progressInterval );
+      setProgress( 100 );
 
       if (url) {
         window.location.href = `${url}`
@@ -147,6 +160,10 @@ const App = (): JSX.Element => {
           )
         }
       </div>
+      <ProgressBar
+        isLoading={isLoading}
+        progress={progress}
+      />
       <div>
         {
           parsedSQL.tableName && (
