@@ -18,14 +18,14 @@ const ImportButton = ({ parsedSQL, handleUpload, handleImport }): JSX.Element =>
         parsedSQL.tableRows.length < 1 ? (
           <Button
             variant="primary"
-            onClick={handleUpload}
+            onClick={ handleUpload }
           >
             { __( 'Upload SQL File', 'sql-to-cpt' ) }
           </Button>
         ) : (
           <Button
             variant="primary"
-            onClick={handleImport}
+            onClick={ handleImport }
           >
             { __( 'Convert to CPT', 'sql-to-cpt' ) }
           </Button>

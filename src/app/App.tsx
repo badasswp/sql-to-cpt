@@ -1,18 +1,15 @@
-import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import { Button } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import type { MediaFrame } from '@wordpress/media-utils';
 
 import Notice from '../components/Notice';
-import Disabled from '../components/Disabled';
 import ProgressBar from '../components/ProgressBar';
+import ImportButton from '../components/ImportButton';
+import TableName from '../components/TableName';
+import TableColumns from '../components/TableColumns';
 
 import { getModalParams } from '../utils';
 import '../styles/app.scss';
-import TableName from '../components/TableName';
-import TableColumns from '../components/TableColumns';
-import ImportButton from '../components/ImportButton';
 
 interface SQLProps {
   tableName: string;
@@ -54,7 +51,7 @@ const App = (): JSX.Element => {
    */
   const handleUpload = (): void => {
     const wpMediaModal = wp.media( getModalParams() );
-    wpMediaModal.on( 'select', () => handleSelect(wpMediaModal) ).open();
+    wpMediaModal.on( 'select', () => handleSelect( wpMediaModal ) ).open();
   };
 
   /**
@@ -69,7 +66,7 @@ const App = (): JSX.Element => {
    * @returns Promise<void>
    */
   const handleSelect = async (wpMediaModal: MediaFrame): Promise<void> => {
-    const args = wpMediaModal.state().get('selection').first().toJSON();
+    const args = wpMediaModal.state().get( 'selection' ).first().toJSON();
 
     // Reset.
     setSqlNotice( '' );
