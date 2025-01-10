@@ -42,6 +42,8 @@ class BootTest extends TestCase {
 		\WP_Mock::userFunction( 'get_current_screen' )
 			->andReturn( $screen );
 
+		$this->boot->register_scripts();
+
 		$this->assertConditionsMet();
 	}
 
@@ -50,6 +52,8 @@ class BootTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_current_screen' )
 			->andReturn( $screen );
+
+		$this->boot->register_scripts();
 
 		$this->assertConditionsMet();
 	}
@@ -62,6 +66,8 @@ class BootTest extends TestCase {
 
 		\WP_Mock::userFunction( 'get_current_screen' )
 			->andReturn( $screen );
+
+		$this->boot->register_scripts();
 
 		$this->assertConditionsMet();
 	}
@@ -125,6 +131,8 @@ class BootTest extends TestCase {
 				'/var/www/html/wp-content/plugins/sql-to-cpt/inc/Services/Boot.php/../../languages'
 			)
 			->andReturn( null );
+
+		$this->boot->register_scripts();
 
 		$this->assertConditionsMet();
 	}
