@@ -36,62 +36,6 @@ class BootTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
-	public function test_register_translation() {
-		$boot = new \ReflectionClass( Boot::class );
-
-		\WP_Mock::userFunction( 'plugin_basename' )
-			->once()
-			->with( $boot->getFileName() )
-			->andReturn( '/inc/Services/Boot.php' );
-
-		\WP_Mock::userFunction( 'load_plugin_textdomain' )
-			->once()
-			->with(
-				'sql-to-cpt',
-				false,
-				'/inc/Services/../../languages'
-			);
-
-		$this->boot->register_translation();
-
-		$this->assertConditionsMet();
-	}
-
-	public function test_register_mimes() {
-		\WP_Mock::userFunction(
-			'wp_parse_args',
-			[
-				'times'  => 1,
-				'return' => function ( $args, $init ) {
-					return array_merge( $init, $args );
-				},
-			]
-		);
-
-		$mimes = $this->boot->register_mimes(
-			[
-				'mp4'  => 'video/mp4',
-				'html' => 'text/html',
-				'json' => 'application/json',
-				'jpeg' => 'image/jpeg',
-				'pdf'  => 'application/pdf',
-			]
-		);
-
-		$this->assertSame(
-			$mimes,
-			[
-				'mp4'  => 'video/mp4',
-				'html' => 'text/html',
-				'json' => 'application/json',
-				'jpeg' => 'image/jpeg',
-				'pdf'  => 'application/pdf',
-				'sql'  => 'application/octet-stream',
-			]
-		);
-		$this->assertConditionsMet();
-	}
-
 	public function test_register_scripts_bails_out_if_screen_is_null() {
 		$screen = null;
 
@@ -182,6 +126,62 @@ class BootTest extends TestCase {
 			)
 			->andReturn( null );
 
+		$this->assertConditionsMet();
+	}
+
+	public function test_register_translation() {
+		$boot = new \ReflectionClass( Boot::class );
+
+		\WP_Mock::userFunction( 'plugin_basename' )
+			->once()
+			->with( $boot->getFileName() )
+			->andReturn( '/inc/Services/Boot.php' );
+
+		\WP_Mock::userFunction( 'load_plugin_textdomain' )
+			->once()
+			->with(
+				'sql-to-cpt',
+				false,
+				'/inc/Services/../../languages'
+			);
+
+		$this->boot->register_translation();
+
+		$this->assertConditionsMet();
+	}
+
+	public function test_register_mimes() {
+		\WP_Mock::userFunction(
+			'wp_parse_args',
+			[
+				'times'  => 1,
+				'return' => function ( $args, $init ) {
+					return array_merge( $init, $args );
+				},
+			]
+		);
+
+		$mimes = $this->boot->register_mimes(
+			[
+				'mp4'  => 'video/mp4',
+				'html' => 'text/html',
+				'json' => 'application/json',
+				'jpeg' => 'image/jpeg',
+				'pdf'  => 'application/pdf',
+			]
+		);
+
+		$this->assertSame(
+			$mimes,
+			[
+				'mp4'  => 'video/mp4',
+				'html' => 'text/html',
+				'json' => 'application/json',
+				'jpeg' => 'image/jpeg',
+				'pdf'  => 'application/pdf',
+				'sql'  => 'application/octet-stream',
+			]
+		);
 		$this->assertConditionsMet();
 	}
 }
