@@ -1,11 +1,12 @@
-import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import { Button } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import type { MediaFrame } from '@wordpress/media-utils';
 
 import Notice from '../components/Notice';
-import Disabled from '../components/Disabled';
+import ProgressBar from '../components/ProgressBar';
+import ImportButton from '../components/ImportButton';
+import TableName from '../components/TableName';
+import TableColumns from '../components/TableColumns';
 
 import { getModalParams } from '../utils';
 import '../styles/app.scss';
@@ -27,6 +28,8 @@ interface SQLProps {
  * @returns {JSX.Element}
  */
 const App = (): JSX.Element => {
+  const [progress, setProgress]   = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [sqlNotice, setSqlNotice] = useState<string>('');
   const [parsedSQL, setParsedSQL] = useState<SQLProps>(
     {
@@ -46,9 +49,9 @@ const App = (): JSX.Element => {
    *
    * @returns {void}
    */
-  const handleModal = (): void => {
+  const handleUpload = (): void => {
     const wpMediaModal = wp.media( getModalParams() );
-    wpMediaModal.on( 'select', () => handleSelect(wpMediaModal) ).open();
+    wpMediaModal.on( 'select', () => handleSelect( wpMediaModal ) ).open();
   };
 
   /**
@@ -63,7 +66,7 @@ const App = (): JSX.Element => {
    * @returns Promise<void>
    */
   const handleSelect = async (wpMediaModal: MediaFrame): Promise<void> => {
-    const args = wpMediaModal.state().get('selection').first().toJSON();
+    const args = wpMediaModal.state().get( 'selection' ).first().toJSON();
 
     // Reset.
     setSqlNotice( '' );
@@ -103,8 +106,15 @@ const App = (): JSX.Element => {
    *
    * @returns Promise<void>
    */
-  const handleImport = async(): Promise<void> => {
+  const handleImport = async (): Promise<void> => {
+    setProgress( 0 );
+    setIsLoading( true );
+
     try {
+      const progressInterval = setInterval(() => {
+        setProgress((prev) => (prev < 90 ? prev + 10 : prev));
+      }, 500);
+
       const url = await apiFetch(
         {
           path: '/sql-to-cpt/v1/import',
@@ -115,7 +125,10 @@ const App = (): JSX.Element => {
         }
       );
 
-      if (url) {
+      clearInterval( progressInterval );
+      setProgress( 100 );
+
+      if ( url ) {
         window.location.href = `${url}`
       }
     } catch ( { message } ) {
@@ -125,54 +138,22 @@ const App = (): JSX.Element => {
 
   return (
     <main>
-      {parsedSQL.tableRows.length < 1 ? (
-        <Button
-          variant="primary"
-          onClick={handleModal}
-        >
-          {__('Import SQL File', 'sql-to-cpt')}
-        </Button>
-      ) : (
-        <Button
-          variant="primary"
-          onClick={handleImport}
-        >
-          {__('Convert to CPT', 'sql-to-cpt')}
-        </Button>
-      )}
-      <div>
-        {
-          sqlNotice && (
-            <Notice message={sqlNotice} />
-          )
-        }
-      </div>
-      <div>
-        {
-          parsedSQL.tableName && (
-            <>
-              <h3>{ __('Table', 'sql-to-cpt') }</h3>
-              <Disabled name={parsedSQL.tableName} />
-            </>
-          )
-        }
-      </div>
-      <div>
-        {
-          parsedSQL.tableColumns.length > 0 && (
-            <>
-              <h3>{ __('Columns', 'sql-to-cpt') }</h3>
-              {
-                parsedSQL.tableColumns.map((name) => {
-                  return (
-                    <Disabled name={name} />
-                  )
-                })
-              }
-            </>
-          )
-        }
-      </div>
+      <ImportButton
+        parsedSQL={ parsedSQL }
+        handleImport={ handleImport }
+        handleUpload={ handleUpload }
+      />
+      <Notice message={ sqlNotice } />
+      <ProgressBar
+        progress={ progress }
+        isLoading={ isLoading }
+      />
+      <TableName
+        parsedSQL={ parsedSQL }
+      />
+      <TableColumns
+        parsedSQL={ parsedSQL }
+      />
     </main>
   )
 }

@@ -29,7 +29,7 @@ If you ever need to migrate a non-WordPress database table into WP, look no furt
 This custom hook provides a simple way to filter the name of the custom post type where the table contents that is being imported will be stored.
 
 ```php
-add_filter( 'sqlt_cpt_table_name', [ $this, 'custom_post_type_name' ], 10, 1 );
+add_filter( 'sqlt_cpt_table_name', [ $this, 'custom_post_type_name' ] );
 
 public function custom_post_type_name( $table_name ): string {
     if ( 'student' === $table_name ) {
@@ -48,10 +48,11 @@ public function custom_post_type_name( $table_name ): string {
 This custom hook provides a simple way to filter the table columns that is being imported.
 
 ```php
-add_action( 'sqlt_cpt_table_columns', [ $this, 'custom_columns' ], 10, 1 );
+add_filter( 'sqlt_cpt_table_columns', [ $this, 'custom_columns' ] );
 
 public function custom_columns( $columns ): array {
     $columns = array_map( '__', $columns );
+
     return $columns;
 }
 ```
@@ -66,10 +67,11 @@ public function custom_columns( $columns ): array {
 This custom hook provides a simple way to filter the table rows that is being imported.
 
 ```php
-add_action( 'sqlt_cpt_table_rows', [ $this, 'custom_rows' ], 10, 1 );
+add_filter( 'sqlt_cpt_table_rows', [ $this, 'custom_rows' ] );
 
 public function custom_rows( $rows ): array {
     $rows = array_map( 'santize_text_field', $rows );
+
     return $rows;
 }
 ```
@@ -79,25 +81,30 @@ public function custom_rows( $rows ): array {
 - rows _`{string[]}`_ By default this will be a string array of row values parsed from the table that is being imported.
 <br/>
 
-#### `sqlt_cpt_post_title`
+#### `sqlt_cpt_post_values`
 
-This custom hook provides a way to filter the post title values being inserted into the post during import.
+This custom hook provides a way to filter the WP post values before import. An e.g is shown below where the `post_title` is filtered to use the `first_name` and `last_name` of the imported `worker` data.
 
 ```php
-add_action( 'sqlt_cpt_post_title', [ $this, 'custom_title' ], 10, 3 );
+add_filter( 'sqlt_cpt_post_values', [ $this, 'filter_post_title' ], 10, 2 );
 
-public function custom_title( $post_title, $table_row, $table_columns ): array {
-    $key = array_search( 'first_name', $table_columns );
+public function filter_post_title( $args, $post_import ): array {
+    if ( 'worker' === $args['post_type'] ?? '' ) {
+        $args['post_title'] = sprintf(
+            '%s %s',
+            $post_import['first_name'] ?? '',
+            $post_import['last_name'] ?? ''
+        );
+    }
 
-    return sanitize_text_field( $table_row[ $key ] );
+    return $args;
 }
 ```
 
 **Parameters**
 
-- post_title _`string`_ By default this will be a string from the first column of the table row that is being parsed.
-- table_row _`{mixed[]}`_ By default this will be a string array of row values parsed from the table that is being imported.
-- table_columns _`{string[]}`_ By default this will be a string array of column names parsed from the table that is being imported.
+- args _`{mixed[]}`_ By default this will be an associative array containg the familiar WP Post values (`post_type`, `post_title`, `meta_input` & `post_status`) to be inserted.
+- post_import _`{mixed[]}`_ By default this will be an associative array containg the key, value pair of the imported data.
 <br/>
 
 #### `sqlt_cpt_post_labels`
@@ -105,7 +112,7 @@ public function custom_title( $post_title, $table_row, $table_columns ): array {
 This custom hook provides a way to filter the post labels of the CPT that is imported.
 
 ```php
-add_action( 'sqlt_cpt_post_labels', [ $this, 'custom_labels' ], 10, 1 );
+add_filter( 'sqlt_cpt_post_labels', [ $this, 'custom_labels' ] );
 
 public function custom_labels( $labels ): array {
     if( 'Students' === $labels['singular_name'] ?? '' ) {
@@ -126,7 +133,7 @@ public function custom_labels( $labels ): array {
 This custom hook provides a way to filter the post options of the CPT that is imported.
 
 ```php
-add_action( 'sqlt_cpt_post_options', [ $this, 'custom_options' ], 10, 1 );
+add_filter( 'sqlt_cpt_post_options', [ $this, 'custom_options' ] );
 
 public function custom_options( $options ): array {
     $options['show_in_menu'] = false;

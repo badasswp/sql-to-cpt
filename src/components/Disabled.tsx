@@ -8,10 +8,10 @@
  *
  * @returns {JSX.Element}
  */
-const Disabled = ({ name }) => {
+const Disabled = ({ name }): JSX.Element => {
   return (
     <p>
-      <input type="text" value={name} disabled />
+      <input type="text" value={ name } disabled />
     </p>
   );
 }
