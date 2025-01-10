@@ -138,9 +138,9 @@ class Import extends Route implements Router {
 			if ( count( $table_columns ) !== count( $table_row ) ) {
 				error_log(
 					sprintf(
-						'SQL to CPT | Error: Table rows do not match columns. Columns: %s, Rows: %s',
+						'SQL to CPT | Error: Table rows do not match columns. Columns: %s, Row: %s',
 						wp_json_encode( $table_columns ),
-						wp_json_encode( $table_rows ),
+						wp_json_encode( $table_row ),
 					)
 				);
 
