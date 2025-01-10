@@ -1,12 +1,12 @@
-import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import { Button } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import type { MediaFrame } from '@wordpress/media-utils';
 
 import Notice from '../components/Notice';
-import Disabled from '../components/Disabled';
 import ProgressBar from '../components/ProgressBar';
+import ImportButton from '../components/ImportButton';
+import TableName from '../components/TableName';
+import TableColumns from '../components/TableColumns';
 
 import { getModalParams } from '../utils';
 import '../styles/app.scss';
@@ -49,9 +49,9 @@ const App = (): JSX.Element => {
    *
    * @returns {void}
    */
-  const handleModal = (): void => {
+  const handleUpload = (): void => {
     const wpMediaModal = wp.media( getModalParams() );
-    wpMediaModal.on( 'select', () => handleSelect(wpMediaModal) ).open();
+    wpMediaModal.on( 'select', () => handleSelect( wpMediaModal ) ).open();
   };
 
   /**
@@ -66,7 +66,7 @@ const App = (): JSX.Element => {
    * @returns Promise<void>
    */
   const handleSelect = async (wpMediaModal: MediaFrame): Promise<void> => {
-    const args = wpMediaModal.state().get('selection').first().toJSON();
+    const args = wpMediaModal.state().get( 'selection' ).first().toJSON();
 
     // Reset.
     setSqlNotice( '' );
@@ -128,7 +128,7 @@ const App = (): JSX.Element => {
       clearInterval( progressInterval );
       setProgress( 100 );
 
-      if (url) {
+      if ( url ) {
         window.location.href = `${url}`
       }
     } catch ( { message } ) {
@@ -138,58 +138,22 @@ const App = (): JSX.Element => {
 
   return (
     <main>
-      {parsedSQL.tableRows.length < 1 ? (
-        <Button
-          variant="primary"
-          onClick={handleModal}
-        >
-          {__('Import SQL File', 'sql-to-cpt')}
-        </Button>
-      ) : (
-        <Button
-          variant="primary"
-          onClick={handleImport}
-        >
-          {__('Convert to CPT', 'sql-to-cpt')}
-        </Button>
-      )}
-      <div>
-        {
-          sqlNotice && (
-            <Notice message={sqlNotice} />
-          )
-        }
-      </div>
-      <ProgressBar
-        isLoading={isLoading}
-        progress={progress}
+      <ImportButton
+        parsedSQL={ parsedSQL }
+        handleImport={ handleImport }
+        handleUpload={ handleUpload }
       />
-      <div>
-        {
-          parsedSQL.tableName && (
-            <>
-              <h3>{ __('Table', 'sql-to-cpt') }</h3>
-              <Disabled name={parsedSQL.tableName} />
-            </>
-          )
-        }
-      </div>
-      <div>
-        {
-          parsedSQL.tableColumns.length > 0 && (
-            <>
-              <h3>{ __('Columns', 'sql-to-cpt') }</h3>
-              {
-                parsedSQL.tableColumns.map((name) => {
-                  return (
-                    <Disabled name={name} />
-                  )
-                })
-              }
-            </>
-          )
-        }
-      </div>
+      <Notice message={ sqlNotice } />
+      <ProgressBar
+        progress={ progress }
+        isLoading={ isLoading }
+      />
+      <TableName
+        parsedSQL={ parsedSQL }
+      />
+      <TableColumns
+        parsedSQL={ parsedSQL }
+      />
     </main>
   )
 }

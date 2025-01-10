@@ -1,5 +1,5 @@
 /**
- * ProgressBar Component.
+ * Progress Bar Component.
  *
  * This function returns a JSX component that is
  * used to display a Progress Bar.
@@ -8,7 +8,7 @@
  *
  * @returns {JSX.Element}
  */
-const ProgressBar = ({ isLoading, progress }) => {
+const ProgressBar = ({ isLoading, progress }): JSX.Element => {
   return (
     <>
       {
@@ -17,7 +17,7 @@ const ProgressBar = ({ isLoading, progress }) => {
             <div>
               <div style={{ width: `${progress}%` }} />
             </div>
-            <p>{progress}%</p>
+            <p>{ progress }%</p>
           </div>
         )
       }
