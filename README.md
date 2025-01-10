@@ -45,7 +45,7 @@ public function custom_post_type_name( $table_name ): string {
 
 #### `sqlt_cpt_table_columns`
 
-This custom hook provides a simple way to filter the names of the table columns that is being imported.
+This custom hook provides a simple way to filter the table columns that is being imported.
 
 ```php
 add_action( 'sqlt_cpt_table_columns', [ $this, 'custom_columns' ], 10, 1 );
@@ -63,7 +63,7 @@ public function custom_columns( $columns ): array {
 
 #### `sqlt_cpt_table_rows`
 
-This custom hook provides a simple way to filter the names of the table rows that is being imported.
+This custom hook provides a simple way to filter the table rows that is being imported.
 
 ```php
 add_action( 'sqlt_cpt_table_rows', [ $this, 'custom_rows' ], 10, 1 );
