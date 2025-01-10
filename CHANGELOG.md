@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+* Feat: Implement Import Progress bar.
 * Refactor filter: `sqlt_cpt_post_title` to `sqlt_cpt_post_values`.
 * Chore: Fix typos in README.
 
