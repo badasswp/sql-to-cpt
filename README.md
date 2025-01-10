@@ -79,25 +79,30 @@ public function custom_rows( $rows ): array {
 - rows _`{string[]}`_ By default this will be a string array of row values parsed from the table that is being imported.
 <br/>
 
-#### `sqlt_cpt_post_title`
+#### `sqlt_cpt_post_values`
 
-This custom hook provides a way to filter the post title values being inserted into the post during import.
+This custom hook provides a way to filter the WP post values before import. An e.g is shown below where the `post_title` is filtered to use the `first_name` and `last_name` of the imported `worker` data.
 
 ```php
-add_action( 'sqlt_cpt_post_title', [ $this, 'custom_title' ], 10, 3 );
+add_filter( 'sqlt_cpt_post_values', [ $this, 'filter_post_title' ], 10, 2 );
 
-public function custom_title( $post_title, $table_row, $table_columns ): array {
-    $key = array_search( 'first_name', $table_columns );
+public function filter_post_title( $args, $post_import ): array {
+    if ( 'worker' === $args['post_type'] ?? '' ) {
+        $args['post_title'] = sprintf(
+            '%s %s',
+            $post_import['first_name'] ?? '',
+            $post_import['last_name'] ?? ''
+        );
+    }
 
-    return sanitize_text_field( $table_row[ $key ] );
+    return $args;
 }
 ```
 
 **Parameters**
 
-- post_title _`string`_ By default this will be a string from the first column of the table row that is being parsed.
-- table_row _`{mixed[]}`_ By default this will be a string array of row values parsed from the table that is being imported.
-- table_columns _`{string[]}`_ By default this will be a string array of column names parsed from the table that is being imported.
+- args _`{mixed[]}`_ By default this will be an associative array containg the familiar WP Post values (`post_type`, `post_title`, `meta_input` & `post_status`) to be inserted.
+- post_import _`{mixed[]}`_ By default this will be an associative array containg the key, value pair of the imported data.
 <br/>
 
 #### `sqlt_cpt_post_labels`
