@@ -20,4 +20,25 @@
 		background: #FFF;
 		margin-top: 15px;
 	}
+
+	.sqlt-cpt {
+		&-progress-bar {
+			margin-top: 10px;
+
+			& > div {
+				width: 100%;
+            	margin-top: 20;
+              	background-color: #DDD;
+              	border-radius: 5px;
+              	overflow: hidden;
+              	height: 10px;
+
+				& > div {
+					height: 100%;
+					background-color: #007cba;
+					transition: width 0.3s ease;
+				}
+			}
+		}
+	}
 }
