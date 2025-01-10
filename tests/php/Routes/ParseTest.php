@@ -192,7 +192,7 @@ class ParseTest extends TestCase {
 
 		\WP_Mock::userFunction( 'esc_url' )
 			->andReturnUsing(
-				function( $arg ) {
+				function ( $arg ) {
 					return $arg;
 				}
 			);
