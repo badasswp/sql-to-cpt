@@ -119,22 +119,7 @@ class Import extends Route implements Router {
 		$post_type = $table_name;
 
 		foreach ( $table_rows as $table_row ) {
-			/**
-			 * Filter Post Title.
-			 *
-			 * Modify the post title name that is being
-			 * used to save the post.
-			 *
-			 * @since 1.1.0
-			 *
-			 * @param string   $post_title    Row field as Post Title.
-			 * @param mixed[]  $table_row     Row values.
-			 * @param string[] $table_columns Column names.
-			 *
-			 * @return string
-			 */
-			$post_title = apply_filters( 'sqlt_cpt_post_title', $table_row[1] ?? '', $table_row, $table_columns );
-
+			// Bail out, if number of rows & columns don't match.
 			if ( count( $table_columns ) !== count( $table_row ) ) {
 				error_log(
 					sprintf(
@@ -147,14 +132,33 @@ class Import extends Route implements Router {
 				continue;
 			}
 
-			$response = wp_insert_post(
-				[
-					'post_type'   => $post_type,
-					'post_title'  => $post_title,
-					'post_status' => 'publish',
-					'meta_input'  => array_combine( $table_columns, $table_row ),
-				]
-			);
+			$post_title  = $table_row[1] ?? '';
+			$post_import = array_combine( $table_columns, $table_row );
+
+			$args = [
+				'post_type'   => $post_type,
+				'post_title'  => $post_title,
+				'meta_input'  => $post_import,
+				'post_status' => 'publish',
+			];
+
+			/**
+			 * Filter Post Values.
+			 *
+			 * Filter the post values that is being inserted
+			 * into WP.
+			 *
+			 * @since 1.1.0
+			 * @since 1.2.0 Refactored to use WP Post $args array.
+			 *
+			 * @param mixed[] $args
+			 * @param mixed[] $post_import Associative array containing name, value pair of imported data.
+			 *
+			 * @return array
+			 */
+			$args = (array) apply_filters( 'sqlt_cpt_post_values', $args, $post_import );
+
+			$response = wp_insert_post( $args );
 
 			if ( is_wp_error( $response ) ) {
 				error_log(

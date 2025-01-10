@@ -222,26 +222,6 @@ class ImportTest extends TestCase {
 				}
 			);
 
-		\WP_Mock::expectFilter(
-			'sqlt_cpt_post_title',
-			'John Doe',
-			[
-				1,
-				'John Doe',
-				37,
-				'M',
-				'john@doe.com',
-			],
-			[
-				'id',
-				'name',
-				'age',
-				'sex',
-				'email_address',
-				'date_created',
-			]
-		);
-
 		$response = $import->get_response();
 
 		$this->assertSame( null, $response );
@@ -275,24 +255,28 @@ class ImportTest extends TestCase {
 		];
 
 		\WP_Mock::expectFilter(
-			'sqlt_cpt_post_title',
-			'John Doe',
+			'sqlt_cpt_post_values',
 			[
-				1,
-				'John Doe',
-				37,
-				'M',
-				'john@doe.com',
-				'00:00:00',
+				'post_type'   => 'student',
+				'post_title'  => 'John Doe',
+				'meta_input'  => [
+					'id'            => 1,
+					'name'          => 'John Doe',
+					'age'           => 37,
+					'sex'           => 'M',
+					'email_address' => 'john@doe.com',
+					'date_created'  => '00:00:00',
+				],
+				'post_status' => 'publish',
 			],
 			[
-				'id',
-				'name',
-				'age',
-				'sex',
-				'email_address',
-				'date_created',
-			]
+				'id'            => 1,
+				'name'          => 'John Doe',
+				'age'           => 37,
+				'sex'           => 'M',
+				'email_address' => 'john@doe.com',
+				'date_created'  => '00:00:00',
+			],
 		);
 
 		$wp_error = Mockery::mock( \WP_Error::class )->makePartial();
@@ -344,24 +328,28 @@ class ImportTest extends TestCase {
 		];
 
 		\WP_Mock::expectFilter(
-			'sqlt_cpt_post_title',
-			'John Doe',
+			'sqlt_cpt_post_values',
 			[
-				1,
-				'John Doe',
-				37,
-				'M',
-				'john@doe.com',
-				'00:00:00',
+				'post_type'   => 'student',
+				'post_title'  => 'John Doe',
+				'meta_input'  => [
+					'id'            => 1,
+					'name'          => 'John Doe',
+					'age'           => 37,
+					'sex'           => 'M',
+					'email_address' => 'john@doe.com',
+					'date_created'  => '00:00:00',
+				],
+				'post_status' => 'publish',
 			],
 			[
-				'id',
-				'name',
-				'age',
-				'sex',
-				'email_address',
-				'date_created',
-			]
+				'id'            => 1,
+				'name'          => 'John Doe',
+				'age'           => 37,
+				'sex'           => 'M',
+				'email_address' => 'john@doe.com',
+				'date_created'  => '00:00:00',
+			],
 		);
 
 		\WP_Mock::userFunction( 'wp_insert_post' )
