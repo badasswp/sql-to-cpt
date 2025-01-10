@@ -1,10 +1,12 @@
 # Changelog
 
-## Unreleased
+## 1.2.0
 * Feat: Implement Import Progress bar.
 * Refactor: `sqlt_cpt_post_title` to `sqlt_cpt_post_values`.
 * Chore: Clean up App components.
 * Chore: Fix typos in README.
+* Add Unit Tests & Test Coverage.
+* Tested up to WP 6.7.1.
 
 ## 1.1.0
 * Fix missing `Import` route class.
