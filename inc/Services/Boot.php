@@ -58,7 +58,7 @@ class Boot extends Service implements Kernel {
 				'wp-edit-post',
 				'wp-edit-site',
 			],
-			'1.1.0',
+			'1.2.0',
 			false,
 		);
 
