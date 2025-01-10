@@ -34,7 +34,7 @@ class Boot extends Service implements Kernel {
 	 *
 	 * @wp-hook 'admin_enqueue_scripts'
 	 */
-	public function register_scripts() {
+	public function register_scripts(): void {
 		$screen = get_current_screen();
 
 		// Bail out, if not plugin Admin page.
@@ -80,7 +80,7 @@ class Boot extends Service implements Kernel {
 	 *
 	 * @wp-hook 'init'
 	 */
-	public function register_translation() {
+	public function register_translation(): void {
 		load_plugin_textdomain(
 			'sql-to-cpt',
 			false,
