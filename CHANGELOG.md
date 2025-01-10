@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+* Refactor filter: `sqlt_cpt_post_title` to `sqlt_cpt_post_values`.
+
 ## 1.1.0
 * Fix missing `Import` route class.
 * Implement `Post` class for handling CPTs.
