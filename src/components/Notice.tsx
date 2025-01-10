@@ -8,10 +8,8 @@
  *
  * @returns {JSX.Element}
  */
-const Notice = ({ message }) => {
-  return (
-    <nav>{message}</nav>
-  );
+const Notice = ({ message }): JSX.Element => {
+  return message && <nav>{ message }</nav>;
 }
 
 export default Notice;
