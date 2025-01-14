@@ -69,6 +69,11 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 
 == Changelog ==
 
+= 1.2.1 =
+* Chore: Add accessibility roles for components.
+* Updated Unit Tests for same.
+* Tested up to WP 6.7.1.
+
 = 1.2.0 =
 * Feat: Implement Import Progress bar.
 * Refactor: `sqlt_cpt_post_title` to `sqlt_cpt_post_values`.
