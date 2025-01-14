@@ -13,7 +13,7 @@ describe( 'ProgressBar', () => {
       `<div class="sqlt-cpt-progress-bar" role="progressbar"><div><div style="width: 75%;"></div></div><p>75%</p></div>`
     );
 
-    // Assert the ProgressBar is rendered and is disabled
+    // Assert the ProgressBar is rendered and is disabled.
     const progressBar = screen.getByRole( 'progressbar' );
     expect( progressBar ).toBeInTheDocument();
     expect( progressBar ).toBeInstanceOf( HTMLDivElement );
