@@ -13,7 +13,7 @@ const ProgressBar = ({ isLoading, progress }): JSX.Element => {
     <>
       {
         isLoading && (
-          <div className="sqlt-cpt-progress-bar">
+          <div className="sqlt-cpt-progress-bar" role="progressbar">
             <div>
               <div style={{ width: `${progress}%` }} />
             </div>
