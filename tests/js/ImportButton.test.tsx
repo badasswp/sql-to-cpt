@@ -52,6 +52,8 @@ describe( 'ImportButton', () => {
     // Assert the button is displayed.
     const uploadButton = screen.getByRole( 'button' );
     expect( uploadButton ).toHaveClass( 'primary' );
+    expect( uploadButton ).toBeInTheDocument();
+    expect( uploadButton ).toBeInstanceOf( HTMLButtonElement );
   } );
 
 
@@ -85,6 +87,8 @@ describe( 'ImportButton', () => {
 
     // Test expectations.
     expect( uploadButton ).toHaveClass( 'primary' );
+    expect( uploadButton ).toBeInTheDocument();
+    expect( uploadButton ).toBeInstanceOf( HTMLButtonElement );
     expect( consoleSpy ).toHaveBeenCalled();
     expect( consoleSpy ).toHaveBeenCalledWith( 'Handle upload fired!' );
     expect( consoleSpy ).toHaveBeenCalledTimes( 1 );
@@ -125,6 +129,8 @@ describe( 'ImportButton', () => {
     // Assert the button is displayed.
     const importButton = screen.getByRole( 'button' );
     expect( importButton ).toHaveClass( 'primary' );
+    expect( importButton ).toBeInTheDocument();
+    expect( importButton ).toBeInstanceOf( HTMLButtonElement );
   } );
 
 
@@ -166,6 +172,8 @@ describe( 'ImportButton', () => {
 
     // Test expectations.
     expect( importButton ).toHaveClass( 'primary' );
+    expect( importButton ).toBeInTheDocument();
+    expect( importButton ).toBeInstanceOf( HTMLButtonElement );
     expect( consoleSpy ).toHaveBeenCalled();
     expect( consoleSpy ).toHaveBeenCalledWith( 'Handle import fired!' );
     expect( consoleSpy ).toHaveBeenCalledTimes( 1 );

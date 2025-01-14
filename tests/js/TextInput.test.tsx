@@ -16,5 +16,7 @@ describe( 'TextInput', () => {
     // Assert the input is rendered and is disabled
     const input = screen.getByRole( 'textbox' );
     expect( input ).toHaveValue( 'post_title' );
+    expect( input ).toBeInTheDocument();
+    expect( input ).toBeInstanceOf( HTMLInputElement );
   } );
 } );

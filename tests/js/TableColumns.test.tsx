@@ -34,6 +34,7 @@ describe( 'TableColumns', () => {
     // Assert the Table Columns are displayed.
     const tableColumns = screen.getByRole('list');
     expect( tableColumns ).toHaveClass( 'sqlt-cpt-table-columns' );
+    expect( tableColumns ).toBeInTheDocument();
     expect( tableColumns ).toBeInstanceOf( HTMLDivElement );
     expect( tableColumns ).toContainHTML( '<h3>Columns</h3><p><input type="text" disabled="" value="id"></p><p><input type="text" disabled="" value="name"></p><p><input type="text" disabled="" value="age"></p><p><input type="text" disabled="" value="sex"></p><p><input type="text" disabled="" value="email_address"></p>' );
   } );

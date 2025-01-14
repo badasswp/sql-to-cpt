@@ -14,8 +14,10 @@ describe( 'Notice', () => {
     );
 
     // Assert the text content is rendered inside the nav element
-    const navText = screen.getByText( 'Fatal Error! Wrong file type: sample-1.png' );
-    const navName = navText.tagName.toLowerCase();
+    const nav = screen.getByText( 'Fatal Error! Wrong file type: sample-1.png' );
+    const navName = nav.tagName.toLowerCase();
     expect( navName ).toBe( 'nav' );
+    expect( nav ).toBeInTheDocument();
+    expect( nav ).toBeInstanceOf( HTMLElement );
   } );
 } );

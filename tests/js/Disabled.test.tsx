@@ -17,5 +17,7 @@ describe( 'Disabled', () => {
     const input = screen.getByRole( 'textbox' );
     expect( input ).toBeDisabled();
     expect( input ).toHaveValue( 'post_title' );
+    expect( input ).toBeInTheDocument();
+    expect( input ).toBeInstanceOf( HTMLInputElement );
   } );
 } );
