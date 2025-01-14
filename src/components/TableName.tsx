@@ -17,7 +17,7 @@ const TableName = ({ parsedSQL }): JSX.Element => {
     <>
       {
         parsedSQL.tableName && (
-          <div className="sqlt-cpt-table-name">
+          <div className="sqlt-cpt-table-name" role="list">
             <h3>{ __( 'Table', 'sql-to-cpt' ) }</h3>
             <Disabled
               name={ parsedSQL.tableName }
