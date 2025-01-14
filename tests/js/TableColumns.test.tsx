@@ -32,7 +32,7 @@ describe( 'TableColumns', () => {
     );
 
     // Assert the Table Columns are displayed.
-    const tableColumns = screen.getByRole('list');
+    const tableColumns = screen.getByRole( 'list' );
     expect( tableColumns ).toHaveClass( 'sqlt-cpt-table-columns' );
     expect( tableColumns ).toBeInTheDocument();
     expect( tableColumns ).toBeInstanceOf( HTMLDivElement );
