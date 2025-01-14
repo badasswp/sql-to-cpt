@@ -24,7 +24,7 @@ const TableColumns = ({ parsedSQL }): JSX.Element => {
                 return (
                   <Disabled key={ index } name={ name } />
                 )
-              })
+              } )
             }
           </div>
         )
