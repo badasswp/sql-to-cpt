@@ -20,4 +20,11 @@ describe( 'Notice', () => {
     expect( nav ).toBeInTheDocument();
     expect( nav ).toBeInstanceOf( HTMLElement );
   } );
+
+  it( 'DOES NOT render the Notice', () => {
+    const { container } = render( <Notice message="" /> );
+
+    // Expect Component to look like so:
+    expect( container.innerHTML ).toBe( `` );
+  } );
 } );
