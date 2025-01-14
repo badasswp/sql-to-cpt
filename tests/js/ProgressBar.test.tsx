@@ -20,7 +20,6 @@ describe( 'ProgressBar', () => {
     expect( progressBar ).toContainHTML( '<div><div style="width: 75%;"></div></div><p>75%</p>' );
   } );
 
-
   it( 'DOES NOT render the Progress Bar', () => {
     const { container } = render( <ProgressBar isLoading={false} progress={75} /> );
 
