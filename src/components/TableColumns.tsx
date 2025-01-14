@@ -17,14 +17,14 @@ const TableColumns = ({ parsedSQL }): JSX.Element => {
     <>
       {
         parsedSQL.tableColumns.length > 0 && (
-          <div className="sqlt-cpt-table-columns">
+          <div className="sqlt-cpt-table-columns" role="list">
             <h3>{ __( 'Columns', 'sql-to-cpt' ) }</h3>
             {
-              parsedSQL.tableColumns.map((name: string) => {
+              parsedSQL.tableColumns.map( ( name: string, index: number ) => {
                 return (
-                  <Disabled name={ name } />
+                  <Disabled key={ index } name={ name } />
                 )
-              })
+              } )
             }
           </div>
         )
