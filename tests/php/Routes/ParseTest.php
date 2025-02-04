@@ -4,6 +4,8 @@ namespace SqlToCpt\Tests\Routes;
 
 use Mockery;
 use WP_Mock\Tools\TestCase;
+
+use SqlToCpt\Core\Parser;
 use SqlToCpt\Routes\Parse;
 use SqlToCpt\Abstracts\Service;
 
@@ -188,6 +190,9 @@ class ParseTest extends TestCase {
 		$parse = Mockery::mock( Parse::class )->makePartial();
 		$parse->shouldAllowMockingProtectedMethods();
 
+		$parser = Mockery::mock( Parser::class )->makePartial();
+		$parser->shouldAllowMockingProtectedMethods();
+
 		$parse->file = '';
 
 		\WP_Mock::userFunction( 'esc_url' )
@@ -200,7 +205,7 @@ class ParseTest extends TestCase {
 		$this->expectException( \Exception::class );
 		$this->expectExceptionMessage( 'Fatal Error: File does not exist: ' );
 
-		return $parse->get_response();
+		return $parse->get_response( $parser );
 	}
 
 	public function create_mock_file( $mock_file ) {

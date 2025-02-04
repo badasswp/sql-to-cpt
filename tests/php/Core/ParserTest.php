@@ -26,12 +26,6 @@ class ParserTest extends TestCase {
 		\WP_Mock::tearDown();
 	}
 
-	public function test_sql_contains_file_path() {
-		$this->parser = new Parser( '/var/www/html/wp-content/uploads/import.sql' );
-
-		$this->assertSame( $this->parser->sql, '/var/www/html/wp-content/uploads/import.sql' );
-	}
-
 	public function test_get_sql_string_throws_exception() {
 		$parser = Mockery::mock( Parser::class )->makePartial();
 		$parser->shouldAllowMockingProtectedMethods();
@@ -244,30 +238,114 @@ class ParserTest extends TestCase {
 		$parser = Mockery::mock( Parser::class )->makePartial();
 		$parser->shouldAllowMockingProtectedMethods();
 
-		$parser->shouldReceive( 'get_sql_table_name' )
-			->once()->andReturn( 'student' );
+		$sql_file = $this->create_sql_file( __DIR__ . '/import.sql' );
 
-		$parser->shouldReceive( 'get_sql_table_columns' )
-			->once()->andReturn( [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ] );
+		\WP_Mock::expectFilter( 'sqlt_cpt_table_name', 'student' );
 
-		$parser->shouldReceive( 'get_sql_table_rows' )
-			->once()->andReturn( [] );
+		\WP_Mock::expectFilter(
+			'sqlt_cpt_table_columns',
+			[
+				'id',
+				'name',
+				'age',
+				'sex',
+				'email_address',
+				'date_created',
+			]
+		);
+
+		\WP_Mock::expectFilter(
+			'sqlt_cpt_table_rows',
+			[
+				[
+					'1',
+					'Alice Smith',
+					'20',
+					'Female',
+					'alice.smith@example.com',
+					'2024-07-03 21:45:23',
+				],
+				[
+					'2',
+					'Bob Johnson',
+					'21',
+					'Male',
+					'bob.johnson@example.com',
+					'2024-07-03 21:45:23',
+				],
+				[
+					'3',
+					'Charlie Brown',
+					'22',
+					'Male',
+					'charlie.brown@example.com',
+					'2024-07-03 21:45:23',
+				],
+			]
+		);
+
+		\WP_Mock::userFunction( 'sanitize_text_field' )
+			->andReturnUsing(
+				function ( $arg ) {
+					return $arg;
+				}
+			);
 
 		$this->assertSame(
-			$parser->get_parsed_sql(),
+			$parser->get_parsed_sql( $sql_file ),
 			[
 				'tableName'    => 'student',
 				'tableColumns' => [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ],
-				'tableRows'    => [],
+				'tableRows'    => [
+					[
+						'1',
+						'Alice Smith',
+						'20',
+						'Female',
+						'alice.smith@example.com',
+						'2024-07-03 21:45:23',
+					],
+					[
+						'2',
+						'Bob Johnson',
+						'21',
+						'Male',
+						'bob.johnson@example.com',
+						'2024-07-03 21:45:23',
+					],
+					[
+						'3',
+						'Charlie Brown',
+						'22',
+						'Male',
+						'charlie.brown@example.com',
+						'2024-07-03 21:45:23',
+					],
+				],
 			]
 		);
 		$this->assertConditionsMet();
+
+		$this->destroy_mock_file( __DIR__ . '/import.sql' );
 	}
 
 	public function create_mock_file( $mock_file ) {
 		file_put_contents( $mock_file, 'INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES', FILE_APPEND );
 
 		return $mock_file;
+	}
+
+	public function create_sql_file( $sql_file ) {
+		file_put_contents(
+			$sql_file,
+			"INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES
+			(1, 'Alice Smith', '20', 'Female', 'alice.smith@example.com', '2024-07-03 21:45:23'),
+			(2, 'Bob Johnson', '21', 'Male', 'bob.johnson@example.com', '2024-07-03 21:45:23'),
+			(3, 'Charlie Brown', '22', 'Male', 'charlie.brown@example.com', '2024-07-03 21:45:23');",
+			FILE_APPEND
+		);
+
+		return $sql_file;
 	}
 
 	public function destroy_mock_file( $mock_file ) {

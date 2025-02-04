@@ -114,7 +114,6 @@ class BootTest extends TestCase {
 					'wp-compose',
 					'wp-plugins',
 					'wp-edit-post',
-					'wp-edit-site',
 				],
 				'1.2.0',
 				false,
