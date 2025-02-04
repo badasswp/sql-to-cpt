@@ -14,7 +14,6 @@ use SqlToCpt\Abstracts\Service;
  * @covers \SqlToCpt\Routes\Parse::response
  * @covers \SqlToCpt\Routes\Parse::get_response
  * @covers \SqlToCpt\Abstracts\Route::get_400_response
- * @covers \SqlToCpt\Core\Parser::__construct
  * @covers \SqlToCpt\Core\Parser::get_parsed_sql
  * @covers \SqlToCpt\Core\Parser::get_sql_string
  * @covers \SqlToCpt\Core\Parser::get_sql_table_name
