@@ -1,6 +1,6 @@
 {
   "name": "sql-to-cpt",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Import & Convert SQL files to Custom Post Types (CPT).",
   "author": "badasswp",
   "license": "GPL-2.0-or-later",

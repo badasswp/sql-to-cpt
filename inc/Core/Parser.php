@@ -23,18 +23,6 @@ class Parser {
 	public string $sql;
 
 	/**
-	 * Set up.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $sql
-	 * @return void
-	 */
-	public function __construct( $sql ) {
-		$this->sql = $sql;
-	}
-
-	/**
 	 * Get SQL.
 	 *
 	 * This method is responsible for grabbing the
@@ -189,10 +177,14 @@ class Parser {
 	 * and sending back the parsed data.
 	 *
 	 * @since 1.0.0
+	 * @since 1.2.2 Pass in SQL source path.
 	 *
+	 * @param string $sql SQL string.
 	 * @return array
 	 */
-	public function get_parsed_sql(): array {
+	public function get_parsed_sql( $sql ): array {
+		$this->sql = $sql;
+
 		return [
 			'tableName'    => $this->get_sql_table_name(),
 			'tableColumns' => $this->get_sql_table_columns(),

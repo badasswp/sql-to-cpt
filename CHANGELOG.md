@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.2
+* Refactor: Parser instance via DI logic.
+* Fix: Breaking WP dependency.
+* Fix: Failing Unit tests.
+* Tested up to WP 6.7.1
+
 ## 1.2.1
 * Chore: Add accessibility roles for components.
 * Updated Unit Tests for same.

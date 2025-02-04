@@ -3,7 +3,7 @@ Contributors: badasswp
 Tags: sql, cpt, post, import, convert.
 Requires at least: 6.0
 Tested up to: 6.7.1
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -68,6 +68,12 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 4. Custom Post Type screen - Imported SQL data showing custom fields in CPT.
 
 == Changelog ==
+
+= 1.2.2 =
+* Refactor: Parser instance via DI logic.
+* Fix: Breaking WP dependency.
+* Fix: Failing Unit tests.
+* Tested up to WP 6.7.1
 
 = 1.2.1 =
 * Chore: Add accessibility roles for components.
