@@ -8,7 +8,6 @@ use WP_Mock\Tools\TestCase;
 use SqlToCpt\Core\Parser;
 
 /**
- * @covers \SqlToCpt\Core\Parser::__construct
  * @covers \SqlToCpt\Core\Parser::get_sql_string
  * @covers \SqlToCpt\Core\Parser::get_sql_table_name
  * @covers \SqlToCpt\Core\Parser::get_sql_table_columns
