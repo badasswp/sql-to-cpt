@@ -130,6 +130,9 @@ class ImportTest extends TestCase {
 		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
+		$rest_response = Mockery::mock( \WP_REST_Response::class )->makePartial();
+		$rest_response->shouldAllowMockingProtectedMethods();
+
 		$request->shouldReceive( 'get_json_params' )
 			->andReturn(
 				[
@@ -169,11 +172,67 @@ class ImportTest extends TestCase {
 				)
 			);
 
-		Mockery::mock( \WP_REST_Response::class )->makePartial();
+		\WP_Mock::userFunction( 'rest_ensure_response' )
+			->times( 1 )
+			->with( 'https://example.com/wp-admin/edit.php?post_type=post' )
+			->andReturn( $rest_response );
 
 		$response = $import->response();
 
 		$this->assertInstanceOf( \WP_REST_Response::class, $response );
+		$this->assertConditionsMet();
+	}
+
+	public function test_response_fails_on_null_response_returns_wp_error() {
+		$import = Mockery::mock( Import::class )->makePartial();
+		$import->shouldAllowMockingProtectedMethods();
+
+		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request->shouldAllowMockingProtectedMethods();
+
+		$rest_response = Mockery::mock( \WP_REST_Response::class )->makePartial();
+		$rest_response->shouldAllowMockingProtectedMethods();
+
+		$request->shouldReceive( 'get_json_params' )
+			->andReturn(
+				[
+					'tableName'    => 'student',
+					'tableColumns' => [
+						'id',
+						'name',
+						'age',
+						'sex',
+						'email_address',
+						'date_created',
+					],
+					'tableRows'    => [
+						[
+							1,
+							'John Doe',
+							37,
+							'M',
+							'john@doe.com',
+							'00:00:00',
+						],
+					],
+				]
+			);
+
+		$import->request = $request;
+
+		$import->shouldReceive( 'get_response' )
+			->andReturn( null );
+
+		\WP_Mock::userFunction( '__' )
+			->andReturnUsing(
+				function( $arg ) {
+					return $arg;
+				}
+			);
+
+		$response = $import->response();
+
+		$this->assertInstanceOf( \WP_Error::class, $response );
 		$this->assertConditionsMet();
 	}
 
