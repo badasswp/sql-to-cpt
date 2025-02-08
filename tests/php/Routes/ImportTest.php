@@ -225,7 +225,7 @@ class ImportTest extends TestCase {
 
 		\WP_Mock::userFunction( '__' )
 			->andReturnUsing(
-				function( $arg ) {
+				function ( $arg ) {
 					return $arg;
 				}
 			);
