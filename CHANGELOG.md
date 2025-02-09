@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+* Fix: Ensure REST response on SQL Import.
+
 ## 1.2.2
 * Refactor: Parser instance via DI logic.
 * Fix: Breaking WP dependency.
