@@ -115,7 +115,7 @@ class Purge extends Route implements Router {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @return \WP_REST_Response|\WP_Error
+	 * @return mixed[]
 	 */
 	protected function get_response(): array {
 		$undeleted_posts = [];
@@ -146,7 +146,7 @@ class Purge extends Route implements Router {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @return \WP_REST_Response|\WP_Error
+	 * @return mixed[]
 	 */
 	protected function get_post_ids(): array {
 		return wp_list_pluck(
