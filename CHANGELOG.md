@@ -2,6 +2,7 @@
 
 ## Unreleased
 * Fix: Ensure REST response on SQL Import.
+* Feat: Add Progress bar to Parse activity.
 
 ## 1.2.2
 * Refactor: Parser instance via DI logic.
