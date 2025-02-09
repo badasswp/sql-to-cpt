@@ -30,6 +30,7 @@ const Purge = ({ setIsLoading, setSqlNotice }): JSX.Element => {
         }
       );
       setIsLoading( false );
+      window.location.reload();
     } catch ( { message } ) {
       setIsLoading( false );
       setSqlNotice( message );
@@ -39,9 +40,16 @@ const Purge = ({ setIsLoading, setSqlNotice }): JSX.Element => {
   return (
     <div className="sqlt-purge">
       <select
-        onChange={ () => {} }
+        onChange={ ( e ) => { setPostType( e.target.value ) } }
       >
         <option>Select CPT</option>
+        {
+          sqlt.postTypes.map( ( item: string ) => {
+            return (
+              <option>{ item }</option>
+            )
+          } )
+        }
       </select>
       <Button
         variant="tertiary"

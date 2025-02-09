@@ -2,12 +2,12 @@ import apiFetch from '@wordpress/api-fetch';
 import { useState } from '@wordpress/element';
 import type { MediaFrame } from '@wordpress/media-utils';
 
+import Purge from '../components/Purge';
 import Notice from '../components/Notice';
 import ProgressBar from '../components/ProgressBar';
 import ImportButton from '../components/ImportButton';
 import TableName from '../components/TableName';
 import TableColumns from '../components/TableColumns';
-import Purge from '../components/Purge';
 
 import { getModalParams } from '../utils';
 import '../styles/app.scss';
