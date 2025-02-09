@@ -7,6 +7,7 @@ import ProgressBar from '../components/ProgressBar';
 import ImportButton from '../components/ImportButton';
 import TableName from '../components/TableName';
 import TableColumns from '../components/TableColumns';
+import Purge from '../components/Purge';
 
 import { getModalParams } from '../utils';
 import '../styles/app.scss';
@@ -148,14 +149,19 @@ const App = (): JSX.Element => {
 
   return (
     <main>
-      <ImportButton
-        parsedSQL={ parsedSQL }
-        handleImport={ handleImport }
-        handleUpload={ handleUpload }
-      />
+      <section>
+        <ImportButton
+          parsedSQL={ parsedSQL }
+          handleImport={ handleImport }
+          handleUpload={ handleUpload }
+        />
+        <Purge
+          setIsLoading={ setIsLoading }
+          setSqlNotice={ setSqlNotice }
+        />
+      </section>
       <Notice message={ sqlNotice } />
       <ProgressBar
-        progress={ progress }
         isLoading={ isLoading }
       />
       <TableName
