@@ -28,10 +28,9 @@ interface SQLProps {
  * @returns {JSX.Element}
  */
 const App = (): JSX.Element => {
-  const [progress, setProgress]   = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [sqlNotice, setSqlNotice] = useState<string>('');
-  const [parsedSQL, setParsedSQL] = useState<SQLProps>(
+  const [ isLoading, setIsLoading ] = useState<boolean>( false );
+  const [ sqlNotice, setSqlNotice ] = useState<string>( '' );
+  const [ parsedSQL, setParsedSQL ] = useState<SQLProps>(
     {
       tableName: '',
       tableColumns: [],
@@ -77,15 +76,10 @@ const App = (): JSX.Element => {
         tableRows: [],
       }
     );
-    setProgress( 0 );
     setIsLoading( true );
 
     // Parse SQL.
     try {
-      const progressInterval = setInterval( () => {
-        setProgress( ( prev ) => ( prev < 90 ? prev + 10 : prev ) );
-      }, 500 );
-
       setParsedSQL(
         await apiFetch(
           {
@@ -97,11 +91,9 @@ const App = (): JSX.Element => {
           }
         )
       );
-
-      clearInterval( progressInterval );
-      setProgress( 100 );
       setIsLoading( false );
     } catch ( { message } ) {
+      setIsLoading( false );
       setSqlNotice( message );
     }
   };
@@ -117,14 +109,10 @@ const App = (): JSX.Element => {
    * @returns Promise<void>
    */
   const handleImport = async (): Promise<void> => {
-    setProgress( 0 );
     setIsLoading( true );
 
+    // Import SQL.
     try {
-      const progressInterval = setInterval( () => {
-        setProgress( ( prev ) => ( prev < 90 ? prev + 10 : prev ) );
-      }, 500 );
-
       const url = await apiFetch(
         {
           path: '/sql-to-cpt/v1/import',
@@ -134,14 +122,12 @@ const App = (): JSX.Element => {
           },
         }
       );
-
-      clearInterval( progressInterval );
-      setProgress( 100 );
-
       if ( url ) {
         window.location.href = `${url}`
       }
+      setIsLoading( false );
     } catch ( { message } ) {
+      setIsLoading( false );
       setSqlNotice( message );
     }
   }
@@ -155,7 +141,6 @@ const App = (): JSX.Element => {
       />
       <Notice message={ sqlNotice } />
       <ProgressBar
-        progress={ progress }
         isLoading={ isLoading }
       />
       <TableName
