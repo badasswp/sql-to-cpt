@@ -78,24 +78,33 @@ class Purge extends Route implements Router {
 		if ( empty( $this->post_type ) ) {
 			return $this->get_400_response(
 				sprintf(
-					'Empty Post type: %s',
-					$post_type
+					__( 'Please select a custom post type to delete.', 'sql-to-cpt' )
 				)
 			);
 		}
 
-		$deleted_posts = $this->get_response();
+		$undeleted_posts = $this->get_response();
 
-		if ( empty( $deleted_posts ) ) {
+		if ( ! empty( $undeleted_posts ) ) {
 			return $this->get_400_response(
 				sprintf(
-					'Unable to delete Posts for CPT: %s',
+					'Unable to delete all Posts for CPT: %s',
 					$this->post_type
 				)
 			);
 		}
 
-		return rest_ensure_response( $deleted_posts );
+		$cpts = $this->get_updated_cpts();
+
+		return rest_ensure_response(
+			[
+				'message'  => sprintf(
+					'Posts deleted succesfully for custom Post Type: %s',
+					$this->post_type
+				),
+				'postType' => $this->post_type,
+			]
+		);
 	}
 
 	/**
@@ -109,22 +118,24 @@ class Purge extends Route implements Router {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	protected function get_response(): array {
-		$deleted_posts = [];
+		$undeleted_posts = [];
 
-		foreach ( $this->get_post_ids() as $post ) {
-			$deleted_post = wp_delete_post( $post, true );
+		foreach ( $this->get_post_ids() as $post_id ) {
+			$deleted_post = wp_delete_post( $post_id, true );
 
 			if ( ! $deleted_post ) {
 				error_log(
-					sprintf( 'Unable to delete the Post with ID: %d', $post )
+					sprintf(
+						'Unable to delete the Post ID: %d',
+						$post_id
+					)
 				);
+				$undeleted_posts[] = $post_id;
 				continue;
 			}
-
-			$deleted_posts[] = $post;
 		}
 
-		return $deleted_posts;
+		return $undeleted_posts;
 	}
 
 	/**
@@ -147,5 +158,27 @@ class Purge extends Route implements Router {
 			),
 			'ID'
 		);
+	}
+
+	/**
+	 * Get Updated CPTs.
+	 *
+	 * This method updates and returns the Plugin's
+	 * CPT values.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @return mixed[]
+	 */
+	protected function get_updated_cpts(): array {
+		$options = get_option( 'sql_to_cpt', [] );
+
+		$options['cpts'] = array_values(
+			array_diff( $options['cpts'], [ $this->post_type ] )
+		);
+
+		update_option( 'sql_to_cpt', $options );
+
+		return $options['cpts'];
 	}
 }
