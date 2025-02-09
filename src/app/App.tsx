@@ -77,9 +77,15 @@ const App = (): JSX.Element => {
         tableRows: [],
       }
     );
+    setProgress( 0 );
+    setIsLoading( true );
 
     // Parse SQL.
     try {
+      const progressInterval = setInterval( () => {
+        setProgress( ( prev ) => ( prev < 90 ? prev + 10 : prev ) );
+      }, 500 );
+
       setParsedSQL(
         await apiFetch(
           {
@@ -91,6 +97,10 @@ const App = (): JSX.Element => {
           }
         )
       );
+
+      clearInterval( progressInterval );
+      setProgress( 100 );
+      setIsLoading( false );
     } catch ( { message } ) {
       setSqlNotice( message );
     }
@@ -111,9 +121,9 @@ const App = (): JSX.Element => {
     setIsLoading( true );
 
     try {
-      const progressInterval = setInterval(() => {
-        setProgress((prev) => (prev < 90 ? prev + 10 : prev));
-      }, 500);
+      const progressInterval = setInterval( () => {
+        setProgress( ( prev ) => ( prev < 90 ? prev + 10 : prev ) );
+      }, 500 );
 
       const url = await apiFetch(
         {
