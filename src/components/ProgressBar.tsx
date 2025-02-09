@@ -1,3 +1,9 @@
+import { useState, useEffect } from '@wordpress/element';
+
+interface ProgressBarProps {
+  isLoading: boolean;
+}
+
 /**
  * Progress Bar Component.
  *
@@ -5,10 +11,31 @@
  * used to display a Progress Bar.
  *
  * @since 1.2.0
+ * @since 1.3.0 Implement Interval logic.
+ *
+ * @param {boolean} isLoading True|False.
  *
  * @returns {JSX.Element}
  */
-const ProgressBar = ({ isLoading, progress }): JSX.Element => {
+const ProgressBar = ({ isLoading }: ProgressBarProps): JSX.Element => {
+  const [ progress, setProgress ] = useState<number>( 0 );
+
+  useEffect( () => {
+    let progressInterval: string | number | NodeJS.Timeout;
+
+    if ( isLoading ) {
+      setProgress( 0 );
+      progressInterval = setInterval( () => {
+        setProgress( ( prev ) => ( prev < 90 ? prev + 10 : prev ) );
+      }, 500 );
+    } else {
+      setProgress( 0 );
+      clearInterval( progressInterval );
+    }
+
+    return () => clearInterval( progressInterval );
+  }, [ isLoading ] );
+
   return (
     <>
       {
