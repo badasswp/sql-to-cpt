@@ -13,6 +13,7 @@ use SqlToCpt\Abstracts\Service;
  * @covers \SqlToCpt\Routes\Purge::get_response
  * @covers \SqlToCpt\Routes\Purge::get_post_ids
  * @covers \SqlToCpt\Routes\Purge::get_updated_cpts
+ * @covers \SqlToCpt\Abstracts\Route::get_400_response
  */
 class PurgeTest extends TestCase {
 	public Purge $purge;
