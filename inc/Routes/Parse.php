@@ -113,7 +113,7 @@ class Parse extends Route implements Router {
 	protected function get_response( Parser $parser ) {
 		try {
 			$response = $parser->get_parsed_sql( $this->file );
-		} catch( \Exception $e ) {
+		} catch ( \Exception $e ) {
 			$response = $this->get_400_response(
 				sprintf( 'Unable to parse SQL file: %s', $e->getMessage() )
 			);
