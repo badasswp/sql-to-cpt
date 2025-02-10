@@ -96,7 +96,7 @@ class Parse extends Route implements Router {
 
 		$response = $this->get_response( new Parser() );
 
-		return new \WP_REST_Response( $response );
+		return rest_ensure_response( $response );
 	}
 
 	/**
@@ -108,10 +108,19 @@ class Parse extends Route implements Router {
 	 * @since 1.0.0
 	 *
 	 * @param Parser $parser SQL Parser instance.
-	 * @return mixed[]
+	 * @return mixed[]|\WP_Error
 	 */
-	protected function get_response( Parser $parser ): array {
-		return $parser->get_parsed_sql( $this->file );
+	protected function get_response( Parser $parser ) {
+		try {
+			$response = $parser->get_parsed_sql( $this->file );
+		} catch( \Exception $e ) {
+			$response = $this->get_400_response(
+				sprintf( 'Unable to parse SQL file: %s', $e->getMessage() )
+			);
+			error_log( $response );
+		}
+
+		return $response;
 	}
 
 	/**
