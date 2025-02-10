@@ -131,6 +131,26 @@ class BootTest extends TestCase {
 			)
 			->andReturn( null );
 
+			\WP_Mock::userFunction( 'get_option' )
+				->once()
+				->with( 'sql_to_cpt', [] )
+				->andReturn(
+					[
+						'cpts' => [ 'student', 'department' ],
+					]
+				);
+
+		\WP_Mock::userFunction( 'wp_localize_script' )
+			->once()
+			->with(
+				'sql-to-cpt',
+				'sqlt',
+				[
+					'postTypes' => [ 'student', 'department' ],
+				]
+			)
+			->andReturn( null );
+
 		$this->boot->register_scripts();
 
 		$this->assertConditionsMet();
