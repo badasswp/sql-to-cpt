@@ -105,7 +105,7 @@ class Import extends Route implements Router {
 			);
 		}
 
-		return rest_ensure_response( $this->get_response() );
+		return rest_ensure_response( $response );
 	}
 
 	/**
