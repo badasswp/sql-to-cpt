@@ -17,6 +17,8 @@ use SqlToCpt\Abstracts\Service;
  * @covers \SqlToCpt\Core\Parser::get_parsed_sql
  * @covers \SqlToCpt\Core\Parser::get_sql_string
  * @covers \SqlToCpt\Core\Parser::get_sql_table_name
+ * @covers \SqlToCpt\Core\Parser::get_sql_table_columns
+ * @covers \SqlToCpt\Core\Parser::get_sql_table_rows
  */
 class ParseTest extends TestCase {
 	public Parse $parse;
