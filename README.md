@@ -4,11 +4,7 @@
 
 Import & Convert SQL files to Custom Post Types (CPT).
 
-<img width="528" alt="sql-to-cpt" src="https://github.com/user-attachments/assets/cf2a4015-bc64-463b-a655-6e1a12762ca3">
-
----
-
-<img width="1502" alt="after-import" src="https://github.com/user-attachments/assets/6b61dc84-2c6c-4385-9786-edec7d34a749">
+https://github.com/user-attachments/assets/89568219-473e-4128-b619-b0b0c8f6d0b8
 
 ## Download
 

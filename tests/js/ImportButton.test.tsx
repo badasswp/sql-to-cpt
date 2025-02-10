@@ -20,13 +20,9 @@ jest.mock( '@wordpress/components', () => ( {
   } )
 } ) );
 
-const handleUpload = jest.fn(
-  () => console.log( 'Handle upload fired!' )
-);
-
-const handleImport = jest.fn(
-  () => console.log( 'Handle import fired!' )
-);
+const setIsLoading = jest.fn();
+const setSqlNotice = jest.fn();
+const setParsedSQL = jest.fn();
 
 describe( 'ImportButton', () => {
   it( 'renders the button with "Upload SQL File" text', () => {
@@ -39,8 +35,9 @@ describe( 'ImportButton', () => {
     const { container } = render(
       <ImportButton
         parsedSQL={ parsedSQL }
-        handleUpload={ handleUpload }
-        handleImport={ handleImport }
+        setIsLoading={ setIsLoading }
+        setSqlNotice={ setSqlNotice }
+        setParsedSQL={ setParsedSQL }
       />
     );
 
@@ -55,48 +52,6 @@ describe( 'ImportButton', () => {
     expect( uploadButton ).toBeInTheDocument();
     expect( uploadButton ).toBeInstanceOf( HTMLButtonElement );
   } );
-
-
-  it( 'logs "Handle upload fired!" when the upload button is clicked', () => {
-    const consoleSpy = jest.spyOn( console, 'log' ).mockImplementation( () => { } );
-
-    const parsedSQL = {
-      tableName: 'student',
-      tableColumns: [ 'id', 'name', 'age', 'sex', 'email_address' ],
-      tableRows: []
-    }
-
-    const { container } = render(
-      <ImportButton
-        parsedSQL={ parsedSQL }
-        handleUpload={ handleUpload }
-        handleImport={ handleImport }
-      />
-    );
-
-    // Expect Component to look like so:
-    expect( container.innerHTML ).toBe(
-      `<button class="primary">Upload SQL File</button>`
-    );
-
-    // Assert the button is displayed.
-    const uploadButton = screen.getByRole( 'button' );
-
-    // Click upload button.
-    fireEvent.click( uploadButton );
-
-    // Test expectations.
-    expect( uploadButton ).toHaveClass( 'primary' );
-    expect( uploadButton ).toBeInTheDocument();
-    expect( uploadButton ).toBeInstanceOf( HTMLButtonElement );
-    expect( consoleSpy ).toHaveBeenCalled();
-    expect( consoleSpy ).toHaveBeenCalledWith( 'Handle upload fired!' );
-    expect( consoleSpy ).toHaveBeenCalledTimes( 1 );
-
-    // Clean up.
-    consoleSpy.mockRestore();
-  } );
-
 
   it( 'renders the button with "Convert to CPT" text', () => {
     const parsedSQL = {
@@ -116,8 +71,9 @@ describe( 'ImportButton', () => {
     const { container } = render(
       <ImportButton
         parsedSQL={ parsedSQL }
-        handleUpload={ handleUpload }
-        handleImport={ handleImport }
+        setIsLoading={ setIsLoading }
+        setSqlNotice={ setSqlNotice }
+        setParsedSQL={ setParsedSQL }
       />
     );
 
@@ -131,54 +87,5 @@ describe( 'ImportButton', () => {
     expect( importButton ).toHaveClass( 'primary' );
     expect( importButton ).toBeInTheDocument();
     expect( importButton ).toBeInstanceOf( HTMLButtonElement );
-  } );
-
-
-  it( 'logs "Handle import fired!" when the import button is clicked', () => {
-    const consoleSpy = jest.spyOn( console, 'log' ).mockImplementation( () => { } );
-
-    const parsedSQL = {
-      tableName: 'student',
-      tableColumns: [ 'id', 'name', 'age', 'sex', 'email_address' ],
-      tableRows: [
-        [
-          1,
-          'John Doe',
-          37,
-          'M',
-          'john@doe.com'
-        ]
-      ]
-    }
-
-    const { container } = render(
-      <ImportButton
-        parsedSQL={ parsedSQL }
-        handleUpload={ handleUpload }
-        handleImport={ handleImport }
-      />
-    );
-
-    // Expect Component to look like so:
-    expect( container.innerHTML ).toBe(
-      `<button class="primary">Convert to CPT</button>`
-    );
-
-    // Assert the button is displayed.
-    const importButton = screen.getByRole( 'button' );
-
-    // Click upload button.
-    fireEvent.click( importButton );
-
-    // Test expectations.
-    expect( importButton ).toHaveClass( 'primary' );
-    expect( importButton ).toBeInTheDocument();
-    expect( importButton ).toBeInstanceOf( HTMLButtonElement );
-    expect( consoleSpy ).toHaveBeenCalled();
-    expect( consoleSpy ).toHaveBeenCalledWith( 'Handle import fired!' );
-    expect( consoleSpy ).toHaveBeenCalledTimes( 1 );
-
-    // Clean up.
-    consoleSpy.mockRestore();
   } );
 } );

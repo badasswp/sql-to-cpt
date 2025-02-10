@@ -64,6 +64,15 @@ class Boot extends Service implements Kernel {
 		// Handle undefined (reading 'limitExceeded') issue.
 		wp_enqueue_media();
 
+		// Localize CPTs.
+		wp_localize_script(
+			'sql-to-cpt',
+			'sqlt',
+			[
+				'postTypes' => get_option( 'sql_to_cpt', [] )['cpts'] ?? [],
+			]
+		);
+
 		// Set Translation.
 		wp_set_script_translations(
 			'sql-to-cpt',

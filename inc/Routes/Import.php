@@ -97,7 +97,15 @@ class Import extends Route implements Router {
 			);
 		}
 
-		return new \WP_REST_Response( $this->get_response() );
+		$response = $this->get_response();
+
+		if ( is_null( $response ) ) {
+			return $this->get_400_response(
+				__( 'Error: Failed SQL Import!', 'sql-to-cpt' )
+			);
+		}
+
+		return rest_ensure_response( $response );
 	}
 
 	/**

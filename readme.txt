@@ -3,12 +3,12 @@ Contributors: badasswp
 Tags: sql, cpt, post, import, convert.
 Requires at least: 6.0
 Tested up to: 6.7.1
-Stable tag: 1.2.2
+Stable tag: 1.3.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Import & Convert SQL files to Custom Post Types (CPT).
+Import & Convert SQL tables to Custom Post Types (CPT). Migrate legacy SQL table data to WordPress custom post types of your choice. It's super fast!
 
 == Installation ==
 
@@ -68,6 +68,15 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 4. Custom Post Type screen - Imported SQL data showing custom fields in CPT.
 
 == Changelog ==
+
+= 1.3.0 =
+* Fix: Ensure REST response on SQL Import.
+* Feat: Add Progress bar to Parse activity.
+* Feat: Implement Purge component.
+* Refactor: Move Interval logic to ProgressBar component.
+* Refactor: Move Handle logic away from App to ImportButton component.
+* Chore: Update doc blocks for components.
+* Tested up to WP 6.7.1
 
 = 1.2.2 =
 * Refactor: Parser instance via DI logic.

@@ -17,6 +17,8 @@ use SqlToCpt\Abstracts\Service;
  * @covers \SqlToCpt\Core\Parser::get_parsed_sql
  * @covers \SqlToCpt\Core\Parser::get_sql_string
  * @covers \SqlToCpt\Core\Parser::get_sql_table_name
+ * @covers \SqlToCpt\Core\Parser::get_sql_table_columns
+ * @covers \SqlToCpt\Core\Parser::get_sql_table_rows
  */
 class ParseTest extends TestCase {
 	public Parse $parse;
@@ -107,6 +109,9 @@ class ParseTest extends TestCase {
 		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
+		$rest_response = Mockery::mock( \WP_REST_Response::class )->makePartial();
+		$rest_response->shouldAllowMockingProtectedMethods();
+
 		$request->shouldReceive( 'get_json_params' )
 			->andReturn(
 				[
@@ -139,10 +144,146 @@ class ParseTest extends TestCase {
 				]
 			);
 
+		\WP_Mock::userFunction( 'rest_ensure_response' )
+			->once()
+			->with(
+				[
+					'tableName'    => 'student',
+					'tableColumns' => [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ],
+					'tableRows'    => [
+						[ 1, 'John Doe', 37, 'M', 'john@doe.com', '00:00:00' ],
+					],
+				]
+			)
+			->andReturn( $rest_response );
+
 		$this->assertInstanceOf( \WP_REST_Response::class, $parse->response() );
 		$this->assertConditionsMet();
 
 		$this->destroy_mock_file( $sql_file );
+	}
+
+	public function test_get_response_catches_exception_and_returns_wp_error() {
+		$parse = Mockery::mock( Parse::class )->makePartial();
+		$parse->shouldAllowMockingProtectedMethods();
+
+		$parser = Mockery::mock( Parser::class )->makePartial();
+		$parser->shouldAllowMockingProtectedMethods();
+
+		$wp_error = Mockery::mock( \WP_Error::class )->makePartial();
+		$wp_error->shouldAllowMockingProtectedMethods();
+
+		$parse->file = '';
+
+		$parse->shouldReceive( 'get_400_response' )
+			->andReturn( $wp_error );
+
+		$response = $parse->get_response( $parser );
+
+		$this->assertInstanceOf( \WP_Error::class, $response );
+		$this->assertConditionsMet();
+	}
+
+	public function test_get_response_passes_and_returns_parsed_sql_data_in_array() {
+		$parse = Mockery::mock( Parse::class )->makePartial();
+		$parse->shouldAllowMockingProtectedMethods();
+
+		$parser = Mockery::mock( Parser::class )->makePartial();
+		$parser->shouldAllowMockingProtectedMethods();
+
+		$sql_file = $this->create_sql_file( __DIR__ . '/import.sql' );
+
+		$parse->file = $sql_file;
+
+		\WP_Mock::expectFilter( 'sqlt_cpt_table_name', 'student' );
+
+		\WP_Mock::expectFilter(
+			'sqlt_cpt_table_columns',
+			[
+				'id',
+				'name',
+				'age',
+				'sex',
+				'email_address',
+				'date_created',
+			]
+		);
+
+		\WP_Mock::expectFilter(
+			'sqlt_cpt_table_rows',
+			[
+				[
+					'1',
+					'Alice Smith',
+					'20',
+					'Female',
+					'alice.smith@example.com',
+					'2024-07-03 21:45:23',
+				],
+				[
+					'2',
+					'Bob Johnson',
+					'21',
+					'Male',
+					'bob.johnson@example.com',
+					'2024-07-03 21:45:23',
+				],
+				[
+					'3',
+					'Charlie Brown',
+					'22',
+					'Male',
+					'charlie.brown@example.com',
+					'2024-07-03 21:45:23',
+				],
+			]
+		);
+
+		\WP_Mock::userFunction( 'sanitize_text_field' )
+			->andReturnUsing(
+				function ( $arg ) {
+					return $arg;
+				}
+			);
+
+		$parsed_sql_data = $parse->get_response( $parser );
+
+		$this->assertSame(
+			$parsed_sql_data,
+			[
+				'tableName'    => 'student',
+				'tableColumns' => [ 'id', 'name', 'age', 'sex', 'email_address', 'date_created' ],
+				'tableRows'    => [
+					[
+						'1',
+						'Alice Smith',
+						'20',
+						'Female',
+						'alice.smith@example.com',
+						'2024-07-03 21:45:23',
+					],
+					[
+						'2',
+						'Bob Johnson',
+						'21',
+						'Male',
+						'bob.johnson@example.com',
+						'2024-07-03 21:45:23',
+					],
+					[
+						'3',
+						'Charlie Brown',
+						'22',
+						'Male',
+						'charlie.brown@example.com',
+						'2024-07-03 21:45:23',
+					],
+				],
+			]
+		);
+		$this->assertConditionsMet();
+
+		$this->destroy_mock_file( __DIR__ . '/import.sql' );
 	}
 
 	public function test_is_sql_returns_true() {
@@ -185,32 +326,23 @@ class ParseTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
-	public function test_get_response_throws_exception(): array {
-		$parse = Mockery::mock( Parse::class )->makePartial();
-		$parse->shouldAllowMockingProtectedMethods();
-
-		$parser = Mockery::mock( Parser::class )->makePartial();
-		$parser->shouldAllowMockingProtectedMethods();
-
-		$parse->file = '';
-
-		\WP_Mock::userFunction( 'esc_url' )
-			->andReturnUsing(
-				function ( $arg ) {
-					return $arg;
-				}
-			);
-
-		$this->expectException( \Exception::class );
-		$this->expectExceptionMessage( 'Fatal Error: File does not exist: ' );
-
-		return $parse->get_response( $parser );
-	}
-
 	public function create_mock_file( $mock_file ) {
 		file_put_contents( $mock_file, 'INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES', FILE_APPEND );
 
 		return $mock_file;
+	}
+
+	public function create_sql_file( $sql_file ) {
+		file_put_contents(
+			$sql_file,
+			"INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES
+			(1, 'Alice Smith', '20', 'Female', 'alice.smith@example.com', '2024-07-03 21:45:23'),
+			(2, 'Bob Johnson', '21', 'Male', 'bob.johnson@example.com', '2024-07-03 21:45:23'),
+			(3, 'Charlie Brown', '22', 'Male', 'charlie.brown@example.com', '2024-07-03 21:45:23');",
+			FILE_APPEND
+		);
+
+		return $sql_file;
 	}
 
 	public function destroy_mock_file( $mock_file ) {
