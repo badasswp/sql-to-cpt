@@ -4,11 +4,7 @@
 
 Import & Convert SQL files to Custom Post Types (CPT).
 
-<img width="528" alt="sql-to-cpt" src="https://github.com/user-attachments/assets/cf2a4015-bc64-463b-a655-6e1a12762ca3">
-
----
-
-<img width="1502" alt="after-import" src="https://github.com/user-attachments/assets/6b61dc84-2c6c-4385-9786-edec7d34a749">
+https://github.com/user-attachments/assets/89568219-473e-4128-b619-b0b0c8f6d0b8
 
 ## Download
 
@@ -21,6 +17,12 @@ You can also get the latest version from any of our [release tags](https://githu
 This plugin helps you migrate legacy __SQL database tables__ to WordPress' __Custom Post Types (CPT)__. It provides a user-friendly interface that enables users upload an SQL file which is then parsed and converted to a CPT with meta data that is recognisable within WordPress.
 
 If you ever need to migrate a non-WordPress database table into WP, look no further. This is exactly what you need!
+
+<img width="528" alt="sql-to-cpt" src="https://github.com/user-attachments/assets/cf2a4015-bc64-463b-a655-6e1a12762ca3">
+
+---
+
+<img width="1502" alt="after-import" src="https://github.com/user-attachments/assets/6b61dc84-2c6c-4385-9786-edec7d34a749">
 
 ### Hooks
 
