@@ -9,7 +9,6 @@ use SqlToCpt\Routes\Purge;
 use SqlToCpt\Abstracts\Service;
 
 /**
- * @covers \SqlToCpt\Routes\Purge::is_sql
  * @covers \SqlToCpt\Routes\Purge::response
  * @covers \SqlToCpt\Routes\Purge::get_response
  * @covers \SqlToCpt\Routes\Purge::get_post_ids
