@@ -2,6 +2,14 @@ import { __ } from '@wordpress/i18n';
 
 import Disabled from './Disabled';
 
+interface ParsedSQLProps {
+  parsedSQL: {
+    tableName: string;
+    tableRows: any[];
+    tableColumns: string[];
+  }
+}
+
 /**
  * Table Name Component.
  *
@@ -10,9 +18,12 @@ import Disabled from './Disabled';
  *
  * @since 1.2.0
  *
+ * @param {Object} props - The component props.
+ * @param {ParsedSQLProps} props.parsedSQL - The parsed SQL object.
+ *
  * @returns {JSX.Element}
  */
-const TableName = ({ parsedSQL }): JSX.Element => {
+const TableName = ( { parsedSQL }: ParsedSQLProps ): JSX.Element => {
   return (
     <>
       {

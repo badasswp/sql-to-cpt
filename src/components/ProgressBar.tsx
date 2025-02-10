@@ -13,11 +13,12 @@ interface ProgressBarProps {
  * @since 1.2.0
  * @since 1.3.0 Implement Interval logic.
  *
- * @param {boolean} isLoading True|False.
+ * @param {Object} props - The component props.
+ * @param {ProgressBarProps} props.isLoading - True|False.
  *
  * @returns {JSX.Element}
  */
-const ProgressBar = ({ isLoading }: ProgressBarProps): JSX.Element => {
+const ProgressBar = ( { isLoading }: ProgressBarProps ): JSX.Element => {
   const [ progress, setProgress ] = useState<number>( 0 );
 
   useEffect( () => {

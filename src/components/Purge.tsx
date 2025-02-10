@@ -3,6 +3,11 @@ import { useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 
+interface PurgeProps {
+  setIsLoading: Function;
+  setSqlNotice: Function;
+}
+
 /**
  * Purge Component.
  *
@@ -11,9 +16,13 @@ import apiFetch from '@wordpress/api-fetch';
  *
  * @since 1.3.0
  *
+ * @param {Object} props - The component props.
+ * @param {Function} props.setIsLoading - Function to set the loading state.
+ * @param {Function} props.setSqlNotice - Function to set an SQL notice.
+ *
  * @returns {JSX.Element}
  */
-const Purge = ({ setIsLoading, setSqlNotice }): JSX.Element => {
+const Purge = ( { setIsLoading, setSqlNotice }: PurgeProps ): JSX.Element => {
   const [ postType, setPostType ] = useState( '' );
 
   const handlePurge = async () => {

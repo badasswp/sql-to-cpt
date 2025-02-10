@@ -1,3 +1,7 @@
+interface NoticeProps {
+  message: string;
+}
+
 /**
  * Notice Component.
  *
@@ -6,9 +10,12 @@
  *
  * @since 1.0.0
  *
+ * @param {Object} props - The component props.
+ * @param {NoticeProps} props.message - Message to be displayed in notice.
+ *
  * @returns {JSX.Element}
  */
-const Notice = ({ message }): JSX.Element => {
+const Notice = ( { message }: NoticeProps ): JSX.Element => {
   return message && <nav>{ message }</nav>;
 }
 
