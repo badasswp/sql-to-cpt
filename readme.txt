@@ -8,7 +8,7 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Import & Convert SQL files to Custom Post Types (CPT).
+Import & Convert SQL tables to Custom Post Types (CPT). Migrate legacy SQL table data to WordPress custom post types of your choice. It's super fast!
 
 == Installation ==
 
