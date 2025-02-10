@@ -69,6 +69,15 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 
 == Changelog ==
 
+= 1.3.0 =
+* Fix: Ensure REST response on SQL Import.
+* Feat: Add Progress bar to Parse activity.
+* Feat: Implement Purge component.
+* Refactor: Move Interval logic to ProgressBar component.
+* Refactor: Move Handle logic away from App to ImportButton component.
+* Chore: Update doc blocks for components.
+* Tested up to WP 6.7.1
+
 = 1.2.2 =
 * Refactor: Parser instance via DI logic.
 * Fix: Breaking WP dependency.
