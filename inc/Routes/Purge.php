@@ -121,9 +121,7 @@ class Purge extends Route implements Router {
 		$undeleted_posts = [];
 
 		foreach ( $this->get_post_ids() as $post_id ) {
-			$deleted_post = wp_delete_post( $post_id, true );
-
-			if ( ! $deleted_post ) {
+			if ( ! wp_delete_post( $post_id, true ) ) {
 				error_log(
 					sprintf(
 						'Unable to delete the Post ID: %d',
