@@ -2,6 +2,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { useState } from '@wordpress/element';
 import type { MediaFrame } from '@wordpress/media-utils';
 
+import Purge from '../components/Purge';
 import Notice from '../components/Notice';
 import ProgressBar from '../components/ProgressBar';
 import ImportButton from '../components/ImportButton';
@@ -134,11 +135,17 @@ const App = (): JSX.Element => {
 
   return (
     <main>
-      <ImportButton
-        parsedSQL={ parsedSQL }
-        handleImport={ handleImport }
-        handleUpload={ handleUpload }
-      />
+      <section>
+        <ImportButton
+          parsedSQL={ parsedSQL }
+          handleImport={ handleImport }
+          handleUpload={ handleUpload }
+        />
+        <Purge
+          setIsLoading={ setIsLoading }
+          setSqlNotice={ setSqlNotice }
+        />
+      </section>
       <Notice message={ sqlNotice } />
       <ProgressBar
         isLoading={ isLoading }

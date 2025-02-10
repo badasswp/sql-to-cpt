@@ -1,13 +1,20 @@
 #sql-to-cpt {
 	button {
 		color: #FFF;
-		background: #7F54B3;
 		padding: 11.5px 15px;
 		border-radius: 2px;
 		border: none;
 		font-size: 13px;
 		font-weight: 400 !important;
 		cursor: pointer;
+
+		&.is-primary {
+			background: #7F54B3;
+		}
+
+		&.is-tertiary {
+			background: #BA7B00;
+		}
 
 		&:hover {
 			background: #1e6ba1;
@@ -21,24 +28,44 @@
 		margin-top: 15px;
 	}
 
-	.sqlt-cpt {
-		&-progress-bar {
-			margin-top: 10px;
+	select {
+		padding: 0 28px 0 14px;
+		min-height: 40px;
+		top: -1px;
+		position: relative;
+		border-radius: 2px;
+	}
 
-			& > div {
-				width: 100%;
-				margin-top: 20;
-				background-color: #DDD;
-				border-radius: 5px;
-				overflow: hidden;
-				height: 10px;
+	section {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.sqlt {
+		&-cpt {
+			&-progress-bar {
+				margin-top: 10px;
 
 				& > div {
-					height: 100%;
-					background-color: #007cba;
-					transition: width 0.3s ease;
+					width: 100%;
+					margin-top: 20;
+					background-color: #DDD;
+					border-radius: 5px;
+					overflow: hidden;
+					height: 10px;
+
+					& > div {
+						height: 100%;
+						background-color: #007cba;
+						transition: width 0.3s ease;
+					}
 				}
 			}
+		}
+
+		&-purge {
+			display: flex;
+			gap: 10px;
 		}
 	}
 }

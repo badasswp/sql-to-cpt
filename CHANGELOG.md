@@ -3,6 +3,7 @@
 ## Unreleased
 * Fix: Ensure REST response on SQL Import.
 * Feat: Add Progress bar to Parse activity.
+* Feat: Implement Purge component.
 * Refactor: Move Interval logic to Progress Bar component.
 
 ## 1.2.2

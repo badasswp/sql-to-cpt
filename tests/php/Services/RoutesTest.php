@@ -6,6 +6,7 @@ use Mockery;
 use WP_Mock\Tools\TestCase;
 
 use SqlToCpt\Routes\Parse;
+use SqlToCpt\Routes\Purge;
 use SqlToCpt\Routes\Import;
 use SqlToCpt\Services\Routes;
 use SqlToCpt\Abstracts\Route;
@@ -44,6 +45,7 @@ class RoutesTest extends TestCase {
 			[
 				Parse::class,
 				Import::class,
+				Purge::class,
 			]
 		);
 
@@ -56,6 +58,7 @@ class RoutesTest extends TestCase {
 				[
 					Parse::class,
 					Import::class,
+					Purge::class,
 				]
 			)
 			->reply(
