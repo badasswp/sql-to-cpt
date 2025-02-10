@@ -18,12 +18,6 @@ This plugin helps you migrate legacy __SQL database tables__ to WordPress' __Cus
 
 If you ever need to migrate a non-WordPress database table into WP, look no further. This is exactly what you need!
 
-<img width="528" alt="sql-to-cpt" src="https://github.com/user-attachments/assets/cf2a4015-bc64-463b-a655-6e1a12762ca3">
-
----
-
-<img width="1502" alt="after-import" src="https://github.com/user-attachments/assets/6b61dc84-2c6c-4385-9786-edec7d34a749">
-
 ### Hooks
 
 #### `sqlt_cpt_table_name`
