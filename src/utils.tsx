@@ -9,29 +9,29 @@ import { __ } from '@wordpress/i18n';
  * @since 1.0.0
  *
  * @param {string} id HTML Element Id.
- * @returns Promise<HTMLElement>
+ * @return Promise<HTMLElement>
  */
-export const getRoot = (id: string): Promise<HTMLElement> => {
-  let elapsedTime = 0;
-  let interval = 25;
+export const getRoot = ( id: string ): Promise< HTMLElement > => {
+	let elapsedTime = 0;
+	const interval = 25;
 
-  return new Promise((resolve, reject) => {
-    const intervalId = setInterval(() => {
-      elapsedTime += interval;
-      const root = document.getElementById(id);
+	return new Promise( ( resolve, reject ) => {
+		const intervalId = setInterval( () => {
+			elapsedTime += interval;
+			const root = document.getElementById( id );
 
-      if (root) {
-        clearInterval(intervalId)
-        resolve(root as HTMLElement);
-      }
+			if ( root ) {
+				clearInterval( intervalId );
+				resolve( root as HTMLElement );
+			}
 
-      if (elapsedTime > (10 * interval)) {
-        clearInterval(intervalId)
-        reject(new Error('Unable to get root container...'));
-      }
-    }, interval);
-  });
-}
+			if ( elapsedTime > 10 * interval ) {
+				clearInterval( intervalId );
+				reject( new Error( 'Unable to get root container...' ) );
+			}
+		}, interval );
+	} );
+};
 
 /**
  * Get Modal Params.
@@ -42,14 +42,14 @@ export const getRoot = (id: string): Promise<HTMLElement> => {
  *
  * @since 1.0.0
  *
- * @returns {Object} Modal Params.
+ * @return {Object} Modal Params.
  */
 export const getModalParams = () => {
-  return {
-    title: __( 'Select SQL File', 'sql-to-cpt' ),
-    button: {
-      text: __( 'Use SQL', 'sql-to-cpt' )
-    },
-    multiple: false,
-  };
-}
+	return {
+		title: __( 'Select SQL File', 'sql-to-cpt' ),
+		button: {
+			text: __( 'Use SQL', 'sql-to-cpt' ),
+		},
+		multiple: false,
+	};
+};
