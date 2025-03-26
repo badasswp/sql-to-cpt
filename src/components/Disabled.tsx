@@ -1,5 +1,5 @@
 interface DisabledProps {
-  name: string;
+	name: string;
 }
 
 /**
@@ -10,17 +10,17 @@ interface DisabledProps {
  *
  * @since 1.0.0
  *
- * @param {Object} props - The component props.
- * @param {DisabledProps} props.message - Default Text value.
+ * @param {Object} props      - The component props.
+ * @param          props.name
  *
- * @returns {JSX.Element}
+ * @return {JSX.Element} The Disabled component.
  */
 const Disabled = ( { name }: DisabledProps ): JSX.Element => {
-  return (
-    <p>
-      <input type="text" value={ name } disabled />
-    </p>
-  );
-}
+	return (
+		<p>
+			<input type="text" value={ name } disabled />
+		</p>
+	);
+};
 
 export default Disabled;
