@@ -169,6 +169,5 @@ This should spin up a local WP env instance for you to work with at:
 http://sql.localhost:5467
 ```
 
-You should now have a functioning local WP env to work with. To login to the `wp-admin` backend, please username as `admin` & password as `password`.
-
+You should now have a functioning local WP env to work with. To login to the `wp-admin` backend, please log in as `admin` & password as `password`.
 __Awesome!__ - Thanks for being interested in contributing your time and code to this project!
