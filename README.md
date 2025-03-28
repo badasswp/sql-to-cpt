@@ -142,3 +142,32 @@ public function custom_options( $options ): array {
 
 - options _`{mixed[]}`_ By default this will be an array containing the post options of the CPT.
 <br/>
+
+---
+
+## Contribute
+
+Contributions are __welcome__ and will be fully __credited__. To contribute, please fork this repo and raise a PR (Pull Request) against the `master` branch.
+
+### Pre-requisites
+
+You should have the following tools before proceeding to the next steps:
+
+- Composer
+- Yarn
+- Docker
+
+To enable you start development, please run:
+
+```bash
+yarn start
+```
+
+This should spin up a local WP env instance for you to work with at:
+
+```bash
+http://sql.localhost:5467
+```
+
+You should now have a functioning local WP env to work with. To login to the `wp-admin` backend, please log in as `admin` & password as `password`.
+__Awesome!__ - Thanks for being interested in contributing your time and code to this project!

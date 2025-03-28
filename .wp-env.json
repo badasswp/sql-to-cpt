@@ -1,0 +1,16 @@
+{
+	"plugins": [
+		"."
+	],
+	"phpVersion": "8.2",
+	"port": 5467,
+	"testsPort": 5468,
+	"config": {
+    "ALLOW_UNFILTERED_UPLOADS": true,
+		"WP_SITEURL": "http://sql.localhost",
+		"WP_HOME": "http://sql.localhost"
+	},
+	"lifecycleScripts": {
+		"afterStart": "./bin/setup.sh"
+	}
+}
