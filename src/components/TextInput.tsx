@@ -1,5 +1,5 @@
 interface TextInputProps {
-  name: string;
+	name: string;
 }
 
 /**
@@ -10,17 +10,17 @@ interface TextInputProps {
  *
  * @since 1.0.0
  *
- * @param {Object} props - The component props.
+ * @param {Object}         props      - The component props.
  * @param {TextInputProps} props.name - Default Text value.
  *
- * @returns {JSX.Element}
+ * @return {JSX.Element} The TextInput component.
  */
 const TextInput = ( { name }: TextInputProps ): JSX.Element => {
-  return (
-    <p>
-      <input type="text" defaultValue={ name } />
-    </p>
-  );
-}
+	return (
+		<p>
+			<input type="text" defaultValue={ name } />
+		</p>
+	);
+};
 
 export default TextInput;

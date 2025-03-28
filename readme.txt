@@ -69,6 +69,9 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 
 == Changelog ==
 
+= 1.3.1 =
+* Enforce WP linting style across plugin.
+
 = 1.3.0 =
 * Fix: Ensure REST response on SQL Import.
 * Feat: Add Progress bar to Parse activity.
