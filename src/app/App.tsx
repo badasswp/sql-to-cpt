@@ -10,9 +10,9 @@ import ImportButton from '../components/ImportButton';
 import '../styles/app.scss';
 
 interface SQLProps {
-  tableName: string;
-  tableColumns: string[];
-  tableRows: any[];
+	tableName: string;
+	tableColumns: string[];
+	tableRows: any[];
 }
 
 /**
@@ -23,45 +23,37 @@ interface SQLProps {
  *
  * @since 1.0.0
  *
- * @returns {JSX.Element}
+ * @return {JSX.Element} The App component.
  */
 const App = (): JSX.Element => {
-  const [ isLoading, setIsLoading ] = useState<boolean>( false );
-  const [ sqlNotice, setSqlNotice ] = useState<string>( '' );
-  const [ parsedSQL, setParsedSQL ] = useState<SQLProps>(
-    {
-      tableName: '',
-      tableColumns: [],
-      tableRows: [],
-    }
-  );
+	const [ isLoading, setIsLoading ] = useState< boolean >( false );
+	const [ sqlNotice, setSqlNotice ] = useState< string >( '' );
+	const [ parsedSQL, setParsedSQL ] = useState< SQLProps >( {
+		tableName: '',
+		tableColumns: [],
+		tableRows: [],
+	} );
 
-  return (
-    <main>
-      <section>
-        <ImportButton
-          parsedSQL={ parsedSQL }
-          setIsLoading={ setIsLoading }
-          setSqlNotice={ setSqlNotice }
-          setParsedSQL={ setParsedSQL }
-        />
-        <Purge
-          setIsLoading={ setIsLoading }
-          setSqlNotice={ setSqlNotice }
-        />
-      </section>
-      <Notice message={ sqlNotice } />
-      <ProgressBar
-        isLoading={ isLoading }
-      />
-      <TableName
-        parsedSQL={ parsedSQL }
-      />
-      <TableColumns
-        parsedSQL={ parsedSQL }
-      />
-    </main>
-  )
-}
+	return (
+		<main>
+			<section>
+				<ImportButton
+					parsedSQL={ parsedSQL }
+					setIsLoading={ setIsLoading }
+					setSqlNotice={ setSqlNotice }
+					setParsedSQL={ setParsedSQL }
+				/>
+				<Purge
+					setIsLoading={ setIsLoading }
+					setSqlNotice={ setSqlNotice }
+				/>
+			</section>
+			<Notice message={ sqlNotice } />
+			<ProgressBar isLoading={ isLoading } />
+			<TableName parsedSQL={ parsedSQL } />
+			<TableColumns parsedSQL={ parsedSQL } />
+		</main>
+	);
+};
 
 export default App;

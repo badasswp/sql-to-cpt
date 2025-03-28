@@ -1,7 +1,10 @@
 .babelrc
 .editorconfig
+.eslintignore
+.eslintrc.js
 .gitignore
 .github
+.wp-env.json
 CHANGELOG.md
 jest.config.js
 jest.setup.js
@@ -14,3 +17,4 @@ phpstan.neon
 src
 assets
 tests
+bin
