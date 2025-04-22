@@ -6,7 +6,7 @@
 	"port": 5467,
 	"testsPort": 5468,
 	"config": {
-    "ALLOW_UNFILTERED_UPLOADS": true,
+		"ALLOW_UNFILTERED_UPLOADS": true,
 		"WP_SITEURL": "http://sql.localhost",
 		"WP_HOME": "http://sql.localhost"
 	},
