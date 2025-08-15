@@ -69,6 +69,16 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 
 == Changelog ==
 
+= 1.3.3
+* Bump up plugin version.
+* Tested up to WP 6.8
+* Update README docs.
+
+= 1.3.2
+* Lint `.wp-env` file correctly.
+* Update setup.sh bash script.
+* Tested up to WP `6.7.2`.
+
 = 1.3.1 =
 * Enforce WP linting style across plugin.
 * Feat: Add WP local dev env for contributors.
