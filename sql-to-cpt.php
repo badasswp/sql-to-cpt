@@ -3,7 +3,7 @@
  * Plugin Name: SQL to CPT
  * Plugin URI:  https://github.com/badasswp/sql-to-cpt
  * Description: Import & Convert SQL files to Custom Post Types (CPT).
- * Version:     1.3.1
+ * Version:     1.3.3
  * Author:      badasswp
  * Author URI:  https://github.com/badasswp
  * License:     GPL v2 or later
