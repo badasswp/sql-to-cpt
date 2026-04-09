@@ -42,22 +42,13 @@ class Boot extends Service implements Kernel {
 			return;
 		}
 
-		// Load Script.
+		$asset_file = require_once dirname(__DIR__, 2) . '/dist/app.asset.php';
+
 		wp_enqueue_script(
 			'sql-to-cpt',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . '../../dist/app.js',
-			[
-				'wp-i18n',
-				'wp-element',
-				'wp-blocks',
-				'wp-components',
-				'wp-editor',
-				'wp-hooks',
-				'wp-compose',
-				'wp-plugins',
-				'wp-edit-post',
-			],
-			'1.2.0',
+			$asset_file['dependencies'],
+			$asset_file['version'],
 			false,
 		);
 

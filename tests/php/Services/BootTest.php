@@ -105,17 +105,14 @@ class BootTest extends TestCase {
 				'sql-to-cpt',
 				'https://example.com/wp-content/plugins/sql-to-cpt/inc/Services/Boot.php/../../dist/app.js',
 				[
-					'wp-i18n',
-					'wp-element',
-					'wp-blocks',
+					'react',
+					'react-dom',
+					'wp-api-fetch',
 					'wp-components',
-					'wp-editor',
-					'wp-hooks',
-					'wp-compose',
-					'wp-plugins',
-					'wp-edit-post',
+					'wp-element',
+					'wp-i18n'
 				],
-				'1.2.0',
+				'ec9080196954ae49fb68',
 				false,
 			);
 
