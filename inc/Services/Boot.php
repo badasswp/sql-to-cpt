@@ -42,7 +42,7 @@ class Boot extends Service implements Kernel {
 			return;
 		}
 
-		$asset_file = require_once dirname(__DIR__, 2) . '/dist/app.asset.php';
+		$asset_file = require_once dirname( __DIR__, 2 ) . '/dist/app.asset.php';
 
 		wp_enqueue_script(
 			'sql-to-cpt',

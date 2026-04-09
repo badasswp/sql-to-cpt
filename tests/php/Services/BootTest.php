@@ -110,7 +110,7 @@ class BootTest extends TestCase {
 					'wp-api-fetch',
 					'wp-components',
 					'wp-element',
-					'wp-i18n'
+					'wp-i18n',
 				],
 				'ec9080196954ae49fb68',
 				false,
