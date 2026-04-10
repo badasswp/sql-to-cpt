@@ -83,6 +83,24 @@ class BootTest extends TestCase {
 
 		$boot = new \ReflectionClass( Boot::class );
 
+		$mock_boot = Mockery::mock( Boot::class )->makePartial();
+		$mock_boot->shouldAllowMockingProtectedMethods();
+
+		$mock_boot->shouldReceive( 'get_assets' )
+			->andReturn(
+				[
+					'dependencies' => [
+						'react',
+						'react-dom',
+						'wp-api-fetch',
+						'wp-components',
+						'wp-element',
+						'wp-i18n',
+					],
+					'version'      => 'ec9080196954ae49fb68',
+				]
+			);
+
 		\WP_Mock::userFunction( 'plugin_dir_url' )
 			->with( $boot->getFileName() )
 			->andReturn( 'https://example.com/wp-content/plugins/sql-to-cpt/inc/Services/Boot.php' );
