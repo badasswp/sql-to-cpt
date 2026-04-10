@@ -10,6 +10,8 @@
 
 namespace SqlToCpt\Routes;
 
+use Exception;
+use WP_REST_Request;
 use SqlToCpt\Core\Parser;
 use SqlToCpt\Abstracts\Route;
 use SqlToCpt\Interfaces\Router;
@@ -43,7 +45,7 @@ class Parse extends Route implements Router {
 	 *
 	 * @var \WP_REST_Request
 	 */
-	public \WP_REST_Request $request;
+	public WP_REST_Request $request;
 
 	/**
 	 * JSON Params.
@@ -113,7 +115,7 @@ class Parse extends Route implements Router {
 	protected function get_response( Parser $parser ) {
 		try {
 			$response = $parser->get_parsed_sql( $this->file );
-		} catch ( \Exception $e ) {
+		} catch ( Exception $e ) {
 			$response = $this->get_400_response(
 				sprintf( 'Unable to parse SQL file: %s', $e->getMessage() )
 			);

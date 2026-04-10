@@ -3,9 +3,11 @@
 namespace SqlToCpt\Tests\Services;
 
 use Mockery;
+use WP_Mock;
+use WP_Screen;
+use ReflectionClass;
 use WP_Mock\Tools\TestCase;
 use SqlToCpt\Services\Boot;
-use SqlToCpt\Abstracts\Service;
 
 /**
  * @covers \SqlToCpt\Services\Boot::register
@@ -17,19 +19,19 @@ class BootTest extends TestCase {
 	public Boot $boot;
 
 	public function setUp(): void {
-		\WP_Mock::setUp();
+		WP_Mock::setUp();
 
 		$this->boot = new Boot();
 	}
 
 	public function tearDown(): void {
-		\WP_Mock::tearDown();
+		WP_Mock::tearDown();
 	}
 
 	public function test_register() {
-		\WP_Mock::expectActionAdded( 'init', [ $this->boot, 'register_translation' ] );
-		\WP_Mock::expectFilterAdded( 'upload_mimes', [ $this->boot, 'register_mimes' ] );
-		\WP_Mock::expectActionAdded( 'admin_enqueue_scripts', [ $this->boot, 'register_scripts' ] );
+		WP_Mock::expectActionAdded( 'init', [ $this->boot, 'register_translation' ] );
+		WP_Mock::expectFilterAdded( 'upload_mimes', [ $this->boot, 'register_mimes' ] );
+		WP_Mock::expectActionAdded( 'admin_enqueue_scripts', [ $this->boot, 'register_scripts' ] );
 
 		$this->boot->register();
 
@@ -39,7 +41,7 @@ class BootTest extends TestCase {
 	public function test_register_scripts_bails_out_if_screen_is_null() {
 		$screen = null;
 
-		\WP_Mock::userFunction( 'get_current_screen' )
+		WP_Mock::userFunction( 'get_current_screen' )
 			->andReturn( $screen );
 
 		$this->boot->register_scripts();
@@ -50,7 +52,7 @@ class BootTest extends TestCase {
 	public function test_register_scripts_bails_out_if_it_is_not_an_object() {
 		$screen = 1;
 
-		\WP_Mock::userFunction( 'get_current_screen' )
+		WP_Mock::userFunction( 'get_current_screen' )
 			->andReturn( $screen );
 
 		$this->boot->register_scripts();
@@ -59,12 +61,12 @@ class BootTest extends TestCase {
 	}
 
 	public function test_register_scripts_bails_out_if_it_is_not_plugin_page() {
-		$screen = Mockery::mock( \WP_Screen::class )->makePartial();
+		$screen = Mockery::mock( WP_Screen::class )->makePartial();
 		$screen->shouldAllowMockingProtectedMethods();
 
 		$screen->id = 'toplevel_page_hello-world';
 
-		\WP_Mock::userFunction( 'get_current_screen' )
+		WP_Mock::userFunction( 'get_current_screen' )
 			->andReturn( $screen );
 
 		$this->boot->register_scripts();
@@ -73,25 +75,25 @@ class BootTest extends TestCase {
 	}
 
 	public function test_register_scripts() {
-		$screen = Mockery::mock( \WP_Screen::class )->makePartial();
+		$screen = Mockery::mock( WP_Screen::class )->makePartial();
 		$screen->shouldAllowMockingProtectedMethods();
 
 		$screen->id = 'toplevel_page_sql-to-cpt';
 
-		\WP_Mock::userFunction( 'get_current_screen' )
+		WP_Mock::userFunction( 'get_current_screen' )
 			->andReturn( $screen );
 
-		$boot = new \ReflectionClass( Boot::class );
+		$boot = new ReflectionClass( Boot::class );
 
-		\WP_Mock::userFunction( 'plugin_dir_url' )
+		WP_Mock::userFunction( 'plugin_dir_url' )
 			->with( $boot->getFileName() )
 			->andReturn( 'https://example.com/wp-content/plugins/sql-to-cpt/inc/Services/Boot.php' );
 
-		\WP_Mock::userFunction( 'plugin_dir_path' )
+		WP_Mock::userFunction( 'plugin_dir_path' )
 			->with( $boot->getFileName() )
 			->andReturn( '/var/www/html/wp-content/plugins/sql-to-cpt/inc/Services/Boot.php/' );
 
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'trailingslashit',
 			[
 				'return' => function ( $text ) {
@@ -100,7 +102,7 @@ class BootTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::userFunction( 'wp_enqueue_script' )
+		WP_Mock::userFunction( 'wp_enqueue_script' )
 			->with(
 				'sql-to-cpt',
 				'https://example.com/wp-content/plugins/sql-to-cpt/inc/Services/Boot.php/../../dist/app.js',
@@ -119,11 +121,11 @@ class BootTest extends TestCase {
 				false,
 			);
 
-		\WP_Mock::userFunction( 'wp_enqueue_media' )
+		WP_Mock::userFunction( 'wp_enqueue_media' )
 			->with()
 			->andReturn( null );
 
-		\WP_Mock::userFunction( 'wp_set_script_translations' )
+		WP_Mock::userFunction( 'wp_set_script_translations' )
 			->with(
 				'sql-to-cpt',
 				'sql-to-cpt',
@@ -131,7 +133,7 @@ class BootTest extends TestCase {
 			)
 			->andReturn( null );
 
-			\WP_Mock::userFunction( 'get_option' )
+			WP_Mock::userFunction( 'get_option' )
 				->once()
 				->with( 'sql_to_cpt', [] )
 				->andReturn(
@@ -140,7 +142,7 @@ class BootTest extends TestCase {
 					]
 				);
 
-		\WP_Mock::userFunction( 'wp_localize_script' )
+		WP_Mock::userFunction( 'wp_localize_script' )
 			->once()
 			->with(
 				'sql-to-cpt',
@@ -157,14 +159,14 @@ class BootTest extends TestCase {
 	}
 
 	public function test_register_translation() {
-		$boot = new \ReflectionClass( Boot::class );
+		$boot = new ReflectionClass( Boot::class );
 
-		\WP_Mock::userFunction( 'plugin_basename' )
+		WP_Mock::userFunction( 'plugin_basename' )
 			->once()
 			->with( $boot->getFileName() )
 			->andReturn( '/inc/Services/Boot.php' );
 
-		\WP_Mock::userFunction( 'load_plugin_textdomain' )
+		WP_Mock::userFunction( 'load_plugin_textdomain' )
 			->once()
 			->with(
 				'sql-to-cpt',
@@ -178,7 +180,7 @@ class BootTest extends TestCase {
 	}
 
 	public function test_register_mimes() {
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'wp_parse_args',
 			[
 				'times'  => 1,

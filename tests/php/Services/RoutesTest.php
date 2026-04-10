@@ -2,15 +2,13 @@
 
 namespace SqlToCpt\Tests\Services;
 
-use Mockery;
+use WP_Mock;
 use WP_Mock\Tools\TestCase;
 
 use SqlToCpt\Routes\Parse;
 use SqlToCpt\Routes\Purge;
 use SqlToCpt\Routes\Import;
 use SqlToCpt\Services\Routes;
-use SqlToCpt\Abstracts\Route;
-use SqlToCpt\Abstracts\Service;
 
 /**
  * @covers \SqlToCpt\Services\Routes::register
@@ -22,17 +20,17 @@ class RoutesTest extends TestCase {
 	public Routes $routes;
 
 	public function setUp(): void {
-		\WP_Mock::setUp();
+		WP_Mock::setUp();
 
 		$this->routes = new Routes();
 	}
 
 	public function tearDown(): void {
-		\WP_Mock::tearDown();
+		WP_Mock::tearDown();
 	}
 
 	public function test_register() {
-		\WP_Mock::expectActionAdded( 'rest_api_init', [ $this->routes, 'register_rest_routes' ] );
+		WP_Mock::expectActionAdded( 'rest_api_init', [ $this->routes, 'register_rest_routes' ] );
 
 		$this->routes->register();
 
@@ -53,7 +51,7 @@ class RoutesTest extends TestCase {
 	}
 
 	public function test_register_rest_routes() {
-		\WP_Mock::onFilter( 'sqlt_cpt_rest_routes' )
+		WP_Mock::onFilter( 'sqlt_cpt_rest_routes' )
 			->with(
 				[
 					Parse::class,
@@ -69,7 +67,7 @@ class RoutesTest extends TestCase {
 
 		$import = new Import();
 
-		\WP_Mock::userFunction( 'register_rest_route' )
+		WP_Mock::userFunction( 'register_rest_route' )
 			->with(
 				'sql-to-cpt/v1',
 				'/import',

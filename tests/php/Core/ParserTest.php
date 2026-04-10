@@ -3,6 +3,8 @@
 namespace SqlToCpt\Tests\Core;
 
 use Mockery;
+use WP_Mock;
+use Exception;
 use WP_Mock\Tools\TestCase;
 
 use SqlToCpt\Core\Parser;
@@ -18,11 +20,11 @@ class ParserTest extends TestCase {
 	public Parser $parser;
 
 	public function setUp(): void {
-		\WP_Mock::setUp();
+		WP_Mock::setUp();
 	}
 
 	public function tearDown(): void {
-		\WP_Mock::tearDown();
+		WP_Mock::tearDown();
 	}
 
 	public function test_get_sql_string_throws_exception() {
@@ -31,11 +33,11 @@ class ParserTest extends TestCase {
 
 		$parser->sql = '/var/www/html/wp-content/uploads/import.sql';
 
-		\WP_Mock::userFunction( 'esc_url' )
+		WP_Mock::userFunction( 'esc_url' )
 			->with( '/var/www/html/wp-content/uploads/import.sql' )
 			->andReturn( '/var/www/html/wp-content/uploads/import.sql' );
 
-		$this->expectException( \Exception::class );
+		$this->expectException( Exception::class );
 		$this->expectExceptionMessage( 'Fatal Error: File does not exist: /var/www/html/wp-content/uploads/import.sql' );
 
 		$parser->get_sql_string();
@@ -65,7 +67,7 @@ class ParserTest extends TestCase {
 		$parser->shouldReceive( 'get_sql_string' )
 			->andReturn( 'INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES' );
 
-		\WP_Mock::expectFilter( 'sqlt_cpt_table_name', 'student' );
+		WP_Mock::expectFilter( 'sqlt_cpt_table_name', 'student' );
 
 		$this->assertSame( $parser->get_sql_table_name(), 'student' );
 		$this->assertConditionsMet();
@@ -78,7 +80,7 @@ class ParserTest extends TestCase {
 		$parser->shouldReceive( 'get_sql_string' )
 			->andReturn( '' );
 
-		\WP_Mock::expectFilter( 'sqlt_cpt_table_name', '' );
+		WP_Mock::expectFilter( 'sqlt_cpt_table_name', '' );
 
 		$this->assertSame( $parser->get_sql_table_name(), '' );
 		$this->assertConditionsMet();
@@ -91,7 +93,7 @@ class ParserTest extends TestCase {
 		$parser->shouldReceive( 'get_sql_string' )
 			->andReturn( 'Invalid SQL string, no table name presented here.' );
 
-		\WP_Mock::expectFilter( 'sqlt_cpt_table_name', '' );
+		WP_Mock::expectFilter( 'sqlt_cpt_table_name', '' );
 
 		$this->assertSame( $parser->get_sql_table_name(), '' );
 		$this->assertConditionsMet();
@@ -104,7 +106,7 @@ class ParserTest extends TestCase {
 		$parser->shouldReceive( 'get_sql_string' )
 			->andReturn( 'INSERT INTO `student` (`id`, `name`, `age`, `sex`, `email_address`, `date_created`) VALUES' );
 
-		\WP_Mock::expectFilter(
+		WP_Mock::expectFilter(
 			'sqlt_cpt_table_columns',
 			[
 				'id',
@@ -168,14 +170,14 @@ class ParserTest extends TestCase {
 (1, 'Alice Smith', '20', 'Female', 'alice.smith@example.com', '2024-07-03 21:45:23');"
 			);
 
-		\WP_Mock::userFunction( 'sanitize_text_field' )
+		WP_Mock::userFunction( 'sanitize_text_field' )
 			->andReturnUsing(
 				function ( $arg ) {
 					return $arg;
 				}
 			);
 
-		\WP_Mock::expectFilter(
+		WP_Mock::expectFilter(
 			'sqlt_cpt_table_rows',
 			[
 				[
@@ -239,9 +241,9 @@ class ParserTest extends TestCase {
 
 		$sql_file = $this->create_sql_file( __DIR__ . '/import.sql' );
 
-		\WP_Mock::expectFilter( 'sqlt_cpt_table_name', 'student' );
+		WP_Mock::expectFilter( 'sqlt_cpt_table_name', 'student' );
 
-		\WP_Mock::expectFilter(
+		WP_Mock::expectFilter(
 			'sqlt_cpt_table_columns',
 			[
 				'id',
@@ -253,7 +255,7 @@ class ParserTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::expectFilter(
+		WP_Mock::expectFilter(
 			'sqlt_cpt_table_rows',
 			[
 				[
@@ -283,7 +285,7 @@ class ParserTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::userFunction( 'sanitize_text_field' )
+		WP_Mock::userFunction( 'sanitize_text_field' )
 			->andReturnUsing(
 				function ( $arg ) {
 					return $arg;
