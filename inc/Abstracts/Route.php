@@ -41,7 +41,7 @@ abstract class Route implements Router {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @var WP_REST_Request
+	 * @var \WP_REST_Request
 	 */
 	public WP_REST_Request $request;
 
@@ -53,7 +53,7 @@ abstract class Route implements Router {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return \WP_REST_Response|WP_Error
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	abstract public function response();
 
@@ -66,8 +66,8 @@ abstract class Route implements Router {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WP_REST_Request $request Request object.
-	 * @return \WP_REST_Response|WP_Error
+	 * @param \WP_REST_Request $request Request object.
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function request( $request ) {
 		$this->request = $request;
@@ -103,7 +103,7 @@ abstract class Route implements Router {
 	 * @since 1.0.0
 	 *
 	 * @param string $message Error Msg.
-	 * @return WP_Error
+	 * @return \WP_Error
 	 */
 	public function get_400_response( $message ): WP_Error {
 		$args = $this->request->get_json_params();
@@ -126,8 +126,8 @@ abstract class Route implements Router {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param WP_REST_Request $request Request Object.
-	 * @return bool|WP_Error
+	 * @param \WP_REST_Request $request Request Object.
+	 * @return bool|\WP_Error
 	 */
 	public function is_user_permissible( $request ) {
 		$http_error = rest_authorization_required_code();
