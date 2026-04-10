@@ -12,6 +12,7 @@ use SqlToCpt\Abstracts\Service;
  * @covers \SqlToCpt\Services\Boot::register_translation
  * @covers \SqlToCpt\Services\Boot::register_mimes
  * @covers \SqlToCpt\Services\Boot::register_scripts
+ * @covers \SqlToCpt\Services\Boot::get_assets
  */
 class BootTest extends TestCase {
 	public Boot $boot;
