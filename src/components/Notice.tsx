@@ -1,3 +1,5 @@
+import { useSelect } from '@wordpress/data';
+
 interface NoticeProps {
 	message: string;
 }
@@ -10,13 +12,18 @@ interface NoticeProps {
  *
  * @since 1.0.0
  *
- * @param {Object}      props         - The component props.
- * @param {NoticeProps} props.message - Message to be displayed in notice.
- *
  * @return {JSX.Element} The Notice component.
  */
-const Notice = ( { message }: NoticeProps ): JSX.Element => {
-	return message && <nav>{ message }</nav>;
+const Notice = (): JSX.Element => {
+	const { sqlNotice } = useSelect( ( select ) => {
+		const store: any = select( 'sql-to-cpt' );
+
+		return {
+			sqlNotice: store.getSqlNotice(),
+		};
+	}, [] );
+
+	return sqlNotice && <nav>{ sqlNotice }</nav>;
 };
 
 export default Notice;

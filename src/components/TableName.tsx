@@ -1,4 +1,5 @@
 import { __ } from '@wordpress/i18n';
+import { useSelect } from '@wordpress/data';
 
 import Disabled from './Disabled';
 
@@ -18,12 +19,17 @@ interface ParsedSQLProps {
  *
  * @since 1.2.0
  *
- * @param {Object}         props           - The component props.
- * @param {ParsedSQLProps} props.parsedSQL - The parsed SQL object.
- *
  * @return {JSX.Element} The Table Name component.
  */
-const TableName = ( { parsedSQL }: ParsedSQLProps ): JSX.Element => {
+const TableName = (): JSX.Element => {
+	const { parsedSQL } = useSelect( ( select ) => {
+		const store: any = select( 'sql-to-cpt' );
+
+		return {
+			parsedSQL: store.getParsedSQL(),
+		};
+	}, [] );
+
 	return (
 		<>
 			{ parsedSQL.tableName && (

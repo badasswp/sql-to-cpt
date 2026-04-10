@@ -1,5 +1,5 @@
 import { useState, useEffect } from '@wordpress/element';
-
+import { useSelect } from '@wordpress/data';
 interface ProgressBarProps {
 	isLoading: boolean;
 }
@@ -13,13 +13,17 @@ interface ProgressBarProps {
  * @since 1.2.0
  * @since 1.3.0 Implement Interval logic.
  *
- * @param {Object}           props           - The component props.
- * @param {ProgressBarProps} props.isLoading - True|False.
- *
  * @return {JSX.Element} The Progress Bar component.
  */
-const ProgressBar = ( { isLoading }: ProgressBarProps ): JSX.Element => {
+const ProgressBar = (): JSX.Element => {
 	const [ progress, setProgress ] = useState< number >( 0 );
+	const { isLoading } = useSelect( ( select ) => {
+		const store: any = select( 'sql-to-cpt' );
+
+		return {
+			isLoading: store.isLoading(),
+		};
+	}, [] );
 
 	useEffect( () => {
 		let progressInterval: string | number | NodeJS.Timeout;

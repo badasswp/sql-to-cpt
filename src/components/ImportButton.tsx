@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { Button } from '@wordpress/components';
 import type { MediaFrame } from '@wordpress/media-utils';
+import { useSelect, useDispatch } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 
 import { getModalParams } from '../utils';
@@ -22,13 +23,20 @@ interface ImportButtonProps {
  * This function returns a JSX component that is
  * used to display the Import Button.
  *
- * @param  props
  * @since 1.2.0
  *
  * @return {JSX.Element} The Import Button component.
  */
-const ImportButton = ( props: ImportButtonProps ): JSX.Element => {
-	const { parsedSQL, setIsLoading, setSqlNotice, setParsedSQL } = props;
+const ImportButton = (): JSX.Element => {
+	const { setIsLoading, setSqlNotice, setParsedSQL } =
+		useDispatch( 'sql-to-cpt' );
+	const { parsedSQL } = useSelect( ( select ) => {
+		const store: any = select( 'sql-to-cpt' );
+
+		return {
+			parsedSQL: store.getParsedSQL(),
+		};
+	}, [] );
 
 	/**
 	 * Handle Upload.
