@@ -15,7 +15,7 @@ require_once dirname( __DIR__ ) . '/../vendor/autoload.php';
 WP_Mock::activateStrictMode();
 WP_Mock::bootstrap();
 
-if( ! class_exists( 'WP_REST_Server') ){
+if ( ! class_exists( 'WP_REST_Server' ) ) {
 	class WP_REST_Server {
 		const READABLE   = 'GET';
 		const CREATABLE  = 'POST';
