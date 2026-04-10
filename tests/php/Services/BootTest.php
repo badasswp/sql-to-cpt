@@ -5,7 +5,6 @@ namespace SqlToCpt\Tests\Services;
 use Mockery;
 use WP_Mock\Tools\TestCase;
 use SqlToCpt\Services\Boot;
-use SqlToCpt\Abstracts\Service;
 
 /**
  * @covers \SqlToCpt\Services\Boot::register
