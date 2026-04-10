@@ -4,11 +4,6 @@ import { Button } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 
-interface PurgeProps {
-	setIsLoading: Function;
-	setSqlNotice: Function;
-}
-
 /**
  * Purge Component.
  *

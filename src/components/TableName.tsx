@@ -3,14 +3,6 @@ import { useSelect } from '@wordpress/data';
 
 import Disabled from './Disabled';
 
-interface ParsedSQLProps {
-	parsedSQL: {
-		tableName: string;
-		tableRows: any[];
-		tableColumns: string[];
-	};
-}
-
 /**
  * Table Name Component.
  *
@@ -32,10 +24,10 @@ const TableName = (): JSX.Element => {
 
 	return (
 		<>
-			{ parsedSQL.tableName && (
+			{ parsedSQL?.tableName && (
 				<div className="sqlt-cpt-table-name" role="list">
 					<h3>{ __( 'Table', 'sql-to-cpt' ) }</h3>
-					<Disabled name={ parsedSQL.tableName } />
+					<Disabled name={ parsedSQL?.tableName || '' } />
 				</div>
 			) }
 		</>

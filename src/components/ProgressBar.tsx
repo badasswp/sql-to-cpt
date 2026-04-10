@@ -1,8 +1,5 @@
 import { useState, useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
-interface ProgressBarProps {
-	isLoading: boolean;
-}
 
 /**
  * Progress Bar Component.
@@ -44,7 +41,11 @@ const ProgressBar = (): JSX.Element => {
 	return (
 		<>
 			{ isLoading && (
-				<div className="sqlt-cpt-progress-bar" role="progressbar">
+				<div
+					data-testid="progress-bar"
+					className="sqlt-cpt-progress-bar"
+					role="progressbar"
+				>
 					<div>
 						<div style={ { width: `${ progress }%` } } />
 					</div>

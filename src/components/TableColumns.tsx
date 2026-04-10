@@ -3,14 +3,6 @@ import { useSelect } from '@wordpress/data';
 
 import Disabled from './Disabled';
 
-interface ParsedSQLProps {
-	parsedSQL: {
-		tableName: string;
-		tableRows: any[];
-		tableColumns: string[];
-	};
-}
-
 /**
  * Table Columns Component.
  *
@@ -32,7 +24,7 @@ const TableColumns = (): JSX.Element => {
 
 	return (
 		<>
-			{ parsedSQL.tableColumns.length > 0 && (
+			{ parsedSQL?.tableColumns?.length > 0 && (
 				<div className="sqlt-cpt-table-columns" role="list">
 					<h3>{ __( 'Columns', 'sql-to-cpt' ) }</h3>
 					{ parsedSQL.tableColumns.map(

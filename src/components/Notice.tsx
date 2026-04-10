@@ -1,9 +1,5 @@
 import { useSelect } from '@wordpress/data';
 
-interface NoticeProps {
-	message: string;
-}
-
 /**
  * Notice Component.
  *
