@@ -2,6 +2,7 @@
 
 ## 1.4.0
 * Refactor: Simplified register mimes.
+* Refactor: Used webpack generated dependencies.
 
 ## 1.3.4
 * Specify `wordpress-plugin` as Composer package type.

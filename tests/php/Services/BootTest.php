@@ -5,13 +5,13 @@ namespace SqlToCpt\Tests\Services;
 use Mockery;
 use WP_Mock\Tools\TestCase;
 use SqlToCpt\Services\Boot;
-use SqlToCpt\Abstracts\Service;
 
 /**
  * @covers \SqlToCpt\Services\Boot::register
  * @covers \SqlToCpt\Services\Boot::register_translation
  * @covers \SqlToCpt\Services\Boot::register_mimes
  * @covers \SqlToCpt\Services\Boot::register_scripts
+ * @covers \SqlToCpt\Services\Boot::get_assets
  */
 class BootTest extends TestCase {
 	public Boot $boot;
@@ -83,6 +83,24 @@ class BootTest extends TestCase {
 
 		$boot = new \ReflectionClass( Boot::class );
 
+		$mock_boot = Mockery::mock( Boot::class )->makePartial();
+		$mock_boot->shouldAllowMockingProtectedMethods();
+
+		$mock_boot->shouldReceive( 'get_assets' )
+			->andReturn(
+				[
+					'dependencies' => [
+						'react',
+						'react-dom',
+						'wp-api-fetch',
+						'wp-components',
+						'wp-element',
+						'wp-i18n',
+					],
+					'version'      => 'ec9080196954ae49fb68',
+				]
+			);
+
 		\WP_Mock::userFunction( 'plugin_dir_url' )
 			->with( $boot->getFileName() )
 			->andReturn( 'https://example.com/wp-content/plugins/sql-to-cpt/inc/Services/Boot.php' );
@@ -105,17 +123,14 @@ class BootTest extends TestCase {
 				'sql-to-cpt',
 				'https://example.com/wp-content/plugins/sql-to-cpt/inc/Services/Boot.php/../../dist/app.js',
 				[
-					'wp-i18n',
-					'wp-element',
-					'wp-blocks',
+					'react',
+					'react-dom',
+					'wp-api-fetch',
 					'wp-components',
-					'wp-editor',
-					'wp-hooks',
-					'wp-compose',
-					'wp-plugins',
-					'wp-edit-post',
+					'wp-element',
+					'wp-i18n',
 				],
-				'1.2.0',
+				'ec9080196954ae49fb68',
 				false,
 			);
 
