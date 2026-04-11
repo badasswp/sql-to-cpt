@@ -1,45 +1,57 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { TableName } from '../../src/components/All';
 
-import TableName from '../../src/components/TableName';
+import { useSelect } from '@wordpress/data';
 
-jest.mock( '@wordpress/i18n', () => ( {
-	__: jest.fn( ( arg ) => arg ),
+jest.mock( '@wordpress/data', () => ( {
+	useSelect: jest.fn(),
 } ) );
 
-describe( 'TableName', () => {
-	it( 'renders the Table Name and its input', () => {
-		const parsedSQL = {
-			tableName: 'student',
-			tableColumns: [ 'id', 'name', 'age', 'sex', 'email_address' ],
-			tableRows: [ [ 1, 'John Doe', 37, 'M', 'john@doe.com' ] ],
-		};
+jest.mock( '@wordpress/i18n', () => ( {
+	__: ( text: string ) => text,
+} ) );
 
-		const { container } = render( <TableName parsedSQL={ parsedSQL } /> );
+jest.mock( '../../src/components/Disabled', () => ( {
+	__esModule: true,
+	default: ( { name }: { name: string } ) => (
+		<div data-testid="disabled">{ name }</div>
+	),
+} ) );
 
-		// Expect Component to look like so:
-		expect( container.innerHTML ).toBe(
-			`<div class="sqlt-cpt-table-name" role="list"><h3>Table</h3><p><input type="text" disabled="" value="student"></p></div>`
-		);
+const mockUseSelect = useSelect as jest.Mock;
 
-		// Assert the Table Name is displayed.
-		const tableName = screen.getByRole( 'list' );
-		expect( tableName ).toHaveClass( 'sqlt-cpt-table-name' );
-		expect( tableName ).toBeInTheDocument();
-		expect( tableName ).toBeInstanceOf( HTMLDivElement );
+describe( 'TableName component', () => {
+	afterEach( () => {
+		jest.clearAllMocks();
 	} );
 
-	it( 'DOES NOT render the Table Name', () => {
-		const parsedSQL = {
-			tableName: '',
-			tableColumns: [ 'id', 'name', 'age', 'sex', 'email_address' ],
-			tableRows: [ [ 1, 'John Doe', 37, 'M', 'john@doe.com' ] ],
-		};
+	it( 'renders table name when available', () => {
+		mockUseSelect.mockReturnValue( {
+			parsedSQL: {
+				tableName: 'student',
+				tableColumns: [ 'id', 'name', 'age', 'sex', 'email_address' ],
+				tableRows: [ [ 1, 'John Doe', 37, 'M', 'john@doe.com' ] ],
+			},
+		} );
 
-		const { container } = render( <TableName parsedSQL={ parsedSQL } /> );
+		render( <TableName /> );
 
-		// Expect Component to look like so:
-		expect( container.innerHTML ).toBe( `` );
+		( expect( screen.getByText( 'Table' ) ) as any ).toBeInTheDocument();
+		( expect( screen.getByTestId( 'disabled' ) ) as any ).toHaveTextContent(
+			'student'
+		);
+	} );
+
+	it( 'does not render when tableName is empty', () => {
+		mockUseSelect.mockReturnValue( { parsedSQL: {} } );
+
+		render( <TableName /> );
+
+		(
+			expect( screen.queryByText( 'Table' ) ) as any
+		 ).not.toBeInTheDocument();
+		(
+			expect( screen.queryByTestId( 'disabled' ) ) as any
+		 ).not.toBeInTheDocument();
 	} );
 } );

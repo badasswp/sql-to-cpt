@@ -1,31 +1,42 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { ProgressBar } from '../../src/components/All';
 
-import ProgressBar from '../../src/components/ProgressBar';
+import { useSelect } from '@wordpress/data';
 
-describe( 'ProgressBar', () => {
-	it( 'renders the Progress Bar', () => {
-		const { container } = render( <ProgressBar isLoading={ true } /> );
+jest.mock( '@wordpress/data', () => ( {
+	useSelect: jest.fn(),
+} ) );
 
-		// Expect Component to look like so:
-		expect( container.innerHTML ).toBe(
-			`<div class="sqlt-cpt-progress-bar" role="progressbar"><div><div style="width: 0%;"></div></div><p>0%</p></div>`
-		);
+jest.mock( '@wordpress/i18n', () => ( {
+	__: ( text: string ) => text,
+} ) );
 
-		// Assert the ProgressBar is rendered and is disabled.
-		const progressBar = screen.getByRole( 'progressbar' );
-		expect( progressBar ).toBeInTheDocument();
-		expect( progressBar ).toBeInstanceOf( HTMLDivElement );
-		expect( progressBar ).toContainHTML(
-			'<div><div style="width: 0%;"></div></div><p>0%</p>'
-		);
+const mockUseSelect = useSelect as jest.Mock;
+
+describe( 'ProgressBar component', () => {
+	afterEach( () => {
+		jest.clearAllMocks();
 	} );
 
-	it( 'DOES NOT render the Progress Bar', () => {
-		const { container } = render( <ProgressBar isLoading={ false } /> );
+	it( 'renders the Progress Bar', () => {
+		mockUseSelect.mockReturnValue( {
+			isLoading: true,
+		} );
 
-		// Expect Component to look like so:
-		expect( container.innerHTML ).toBe( `` );
+		render( <ProgressBar /> );
+
+		( expect( screen.getByTestId( 'progress-bar' ) ) as any ).toBeVisible();
+	} );
+
+	it( 'does not render table columns if empty', () => {
+		mockUseSelect.mockReturnValue( {
+			isLoading: false,
+		} );
+
+		render( <ProgressBar /> );
+
+		(
+			expect( screen.queryByTestId( 'progress-bar' ) ) as any
+		 ).not.toBeInTheDocument();
 	} );
 } );

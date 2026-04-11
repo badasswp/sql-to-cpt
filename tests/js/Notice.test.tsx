@@ -1,34 +1,50 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { Notice } from '../../src/components/All';
 
-import Notice from '../../src/components/Notice';
+import { useSelect } from '@wordpress/data';
 
-describe( 'Notice', () => {
-	it( 'renders the component with correct text', () => {
-		const { container } = render(
-			<Notice message="Fatal Error! Wrong file type: sample-1.png" />
-		);
+jest.mock( '@wordpress/data', () => ( {
+	useSelect: jest.fn(),
+} ) );
 
-		// Expect Component to look like so:
-		expect( container.innerHTML ).toBe(
-			`<nav>Fatal Error! Wrong file type: sample-1.png</nav>`
-		);
+jest.mock( '@wordpress/i18n', () => ( {
+	__: ( text: string ) => text,
+} ) );
 
-		// Assert the text content is rendered inside the nav element.
-		const nav = screen.getByText(
-			'Fatal Error! Wrong file type: sample-1.png'
-		);
-		const navName = nav.tagName.toLowerCase();
-		expect( navName ).toBe( 'nav' );
-		expect( nav ).toBeInTheDocument();
-		expect( nav ).toBeInstanceOf( HTMLElement );
+const mockUseSelect = useSelect as jest.Mock;
+
+describe( 'Notice component', () => {
+	afterEach( () => {
+		jest.clearAllMocks();
 	} );
 
-	it( 'DOES NOT render the Notice', () => {
-		const { container } = render( <Notice message="" /> );
+	it( 'renders the failed notice if any from API response', () => {
+		mockUseSelect.mockReturnValue( {
+			sqlNotice: 'Fatal Error! Wrong file type: sample-1.png',
+		} );
 
-		// Expect Component to look like so:
-		expect( container.innerHTML ).toBe( `` );
+		render( <Notice /> );
+
+		(
+			expect(
+				screen.getByText( 'Fatal Error! Wrong file type: sample-1.png' )
+			) as any
+		 ).toBeVisible();
+	} );
+
+	it( 'does not render any notice if empty', () => {
+		mockUseSelect.mockReturnValue( {
+			sqlNotice: '',
+		} );
+
+		render( <Notice /> );
+
+		(
+			expect(
+				screen.queryByText(
+					'Fatal Error! Wrong file type: sample-1.png'
+				)
+			) as any
+		 ).not.toBeInTheDocument();
 	} );
 } );

@@ -1,4 +1,7 @@
 import { __ } from '@wordpress/i18n';
+import { select, dispatch } from '@wordpress/data';
+import type { MediaFrame } from '@wordpress/media-utils';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Get Root.
@@ -52,4 +55,99 @@ export const getModalParams = () => {
 		},
 		multiple: false,
 	};
+};
+
+/**
+ * Handle Upload.
+ *
+ * This function is responsible for opening the
+ * WP media modal to enable user select.
+ *
+ * @since 1.0.0
+ *
+ * @return {void}
+ */
+export const handleUpload = (): void => {
+	const wpMediaModal = wp.media( getModalParams() );
+	wpMediaModal.on( 'select', () => handleSelect( wpMediaModal ) ).open();
+};
+
+/**
+ * Handle Selection.
+ *
+ * This function is responsible for handling a
+ * selection made by the user.
+ *
+ * @since 1.0.0
+ *
+ * @param {MediaFrame} wpMediaModal WP Media Modal.
+ * @return Promise<void>
+ */
+export const handleSelect = async (
+	wpMediaModal: MediaFrame
+): Promise< void > => {
+	const args = wpMediaModal.state().get( 'selection' ).first().toJSON();
+	const { setSqlNotice, setParsedSQL, setIsLoading } = dispatch(
+		'sql-to-cpt'
+	) as any;
+
+	// Reset.
+	setSqlNotice( '' );
+	setParsedSQL( {
+		tableName: '',
+		tableColumns: [],
+		tableRows: [],
+	} );
+	setIsLoading( true );
+
+	// Parse SQL.
+	try {
+		setParsedSQL(
+			await apiFetch( {
+				path: '/sql-to-cpt/v1/parse',
+				method: 'POST',
+				data: {
+					...args,
+				},
+			} )
+		);
+		setIsLoading( false );
+	} catch ( { message } ) {
+		setIsLoading( false );
+		setSqlNotice( message );
+	}
+};
+
+/**
+ * Handle Import.
+ *
+ * This function is responsible for handling the
+ * import made by the user.
+ *
+ * @since 1.1.0
+ *
+ * @return Promise<void>
+ */
+export const handleImport = async (): Promise< void > => {
+	const { getParsedSQL } = select( 'sql-to-cpt' ) as any;
+	const { setSqlNotice, setIsLoading } = dispatch( 'sql-to-cpt' ) as any;
+	setIsLoading( true );
+
+	// Import SQL.
+	try {
+		const url = await apiFetch( {
+			path: '/sql-to-cpt/v1/import',
+			method: 'POST',
+			data: {
+				...getParsedSQL(),
+			},
+		} );
+		if ( url ) {
+			window.location.href = `${ url }`;
+		}
+		setIsLoading( false );
+	} catch ( { message } ) {
+		setIsLoading( false );
+		setSqlNotice( message );
+	}
 };
