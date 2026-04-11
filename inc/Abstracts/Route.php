@@ -10,6 +10,8 @@
 
 namespace SqlToCpt\Abstracts;
 
+use WP_Error;
+use WP_REST_Request;
 use SqlToCpt\Interfaces\Router;
 
 /**
@@ -41,7 +43,7 @@ abstract class Route implements Router {
 	 *
 	 * @var \WP_REST_Request
 	 */
-	public \WP_REST_Request $request;
+	public WP_REST_Request $request;
 
 	/**
 	 * Response Callback.
@@ -103,10 +105,10 @@ abstract class Route implements Router {
 	 * @param string $message Error Msg.
 	 * @return \WP_Error
 	 */
-	public function get_400_response( $message ): \WP_Error {
+	public function get_400_response( $message ): WP_Error {
 		$args = $this->request->get_json_params();
 
-		return new \WP_Error(
+		return new WP_Error(
 			'sql-to-cpt-bad-request',
 			sprintf(
 				'Fatal Error: Bad Request, %s',
@@ -131,7 +133,7 @@ abstract class Route implements Router {
 		$http_error = rest_authorization_required_code();
 
 		if ( ! current_user_can( 'administrator' ) ) {
-			return new \WP_Error(
+			return new WP_Error(
 				'sql-to-cpt-rest-forbidden',
 				sprintf( 'Invalid User. Error: %s', $http_error ),
 				[ 'status' => $http_error ]
@@ -139,7 +141,7 @@ abstract class Route implements Router {
 		}
 
 		if ( ! wp_verify_nonce( $request->get_header( 'X-WP-Nonce' ), 'wp_rest' ) ) {
-			return new \WP_Error(
+			return new WP_Error(
 				'sql-to-cpt-rest-forbidden',
 				sprintf( 'Invalid Nonce. Error: %s', $http_error ),
 				[ 'status' => $http_error ]

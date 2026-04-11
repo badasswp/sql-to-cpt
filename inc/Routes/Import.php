@@ -10,6 +10,7 @@
 
 namespace SqlToCpt\Routes;
 
+use WP_REST_Request;
 use WP_REST_Server;
 use SqlToCpt\Abstracts\Route;
 use SqlToCpt\Interfaces\Router;
@@ -43,7 +44,7 @@ class Import extends Route implements Router {
 	 *
 	 * @var \WP_REST_Request
 	 */
-	public \WP_REST_Request $request;
+	public WP_REST_Request $request;
 
 	/**
 	 * JSON Params.
