@@ -11,6 +11,7 @@
 namespace SqlToCpt\Routes;
 
 use WP_REST_Request;
+use WP_REST_Server;
 use SqlToCpt\Abstracts\Route;
 use SqlToCpt\Interfaces\Router;
 
@@ -25,7 +26,7 @@ class Import extends Route implements Router {
 	 *
 	 * @var string
 	 */
-	public string $method = 'POST';
+	public string $method = WP_REST_Server::CREATABLE;
 
 	/**
 	 * WP REST Endpoint e.g. /wp-json/sql-to-cpt/v1/import.
