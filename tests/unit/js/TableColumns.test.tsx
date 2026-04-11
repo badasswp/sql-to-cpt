@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { TableColumns } from '../../src/components/All';
+import { TableColumns } from '../../../src/components/All';
 
 import { useSelect } from '@wordpress/data';
 
@@ -11,7 +11,7 @@ jest.mock( '@wordpress/i18n', () => ( {
 	__: ( text: string ) => text,
 } ) );
 
-jest.mock( '../../src/components/Disabled', () => ( {
+jest.mock( '../../../src/components/Disabled', () => ( {
 	__esModule: true,
 	default: ( { name }: { name: string } ) => (
 		<div data-testid={ name }>{ name }</div>

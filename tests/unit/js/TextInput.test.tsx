@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import TextInput from '../../src/components/TextInput';
+import TextInput from '../../../src/components/TextInput';
 
 describe( 'TextInput', () => {
 	it( 'renders the component with correct text', () => {

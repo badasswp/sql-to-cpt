@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import Disabled from '../../src/components/Disabled';
+import Disabled from '../../../src/components/Disabled';
 
 describe( 'Disabled', () => {
 	it( 'renders the component with correct text', () => {

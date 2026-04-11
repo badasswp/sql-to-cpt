@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Notice } from '../../src/components/All';
+import { Notice } from '../../../src/components/All';
 
 import { useSelect } from '@wordpress/data';
 
