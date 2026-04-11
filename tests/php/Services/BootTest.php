@@ -86,7 +86,6 @@ class BootTest extends TestCase {
 
 		$boot = new ReflectionClass( Boot::class );
 
-		WP_Mock::userFunction( 'plugin_dir_url' )
 		$mock_boot = Mockery::mock( Boot::class )->makePartial();
 		$mock_boot->shouldAllowMockingProtectedMethods();
 
@@ -105,7 +104,7 @@ class BootTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::userFunction( 'plugin_dir_url' )
+		WP_Mock::userFunction( 'plugin_dir_url' )
 			->with( $boot->getFileName() )
 			->andReturn( 'https://example.com/wp-content/plugins/sql-to-cpt/inc/Services/Boot.php' );
 
