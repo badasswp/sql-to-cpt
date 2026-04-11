@@ -42,22 +42,13 @@ class Boot extends Service implements Kernel {
 			return;
 		}
 
-		// Load Script.
+		$assets = $this->get_assets( plugin_dir_path( __FILE__ ) . '/../../dist/app.asset.php' );
+
 		wp_enqueue_script(
 			'sql-to-cpt',
 			trailingslashit( plugin_dir_url( __FILE__ ) ) . '../../dist/app.js',
-			[
-				'wp-i18n',
-				'wp-element',
-				'wp-blocks',
-				'wp-components',
-				'wp-editor',
-				'wp-hooks',
-				'wp-compose',
-				'wp-plugins',
-				'wp-edit-post',
-			],
-			'1.2.0',
+			$assets['dependencies'],
+			$assets['version'],
 			false,
 		);
 
@@ -112,5 +103,36 @@ class Boot extends Service implements Kernel {
 			],
 			$mimes
 		);
+	}
+
+	/**
+	 * Get Asset dependencies.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @param string $path Path to webpack generated PHP asset file.
+	 * @return array
+	 */
+	protected function get_assets( string $path ): array {
+		$assets = [
+			'version'      => 'ec9080196954ae49fb68',
+			'dependencies' => [
+				'react',
+				'react-dom',
+				'wp-api-fetch',
+				'wp-components',
+				'wp-element',
+				'wp-i18n',
+			],
+		];
+
+		if ( ! file_exists( $path ) ) {
+			return $assets;
+		}
+
+		// phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.UsingVariable
+		$assets = require_once $path;
+
+		return $assets;
 	}
 }
