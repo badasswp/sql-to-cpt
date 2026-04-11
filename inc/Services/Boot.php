@@ -97,12 +97,12 @@ class Boot extends Service implements Kernel {
 	 * @wp-hook 'upload_mimes'
 	 */
 	public function register_mimes( $mimes ): array {
-		return wp_parse_args(
-			[
-				'sql' => 'application/octet-stream',
-			],
-			$mimes
-		);
+		if ( ! isset( $mimes['sql'] ) ) {
+			$mimes['sql'] = 'application/octet-stream';
+			return $mimes;
+		}
+
+		return $mimes;
 	}
 
 	/**

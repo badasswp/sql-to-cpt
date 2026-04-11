@@ -193,15 +193,6 @@ class BootTest extends TestCase {
 	}
 
 	public function test_register_mimes() {
-		\WP_Mock::userFunction(
-			'wp_parse_args',
-			[
-				'times'  => 1,
-				'return' => function ( $args, $init ) {
-					return array_merge( $init, $args );
-				},
-			]
-		);
 
 		$mimes = $this->boot->register_mimes(
 			[
