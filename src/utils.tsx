@@ -68,54 +68,48 @@ export const getModalParams = () => {
  * @return {void}
  */
 export const handleUpload = (): void => {
-	const wpMediaModal = wp.media( getModalParams() );
-	wpMediaModal.on( 'select', () => handleSelect( wpMediaModal ) ).open();
-};
+	const wpMediaModal: MediaFrame = wp.media( getModalParams() );
 
-/**
- * Handle Selection.
- *
- * This function is responsible for handling a
- * selection made by the user.
- *
- * @since 1.0.0
- *
- * @param {MediaFrame} wpMediaModal WP Media Modal.
- * @return Promise<void>
- */
-export const handleSelect = async (
-	wpMediaModal: MediaFrame
-): Promise< void > => {
-	const args = wpMediaModal.state().get( 'selection' ).first().toJSON();
-	const { setSqlNotice, setParsedSQL, setIsLoading } = dispatch(
-		'sql-to-cpt'
-	) as any;
+	wpMediaModal
+		.on( 'select', async () => {
+			const args = wpMediaModal
+				.state()
+				.get( 'selection' )
+				.first()
+				.toJSON();
 
-	// Reset.
-	setSqlNotice( '' );
-	setParsedSQL( {
-		tableName: '',
-		tableColumns: [],
-		tableRows: [],
-	} );
-	setIsLoading( true );
+			const { setSqlNotice, setParsedSQL, setIsLoading } = dispatch(
+				'sql-to-cpt'
+			) as any;
 
-	// Parse SQL.
-	try {
-		setParsedSQL(
-			await apiFetch( {
-				path: '/sql-to-cpt/v1/parse',
-				method: 'POST',
-				data: {
-					...args,
-				},
-			} )
-		);
-		setIsLoading( false );
-	} catch ( { message } ) {
-		setIsLoading( false );
-		setSqlNotice( message );
-	}
+			// Reset.
+			setSqlNotice( '' );
+			setIsLoading( true );
+			setParsedSQL( {
+				tableName: '',
+				tableColumns: [],
+				tableRows: [],
+			} );
+
+			// Parse SQL.
+			try {
+				setParsedSQL(
+					await apiFetch( {
+						path: '/sql-to-cpt/v1/parse',
+						method: 'POST',
+						data: {
+							...args,
+						},
+					} )
+				);
+			} catch ( { message } ) {
+				setSqlNotice( message );
+			}
+
+			// Clear Notice.
+			setIsLoading( false );
+		} )
+		.open();
 };
 
 /**
@@ -131,6 +125,8 @@ export const handleSelect = async (
 export const handleImport = async (): Promise< void > => {
 	const { getParsedSQL } = select( 'sql-to-cpt' ) as any;
 	const { setSqlNotice, setIsLoading } = dispatch( 'sql-to-cpt' ) as any;
+
+	// Set Notice.
 	setIsLoading( true );
 
 	// Import SQL.
@@ -145,9 +141,10 @@ export const handleImport = async (): Promise< void > => {
 		if ( url ) {
 			window.location.href = `${ url }`;
 		}
-		setIsLoading( false );
 	} catch ( { message } ) {
-		setIsLoading( false );
 		setSqlNotice( message );
 	}
+
+	// Clear Notice.
+	setIsLoading( false );
 };
