@@ -78,7 +78,7 @@ class Purge extends Route implements Router {
 
 		// Bail out, if bad request.
 		if ( empty( $this->post_type ) ) {
-			return $this->get_400_response(
+			return $this->get_error_response(
 				sprintf(
 					__( 'Please select a custom post type to delete.', 'sql-to-cpt' )
 				)
@@ -88,7 +88,7 @@ class Purge extends Route implements Router {
 		$undeleted_posts = $this->get_response();
 
 		if ( ! empty( $undeleted_posts ) ) {
-			return $this->get_400_response(
+			return $this->get_error_response(
 				sprintf(
 					'Unable to delete all Posts for CPT: %s',
 					$this->post_type

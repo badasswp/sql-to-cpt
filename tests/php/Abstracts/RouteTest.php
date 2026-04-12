@@ -12,7 +12,7 @@ use SqlToCpt\Abstracts\Route;
 /**
  * @covers \SqlToCpt\Abstracts\Route::request
  * @covers \SqlToCpt\Abstracts\Route::register_route
- * @covers \SqlToCpt\Abstracts\Route::get_400_response
+ * @covers \SqlToCpt\Abstracts\Route::get_error_response
  * @covers \SqlToCpt\Abstracts\Route::is_user_permissible
  */
 class RouteTest extends TestCase {
@@ -53,7 +53,7 @@ class RouteTest extends TestCase {
 		$this->assertConditionsMet();
 	}
 
-	public function test_get_400_response() {
+	public function test_get_error_response() {
 		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
@@ -81,7 +81,7 @@ class RouteTest extends TestCase {
 				]
 			);
 
-		$error_response = $this->route->get_400_response( 'Something went terribly wrong...' );
+		$error_response = $this->route->get_error_response( 'Something went terribly wrong...' );
 
 		$this->assertInstanceOf( WP_Error::class, $error_response );
 		$this->assertConditionsMet();

@@ -16,7 +16,7 @@ use SqlToCpt\Routes\Parse;
  * @covers \SqlToCpt\Routes\Parse::is_sql
  * @covers \SqlToCpt\Routes\Parse::response
  * @covers \SqlToCpt\Routes\Parse::get_response
- * @covers \SqlToCpt\Abstracts\Route::get_400_response
+ * @covers \SqlToCpt\Abstracts\Route::get_error_response
  * @covers \SqlToCpt\Core\Parser::get_parsed_sql
  * @covers \SqlToCpt\Core\Parser::get_sql_string
  * @covers \SqlToCpt\Core\Parser::get_sql_table_name
@@ -178,7 +178,7 @@ class ParseTest extends TestCase {
 
 		$parse->file = '';
 
-		$parse->shouldReceive( 'get_400_response' )
+		$parse->shouldReceive( 'get_error_response' )
 			->andReturn( $wp_error );
 
 		$response = $parse->get_response( $parser );

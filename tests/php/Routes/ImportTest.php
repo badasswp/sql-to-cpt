@@ -14,7 +14,7 @@ use SqlToCpt\Routes\Import;
  * @covers \SqlToCpt\Routes\Import::response
  * @covers \SqlToCpt\Routes\Import::get_response
  * @covers \SqlToCpt\Routes\Import::get_post_type
- * @covers \SqlToCpt\Abstracts\Route::get_400_response
+ * @covers \SqlToCpt\Abstracts\Route::get_error_response
  */
 class ImportTest extends TestCase {
 	public Import $import;
