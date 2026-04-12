@@ -10,6 +10,8 @@
 
 namespace SqlToCpt\Core;
 
+use Exception;
+
 class Parser {
 	/**
 	 * SQL.
@@ -35,7 +37,7 @@ class Parser {
 	 */
 	protected function get_sql_string(): string {
 		if ( ! file_exists( $this->sql ) ) {
-			throw new \Exception(
+			throw new Exception(
 				sprintf(
 					'Fatal Error: File does not exist: %s',
 					esc_url( $this->sql )

@@ -2,7 +2,7 @@
 
 namespace SqlToCpt\Tests\Core;
 
-use Mockery;
+use WP_Mock;
 use WP_Mock\Tools\TestCase;
 
 use SqlToCpt\Core\Post;
@@ -24,13 +24,13 @@ class PostTest extends TestCase {
 	public Post $post;
 
 	public function setUp(): void {
-		\WP_Mock::setUp();
+		WP_Mock::setUp();
 
 		$this->post = new Post( 'student' );
 	}
 
 	public function tearDown(): void {
-		\WP_Mock::tearDown();
+		WP_Mock::tearDown();
 	}
 
 	public function test_get_name() {
@@ -58,7 +58,7 @@ class PostTest extends TestCase {
 	}
 
 	public function test_get_options() {
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'__',
 			[
 				'return' => function ( $label, $text_domain = 'sql-to-cpt' ) {
@@ -67,7 +67,7 @@ class PostTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'sanitize_title',
 			[
 				'return' => function ( $text ) {
@@ -100,9 +100,9 @@ class PostTest extends TestCase {
 			],
 		];
 
-		\WP_Mock::expectFilter( 'sqlt_cpt_post_labels', $student_post_labels );
+		WP_Mock::expectFilter( 'sqlt_cpt_post_labels', $student_post_labels );
 
-		\WP_Mock::onFilter( 'sqlt_cpt_post_options' )
+		WP_Mock::onFilter( 'sqlt_cpt_post_options' )
 			->with( $student_post_options )
 			->reply(
 				array_merge(
@@ -133,7 +133,7 @@ class PostTest extends TestCase {
 	}
 
 	public function test_get_labels() {
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'__',
 			[
 				'return' => function ( $label, $text_domain = 'sql-to-cpt' ) {
@@ -154,7 +154,7 @@ class PostTest extends TestCase {
 			'menu_name'     => 'Students',
 		];
 
-		\WP_Mock::onFilter( 'sqlt_cpt_post_labels' )
+		WP_Mock::onFilter( 'sqlt_cpt_post_labels' )
 			->with( $student_post_labels )
 			->reply(
 				array_merge(
@@ -186,7 +186,7 @@ class PostTest extends TestCase {
 	}
 
 	public function test_register_post_type() {
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'post_type_exists',
 			[
 				'return' => function ( $post_type ) {
@@ -197,7 +197,7 @@ class PostTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'__',
 			[
 				'return' => function ( $label, $text_domain = 'sql-to-cpt' ) {
@@ -206,7 +206,7 @@ class PostTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'sanitize_title',
 			[
 				'return' => function ( $text ) {
@@ -239,10 +239,10 @@ class PostTest extends TestCase {
 			],
 		];
 
-		\WP_Mock::expectFilter( 'sqlt_cpt_post_labels', $student_post_labels );
-		\WP_Mock::expectFilter( 'sqlt_cpt_post_options', $student_post_options );
+		WP_Mock::expectFilter( 'sqlt_cpt_post_labels', $student_post_labels );
+		WP_Mock::expectFilter( 'sqlt_cpt_post_options', $student_post_options );
 
-		\WP_Mock::userFunction( 'register_post_type' )
+		WP_Mock::userFunction( 'register_post_type' )
 			->with( 'student', $student_post_options );
 
 		$this->post->register_post_type();

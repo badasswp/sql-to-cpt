@@ -5,6 +5,7 @@
 * Refactor: Replaced hard coded HTTP verbs with `WP_REST_Server` constant.
 * Refactor: Simplified register mimes.
 * Refactor: Used webpack generated dependencies.
+* Refactor: Replaced fully qualified path classes with their `use` counter part
 
 ## 1.3.4
 * Specify `wordpress-plugin` as Composer package type.

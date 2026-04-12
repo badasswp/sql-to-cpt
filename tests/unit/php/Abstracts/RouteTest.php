@@ -3,6 +3,9 @@
 namespace SqlToCpt\Tests\Abstracts;
 
 use Mockery;
+use WP_Error;
+use WP_Mock;
+use WP_REST_Request;
 use WP_Mock\Tools\TestCase;
 use SqlToCpt\Abstracts\Route;
 
@@ -16,24 +19,24 @@ class RouteTest extends TestCase {
 	public Route $route;
 
 	public function setUp(): void {
-		\WP_Mock::setUp();
+		WP_Mock::setUp();
 
 		$this->route = new ConcreteRoute();
 	}
 
 	public function tearDown(): void {
-		\WP_Mock::tearDown();
+		WP_Mock::tearDown();
 	}
 
 	public function test_request_returns_response() {
-		$request  = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request  = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$response = $this->route->request( $request );
 
-		$this->assertInstanceOf( \WP_REST_Request::class, $response );
+		$this->assertInstanceOf( WP_REST_Request::class, $response );
 	}
 
 	public function test_register_route() {
-		\WP_Mock::userFunction( 'register_rest_route' )
+		WP_Mock::userFunction( 'register_rest_route' )
 			->with(
 				'sql-to-cpt/v1',
 				'test-register-route',
@@ -51,7 +54,7 @@ class RouteTest extends TestCase {
 	}
 
 	public function test_get_400_response() {
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
 		$request->shouldReceive( 'get_json_params' )
@@ -63,7 +66,7 @@ class RouteTest extends TestCase {
 
 		$this->route->request = $request;
 
-		$error = Mockery::mock( \WP_Error::class )->makePartial();
+		$error = Mockery::mock( WP_Error::class )->makePartial();
 		$error->shouldAllowMockingProtectedMethods();
 
 		$error->shouldReceive( '__construct' )
@@ -80,41 +83,41 @@ class RouteTest extends TestCase {
 
 		$error_response = $this->route->get_400_response( 'Something went terribly wrong...' );
 
-		$this->assertInstanceOf( \WP_Error::class, $error_response );
+		$this->assertInstanceOf( WP_Error::class, $error_response );
 		$this->assertConditionsMet();
 	}
 
 	public function test_is_user_permissible_returns_error_if_not_administrator() {
-		\WP_Mock::userFunction( 'rest_authorization_required_code' )
+		WP_Mock::userFunction( 'rest_authorization_required_code' )
 			->andReturn( 403 );
 
-		\WP_Mock::userFunction( 'current_user_can' )
+		WP_Mock::userFunction( 'current_user_can' )
 			->with( 'administrator' )
 			->andReturn( false );
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
 		$this->assertInstanceOf(
-			\WP_Error::class,
+			WP_Error::class,
 			$this->route->is_user_permissible( $request )
 		);
 		$this->assertConditionsMet();
 	}
 
 	public function test_is_user_permissible_returns_error_if_nonce_fails() {
-		\WP_Mock::userFunction( 'rest_authorization_required_code' )
+		WP_Mock::userFunction( 'rest_authorization_required_code' )
 			->andReturn( 403 );
 
-		\WP_Mock::userFunction( 'current_user_can' )
+		WP_Mock::userFunction( 'current_user_can' )
 			->with( 'administrator' )
 			->andReturn( true );
 
-		\WP_Mock::userFunction( 'wp_verify_nonce' )
+		WP_Mock::userFunction( 'wp_verify_nonce' )
 			->with( 'a8ceg59jeqwvk', 'wp_rest' )
 			->andReturn( false );
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
 		$request->shouldReceive( 'get_header' )
@@ -122,28 +125,28 @@ class RouteTest extends TestCase {
 			->andReturn( 'a8ceg59jeqwvk' );
 
 		$this->assertInstanceOf(
-			\WP_Error::class,
+			WP_Error::class,
 			$this->route->is_user_permissible( $request )
 		);
 		$this->assertConditionsMet();
 	}
 
 	public function test_is_user_permissible_passes_correctly() {
-		\WP_Mock::userFunction( 'rest_authorization_required_code' )
+		WP_Mock::userFunction( 'rest_authorization_required_code' )
 			->andReturn( 403 );
 
-		\WP_Mock::userFunction( 'current_user_can' )
+		WP_Mock::userFunction( 'current_user_can' )
 			->with( 'administrator' )
 			->andReturn( true );
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
 		$request->shouldReceive( 'get_header' )
 			->with( 'X-WP-Nonce' )
 			->andReturn( 'a8ceg59jeqwvk' );
 
-		\WP_Mock::userFunction( 'wp_verify_nonce' )
+		WP_Mock::userFunction( 'wp_verify_nonce' )
 			->with( 'a8ceg59jeqwvk', 'wp_rest' )
 			->andReturn( true );
 
