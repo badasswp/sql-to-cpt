@@ -95,7 +95,8 @@ class RouteTest extends TestCase {
 			->with( 'administrator' )
 			->andReturn( false );
 
-		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
+		$wp_error = Mockery::mock( WP_Error::class )->makePartial();
+		$request  = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
 		$this->assertInstanceOf(
