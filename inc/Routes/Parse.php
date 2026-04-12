@@ -79,7 +79,7 @@ class Parse extends Route implements Router {
 
 		// Bail out, if it does NOT exists.
 		if ( ! file_exists( $this->file ) ) {
-			return $this->get_400_response(
+			return $this->get_error_response(
 				sprintf(
 					'File does not exists for ID: %s',
 					$this->args['id'] ?? ''
@@ -89,7 +89,7 @@ class Parse extends Route implements Router {
 
 		// Bail out, if it is not SQL.
 		if ( ! $this->is_sql( $this->file ) ) {
-			return $this->get_400_response(
+			return $this->get_error_response(
 				sprintf(
 					'Wrong file type has been received: %s',
 					$this->args['filename'] ?? ''
@@ -117,7 +117,7 @@ class Parse extends Route implements Router {
 		try {
 			$response = $parser->get_parsed_sql( $this->file );
 		} catch ( Exception $e ) {
-			$response = $this->get_400_response(
+			$response = $this->get_error_response(
 				sprintf( 'Unable to parse SQL file: %s', $e->getMessage() )
 			);
 			error_log( $response );

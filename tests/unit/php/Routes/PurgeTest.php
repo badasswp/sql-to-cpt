@@ -17,7 +17,7 @@ use SqlToCpt\Routes\Purge;
  * @covers \SqlToCpt\Routes\Purge::get_response
  * @covers \SqlToCpt\Routes\Purge::get_post_ids
  * @covers \SqlToCpt\Routes\Purge::get_updated_cpts
- * @covers \SqlToCpt\Abstracts\Route::get_400_response
+ * @covers \SqlToCpt\Abstracts\Route::get_error_response
  */
 class PurgeTest extends TestCase {
 	public Purge $purge;
