@@ -70,13 +70,13 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 == Changelog ==
 
 = 1.4.0
-* Chore: Pull Request template added.
 * Feat: Setup custom WP store to prevent props drilling across components.
 * Refactor: Replaced hard coded HTTP verbs with `WP_REST_Server` constant.
 * Refactor: Simplified register mimes.
 * Refactor: Used webpack generated dependencies.
 * Refactor: Replaced fully qualified path classes with their `use` counter part
 * Refactor: Replaced `get-400-response` with `get-error-`response` and sets 400 as the default status.
+* Chore: Pull Request template added.
 
 = 1.3.4
 * Specify `wordpress-plugin` as Composer package type.
