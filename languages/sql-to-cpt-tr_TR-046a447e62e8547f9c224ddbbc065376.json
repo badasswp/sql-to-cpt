@@ -1,0 +1,39 @@
+{
+  "translation-revision-date": "2024-10-06 03:27+0100",
+  "generator": "WP-CLI/2.6.0",
+  "source": "dist/app.js",
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "lang": "tr_TR\\n",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "SQL to CPT": [
+        "SQL'den CPT'ye"
+      ],
+      "Import SQL File": [
+        "SQL Dosyasını İçe Aktar"
+      ],
+      "Select SQL File": [
+        "SQL Dosyası Seç"
+      ],
+      "Use SQL": [
+        "SQL Kullan"
+      ],
+      "Table": [
+        "Tablo"
+      ],
+      "Columns": [
+        "Sütunlar"
+      ],
+      "Importing SQL...": [
+        "SQL İçe Aktarılıyor..."
+      ],
+      "Import Completed!": [
+        "İçe Aktarma Tamamlandı!"
+      ]
+    }
+  }
+}
