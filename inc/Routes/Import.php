@@ -10,6 +10,7 @@
 
 namespace SqlToCpt\Routes;
 
+use WP_REST_Request;
 use WP_REST_Server;
 use SqlToCpt\Abstracts\Route;
 use SqlToCpt\Interfaces\Router;
@@ -43,7 +44,7 @@ class Import extends Route implements Router {
 	 *
 	 * @var \WP_REST_Request
 	 */
-	public \WP_REST_Request $request;
+	public WP_REST_Request $request;
 
 	/**
 	 * JSON Params.
@@ -70,7 +71,7 @@ class Import extends Route implements Router {
 
 		// Bail out, if bad request.
 		if ( empty( $table_name ) ) {
-			return $this->get_400_response(
+			return $this->get_error_response(
 				sprintf(
 					'Empty Table name: %s',
 					$table_name
@@ -80,7 +81,7 @@ class Import extends Route implements Router {
 
 		// Bail out, if bad request.
 		if ( empty( $table_columns ) ) {
-			return $this->get_400_response(
+			return $this->get_error_response(
 				sprintf(
 					'Empty Table columns: %s',
 					wp_json_encode( $table_columns )
@@ -90,7 +91,7 @@ class Import extends Route implements Router {
 
 		// Bail out, if bad request.
 		if ( empty( $table_rows ) ) {
-			return $this->get_400_response(
+			return $this->get_error_response(
 				sprintf(
 					'Empty Table rows: %s',
 					wp_json_encode( $table_rows )
@@ -101,7 +102,7 @@ class Import extends Route implements Router {
 		$response = $this->get_response();
 
 		if ( is_null( $response ) ) {
-			return $this->get_400_response(
+			return $this->get_error_response(
 				__( 'Error: Failed SQL Import!', 'sql-to-cpt' )
 			);
 		}

@@ -3,6 +3,8 @@
 namespace SqlToCpt\Tests\Interfaces;
 
 use Mockery;
+use WP_Mock;
+use WP_REST_Request;
 use WP_Mock\Tools\TestCase;
 use SqlToCpt\Interfaces\Router;
 
@@ -15,13 +17,13 @@ class RouterTest extends TestCase {
 	public Router $router;
 
 	public function setUp(): void {
-		\WP_Mock::setUp();
+		WP_Mock::setUp();
 
 		$this->router = $this->getMockForAbstractClass( Router::class );
 	}
 
 	public function tearDown(): void {
-		\WP_Mock::tearDown();
+		WP_Mock::tearDown();
 	}
 
 	public function test_response() {
@@ -37,7 +39,7 @@ class RouterTest extends TestCase {
 		$this->router->expects( $this->once() )
 			->method( 'request' );
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 
 		$this->router->request( $request );
 
@@ -48,7 +50,7 @@ class RouterTest extends TestCase {
 		$this->router->expects( $this->once() )
 			->method( 'is_user_permissible' );
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 
 		$this->router->is_user_permissible( $request );
 

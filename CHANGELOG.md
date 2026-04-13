@@ -6,6 +6,8 @@
 * Refactor: Replaced hard coded HTTP verbs with `WP_REST_Server` constant.
 * Refactor: Simplified register mimes.
 * Refactor: Used webpack generated dependencies.
+* Refactor: Replaced fully qualified path classes with their `use` counter part
+* Refactor: Replaced `get-400-response` with `get-error-response` and sets `400` as the default status.
 
 ## 1.3.4
 * Specify `wordpress-plugin` as Composer package type.

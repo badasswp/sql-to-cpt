@@ -3,29 +3,33 @@
 namespace SqlToCpt\Tests\Routes;
 
 use Mockery;
+use WP_Mock;
+use WP_Post;
+use WP_Error;
+use WP_REST_Request;
+use WP_REST_Response;
 use WP_Mock\Tools\TestCase;
 
 use SqlToCpt\Routes\Purge;
-use SqlToCpt\Abstracts\Service;
 
 /**
  * @covers \SqlToCpt\Routes\Purge::response
  * @covers \SqlToCpt\Routes\Purge::get_response
  * @covers \SqlToCpt\Routes\Purge::get_post_ids
  * @covers \SqlToCpt\Routes\Purge::get_updated_cpts
- * @covers \SqlToCpt\Abstracts\Route::get_400_response
+ * @covers \SqlToCpt\Abstracts\Route::get_error_response
  */
 class PurgeTest extends TestCase {
 	public Purge $purge;
 
 	public function setUp(): void {
-		\WP_Mock::setUp();
+		WP_Mock::setUp();
 
 		$this->purge = new Purge();
 	}
 
 	public function tearDown(): void {
-		\WP_Mock::tearDown();
+		WP_Mock::tearDown();
 	}
 
 	public function test_route_initial_values() {
@@ -37,10 +41,10 @@ class PurgeTest extends TestCase {
 		$purge = Mockery::mock( Purge::class )->makePartial();
 		$purge->shouldAllowMockingProtectedMethods();
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::userFunction( '__' )
+		WP_Mock::userFunction( '__' )
 			->andReturnUsing(
 				function ( $arg ) {
 					return $arg;
@@ -56,7 +60,7 @@ class PurgeTest extends TestCase {
 
 		$purge->request = $request;
 
-		$this->assertInstanceOf( \WP_Error::class, $purge->response() );
+		$this->assertInstanceOf( WP_Error::class, $purge->response() );
 		$this->assertConditionsMet();
 	}
 
@@ -64,7 +68,7 @@ class PurgeTest extends TestCase {
 		$purge = Mockery::mock( Purge::class )->makePartial();
 		$purge->shouldAllowMockingProtectedMethods();
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
 		$request->shouldReceive( 'get_json_params' )
@@ -79,7 +83,7 @@ class PurgeTest extends TestCase {
 
 		$purge->request = $request;
 
-		$this->assertInstanceOf( \WP_Error::class, $purge->response() );
+		$this->assertInstanceOf( WP_Error::class, $purge->response() );
 		$this->assertConditionsMet();
 	}
 
@@ -87,10 +91,10 @@ class PurgeTest extends TestCase {
 		$purge = Mockery::mock( Purge::class )->makePartial();
 		$purge->shouldAllowMockingProtectedMethods();
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
-		$rest_response = Mockery::mock( \WP_REST_Response::class )->makePartial();
+		$rest_response = Mockery::mock( WP_REST_Response::class )->makePartial();
 		$rest_response->shouldAllowMockingProtectedMethods();
 
 		$request->shouldReceive( 'get_json_params' )
@@ -106,7 +110,7 @@ class PurgeTest extends TestCase {
 		$purge->shouldReceive( 'get_updated_cpts' )
 			->andReturn( [ 'lecturer', 'department' ] );
 
-		\WP_Mock::userFunction( 'rest_ensure_response' )
+		WP_Mock::userFunction( 'rest_ensure_response' )
 			->with(
 				[
 					'message'  => 'Posts deleted succesfully for custom Post Type: student',
@@ -117,7 +121,7 @@ class PurgeTest extends TestCase {
 
 		$purge->request = $request;
 
-		$this->assertInstanceOf( \WP_REST_Response::class, $purge->response() );
+		$this->assertInstanceOf( WP_REST_Response::class, $purge->response() );
 		$this->assertConditionsMet();
 	}
 
@@ -128,7 +132,7 @@ class PurgeTest extends TestCase {
 		$purge->shouldReceive( 'get_post_ids' )
 			->andReturn( [ 1, 2, 3 ] );
 
-		\WP_Mock::userFunction( 'wp_delete_post' )
+		WP_Mock::userFunction( 'wp_delete_post' )
 			->andReturnUsing(
 				function ( $arg ) {
 					return $arg % 2;
@@ -148,7 +152,7 @@ class PurgeTest extends TestCase {
 		$purge->shouldReceive( 'get_post_ids' )
 			->andReturn( [ 1, 2, 3 ] );
 
-		\WP_Mock::userFunction( 'wp_delete_post' )
+		WP_Mock::userFunction( 'wp_delete_post' )
 			->andReturnUsing(
 				function ( $arg ) {
 					return null;
@@ -168,7 +172,7 @@ class PurgeTest extends TestCase {
 		$purge->shouldReceive( 'get_post_ids' )
 			->andReturn( [ 1, 2, 3 ] );
 
-		\WP_Mock::userFunction( 'wp_delete_post' )
+		WP_Mock::userFunction( 'wp_delete_post' )
 			->andReturnUsing(
 				function ( $arg ) {
 					return $arg;
@@ -185,16 +189,16 @@ class PurgeTest extends TestCase {
 		$purge = Mockery::mock( Purge::class )->makePartial();
 		$purge->shouldAllowMockingProtectedMethods();
 
-		$post1     = Mockery::mock( \WP_Post::class )->makePartial();
+		$post1     = Mockery::mock( WP_Post::class )->makePartial();
 		$post1->ID = 1;
 
-		$post2     = Mockery::mock( \WP_Post::class )->makePartial();
+		$post2     = Mockery::mock( WP_Post::class )->makePartial();
 		$post2->ID = 2;
 
-		$post3     = Mockery::mock( \WP_Post::class )->makePartial();
+		$post3     = Mockery::mock( WP_Post::class )->makePartial();
 		$post3->ID = 3;
 
-		\WP_Mock::userFunction( 'get_posts' )
+		WP_Mock::userFunction( 'get_posts' )
 			->once()
 			->with(
 				[
@@ -210,7 +214,7 @@ class PurgeTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::userFunction( 'wp_list_pluck' )
+		WP_Mock::userFunction( 'wp_list_pluck' )
 			->with(
 				[
 					$post1,
@@ -242,7 +246,7 @@ class PurgeTest extends TestCase {
 		$purge = Mockery::mock( Purge::class )->makePartial();
 		$purge->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::userFunction( 'get_option' )
+		WP_Mock::userFunction( 'get_option' )
 			->once()
 			->with( 'sql_to_cpt', [] )
 			->andReturn(
@@ -251,7 +255,7 @@ class PurgeTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::userFunction( 'update_option' )
+		WP_Mock::userFunction( 'update_option' )
 			->once()
 			->with(
 				'sql_to_cpt',

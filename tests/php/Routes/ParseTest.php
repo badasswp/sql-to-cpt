@@ -3,17 +3,20 @@
 namespace SqlToCpt\Tests\Routes;
 
 use Mockery;
+use WP_Mock;
+use WP_Error;
+use WP_REST_Request;
+use WP_REST_Response;
 use WP_Mock\Tools\TestCase;
 
 use SqlToCpt\Core\Parser;
 use SqlToCpt\Routes\Parse;
-use SqlToCpt\Abstracts\Service;
 
 /**
  * @covers \SqlToCpt\Routes\Parse::is_sql
  * @covers \SqlToCpt\Routes\Parse::response
  * @covers \SqlToCpt\Routes\Parse::get_response
- * @covers \SqlToCpt\Abstracts\Route::get_400_response
+ * @covers \SqlToCpt\Abstracts\Route::get_error_response
  * @covers \SqlToCpt\Core\Parser::get_parsed_sql
  * @covers \SqlToCpt\Core\Parser::get_sql_string
  * @covers \SqlToCpt\Core\Parser::get_sql_table_name
@@ -24,13 +27,13 @@ class ParseTest extends TestCase {
 	public Parse $parse;
 
 	public function setUp(): void {
-		\WP_Mock::setUp();
+		WP_Mock::setUp();
 
 		$this->parse = new Parse();
 	}
 
 	public function tearDown(): void {
-		\WP_Mock::tearDown();
+		WP_Mock::tearDown();
 	}
 
 	public function test_route_initial_values() {
@@ -42,7 +45,7 @@ class ParseTest extends TestCase {
 		$parse = Mockery::mock( Parse::class )->makePartial();
 		$parse->shouldAllowMockingProtectedMethods();
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
 		$request->shouldReceive( 'get_json_params' )
@@ -52,13 +55,13 @@ class ParseTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::userFunction( 'get_attached_file' )
+		WP_Mock::userFunction( 'get_attached_file' )
 			->with( '' )
 			->andReturn( false );
 
 		$parse->request = $request;
 
-		$this->assertInstanceOf( \WP_Error::class, $parse->response() );
+		$this->assertInstanceOf( WP_Error::class, $parse->response() );
 		$this->assertConditionsMet();
 	}
 
@@ -69,7 +72,7 @@ class ParseTest extends TestCase {
 		$parse = Mockery::mock( Parse::class )->makePartial();
 		$parse->shouldAllowMockingProtectedMethods();
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
 		$request->shouldReceive( 'get_json_params' )
@@ -81,7 +84,7 @@ class ParseTest extends TestCase {
 
 		$parse->request = $request;
 
-		\WP_Mock::userFunction( 'get_attached_file' )
+		WP_Mock::userFunction( 'get_attached_file' )
 			->with( 1 )
 			->andReturn( $txt_file );
 
@@ -93,7 +96,7 @@ class ParseTest extends TestCase {
 				}
 			);
 
-		$this->assertInstanceOf( \WP_Error::class, $parse->response() );
+		$this->assertInstanceOf( WP_Error::class, $parse->response() );
 		$this->assertConditionsMet();
 
 		$this->destroy_mock_file( $txt_file );
@@ -106,10 +109,10 @@ class ParseTest extends TestCase {
 		$parse = Mockery::mock( Parse::class )->makePartial();
 		$parse->shouldAllowMockingProtectedMethods();
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
-		$rest_response = Mockery::mock( \WP_REST_Response::class )->makePartial();
+		$rest_response = Mockery::mock( WP_REST_Response::class )->makePartial();
 		$rest_response->shouldAllowMockingProtectedMethods();
 
 		$request->shouldReceive( 'get_json_params' )
@@ -121,7 +124,7 @@ class ParseTest extends TestCase {
 
 		$parse->request = $request;
 
-		\WP_Mock::userFunction( 'get_attached_file' )
+		WP_Mock::userFunction( 'get_attached_file' )
 			->with( 1 )
 			->andReturn( $sql_file );
 
@@ -144,7 +147,7 @@ class ParseTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::userFunction( 'rest_ensure_response' )
+		WP_Mock::userFunction( 'rest_ensure_response' )
 			->once()
 			->with(
 				[
@@ -157,7 +160,7 @@ class ParseTest extends TestCase {
 			)
 			->andReturn( $rest_response );
 
-		$this->assertInstanceOf( \WP_REST_Response::class, $parse->response() );
+		$this->assertInstanceOf( WP_REST_Response::class, $parse->response() );
 		$this->assertConditionsMet();
 
 		$this->destroy_mock_file( $sql_file );
@@ -170,17 +173,17 @@ class ParseTest extends TestCase {
 		$parser = Mockery::mock( Parser::class )->makePartial();
 		$parser->shouldAllowMockingProtectedMethods();
 
-		$wp_error = Mockery::mock( \WP_Error::class )->makePartial();
+		$wp_error = Mockery::mock( WP_Error::class )->makePartial();
 		$wp_error->shouldAllowMockingProtectedMethods();
 
 		$parse->file = '';
 
-		$parse->shouldReceive( 'get_400_response' )
+		$parse->shouldReceive( 'get_error_response' )
 			->andReturn( $wp_error );
 
 		$response = $parse->get_response( $parser );
 
-		$this->assertInstanceOf( \WP_Error::class, $response );
+		$this->assertInstanceOf( WP_Error::class, $response );
 		$this->assertConditionsMet();
 	}
 
@@ -195,9 +198,9 @@ class ParseTest extends TestCase {
 
 		$parse->file = $sql_file;
 
-		\WP_Mock::expectFilter( 'sqlt_cpt_table_name', 'student' );
+		WP_Mock::expectFilter( 'sqlt_cpt_table_name', 'student' );
 
-		\WP_Mock::expectFilter(
+		WP_Mock::expectFilter(
 			'sqlt_cpt_table_columns',
 			[
 				'id',
@@ -209,7 +212,7 @@ class ParseTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::expectFilter(
+		WP_Mock::expectFilter(
 			'sqlt_cpt_table_rows',
 			[
 				[
@@ -239,7 +242,7 @@ class ParseTest extends TestCase {
 			]
 		);
 
-		\WP_Mock::userFunction( 'sanitize_text_field' )
+		WP_Mock::userFunction( 'sanitize_text_field' )
 			->andReturnUsing(
 				function ( $arg ) {
 					return $arg;
@@ -292,7 +295,7 @@ class ParseTest extends TestCase {
 		$parse = Mockery::mock( Parse::class )->makePartial();
 		$parse->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::userFunction( 'wp_check_filetype' )
+		WP_Mock::userFunction( 'wp_check_filetype' )
 			->with( $file_path )
 			->andReturnUsing(
 				function ( $path ) {
@@ -312,7 +315,7 @@ class ParseTest extends TestCase {
 		$parse = Mockery::mock( Parse::class )->makePartial();
 		$parse->shouldAllowMockingProtectedMethods();
 
-		\WP_Mock::userFunction( 'wp_check_filetype' )
+		WP_Mock::userFunction( 'wp_check_filetype' )
 			->with( $file_path )
 			->andReturnUsing(
 				function ( $path ) {

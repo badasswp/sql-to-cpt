@@ -3,27 +3,30 @@
 namespace SqlToCpt\Tests\Routes;
 
 use Mockery;
+use WP_Mock;
+use WP_Error;
+use WP_REST_Request;
+use WP_REST_Response;
 use WP_Mock\Tools\TestCase;
 use SqlToCpt\Routes\Import;
-use SqlToCpt\Abstracts\Service;
 
 /**
  * @covers \SqlToCpt\Routes\Import::response
  * @covers \SqlToCpt\Routes\Import::get_response
  * @covers \SqlToCpt\Routes\Import::get_post_type
- * @covers \SqlToCpt\Abstracts\Route::get_400_response
+ * @covers \SqlToCpt\Abstracts\Route::get_error_response
  */
 class ImportTest extends TestCase {
 	public Import $import;
 
 	public function setUp(): void {
-		\WP_Mock::setUp();
+		WP_Mock::setUp();
 
 		$this->import = new Import();
 	}
 
 	public function tearDown(): void {
-		\WP_Mock::tearDown();
+		WP_Mock::tearDown();
 	}
 
 	public function test_route_initial_values() {
@@ -35,7 +38,7 @@ class ImportTest extends TestCase {
 		$import = Mockery::mock( Import::class )->makePartial();
 		$import->shouldAllowMockingProtectedMethods();
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
 		$request->shouldReceive( 'get_json_params' )
@@ -51,7 +54,7 @@ class ImportTest extends TestCase {
 
 		$response = $import->response();
 
-		$this->assertInstanceOf( \WP_Error::class, $response );
+		$this->assertInstanceOf( WP_Error::class, $response );
 		$this->assertConditionsMet();
 	}
 
@@ -59,7 +62,7 @@ class ImportTest extends TestCase {
 		$import = Mockery::mock( Import::class )->makePartial();
 		$import->shouldAllowMockingProtectedMethods();
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
 		$request->shouldReceive( 'get_json_params' )
@@ -71,7 +74,7 @@ class ImportTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'wp_json_encode',
 			[
 				'times'  => 1,
@@ -85,7 +88,7 @@ class ImportTest extends TestCase {
 
 		$response = $import->response();
 
-		$this->assertInstanceOf( \WP_Error::class, $response );
+		$this->assertInstanceOf( WP_Error::class, $response );
 		$this->assertConditionsMet();
 	}
 
@@ -93,7 +96,7 @@ class ImportTest extends TestCase {
 		$import = Mockery::mock( Import::class )->makePartial();
 		$import->shouldAllowMockingProtectedMethods();
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
 		$request->shouldReceive( 'get_json_params' )
@@ -105,7 +108,7 @@ class ImportTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::userFunction(
+		WP_Mock::userFunction(
 			'wp_json_encode',
 			[
 				'times'  => 1,
@@ -119,7 +122,7 @@ class ImportTest extends TestCase {
 
 		$response = $import->response();
 
-		$this->assertInstanceOf( \WP_Error::class, $response );
+		$this->assertInstanceOf( WP_Error::class, $response );
 		$this->assertConditionsMet();
 	}
 
@@ -127,10 +130,10 @@ class ImportTest extends TestCase {
 		$import = Mockery::mock( Import::class )->makePartial();
 		$import->shouldAllowMockingProtectedMethods();
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
-		$rest_response = Mockery::mock( \WP_REST_Response::class )->makePartial();
+		$rest_response = Mockery::mock( WP_REST_Response::class )->makePartial();
 		$rest_response->shouldAllowMockingProtectedMethods();
 
 		$request->shouldReceive( 'get_json_params' )
@@ -172,14 +175,14 @@ class ImportTest extends TestCase {
 				)
 			);
 
-		\WP_Mock::userFunction( 'rest_ensure_response' )
+		WP_Mock::userFunction( 'rest_ensure_response' )
 			->times( 1 )
 			->with( 'https://example.com/wp-admin/edit.php?post_type=post' )
 			->andReturn( $rest_response );
 
 		$response = $import->response();
 
-		$this->assertInstanceOf( \WP_REST_Response::class, $response );
+		$this->assertInstanceOf( WP_REST_Response::class, $response );
 		$this->assertConditionsMet();
 	}
 
@@ -187,10 +190,10 @@ class ImportTest extends TestCase {
 		$import = Mockery::mock( Import::class )->makePartial();
 		$import->shouldAllowMockingProtectedMethods();
 
-		$request = Mockery::mock( \WP_REST_Request::class )->makePartial();
+		$request = Mockery::mock( WP_REST_Request::class )->makePartial();
 		$request->shouldAllowMockingProtectedMethods();
 
-		$rest_response = Mockery::mock( \WP_REST_Response::class )->makePartial();
+		$rest_response = Mockery::mock( WP_REST_Response::class )->makePartial();
 		$rest_response->shouldAllowMockingProtectedMethods();
 
 		$request->shouldReceive( 'get_json_params' )
@@ -223,7 +226,7 @@ class ImportTest extends TestCase {
 		$import->shouldReceive( 'get_response' )
 			->andReturn( null );
 
-		\WP_Mock::userFunction( '__' )
+		WP_Mock::userFunction( '__' )
 			->andReturnUsing(
 				function ( $arg ) {
 					return $arg;
@@ -232,7 +235,7 @@ class ImportTest extends TestCase {
 
 		$response = $import->response();
 
-		$this->assertInstanceOf( \WP_Error::class, $response );
+		$this->assertInstanceOf( WP_Error::class, $response );
 		$this->assertConditionsMet();
 	}
 
@@ -273,7 +276,7 @@ class ImportTest extends TestCase {
 			],
 		];
 
-		\WP_Mock::userFunction( 'wp_json_encode' )
+		WP_Mock::userFunction( 'wp_json_encode' )
 			->twice()
 			->andReturnUsing(
 				function ( $arg ) {
@@ -313,7 +316,7 @@ class ImportTest extends TestCase {
 			],
 		];
 
-		\WP_Mock::expectFilter(
+		WP_Mock::expectFilter(
 			'sqlt_cpt_post_values',
 			[
 				'post_type'   => 'student',
@@ -338,19 +341,19 @@ class ImportTest extends TestCase {
 			],
 		);
 
-		$wp_error = Mockery::mock( \WP_Error::class )->makePartial();
+		$wp_error = Mockery::mock( WP_Error::class )->makePartial();
 		$wp_error->shouldAllowMockingProtectedMethods();
 
 		$wp_error->shouldReceive( 'get_error_message' )
 			->andReturn( 'Post ID: null' );
 
-		\WP_Mock::userFunction( 'wp_insert_post' )
+		WP_Mock::userFunction( 'wp_insert_post' )
 			->andReturn( $wp_error );
 
-		\WP_Mock::userFunction( 'is_wp_error' )
+		WP_Mock::userFunction( 'is_wp_error' )
 			->andReturnUsing(
 				function ( $arg ) {
-					return $arg instanceof \WP_Error;
+					return $arg instanceof WP_Error;
 				}
 			);
 
@@ -386,7 +389,7 @@ class ImportTest extends TestCase {
 			],
 		];
 
-		\WP_Mock::expectFilter(
+		WP_Mock::expectFilter(
 			'sqlt_cpt_post_values',
 			[
 				'post_type'   => 'student',
@@ -411,31 +414,31 @@ class ImportTest extends TestCase {
 			],
 		);
 
-		\WP_Mock::userFunction( 'wp_insert_post' )
+		WP_Mock::userFunction( 'wp_insert_post' )
 			->andReturn( 1 );
 
-		\WP_Mock::userFunction( 'is_wp_error' )
+		WP_Mock::userFunction( 'is_wp_error' )
 			->andReturnUsing(
 				function ( $arg ) {
-					return $arg instanceof \WP_Error;
+					return $arg instanceof WP_Error;
 				}
 			);
 
-		\WP_Mock::userFunction( 'add_query_arg' )
+		WP_Mock::userFunction( 'add_query_arg' )
 			->andReturnUsing(
 				function ( $arg1, $arg2 ) {
 					return sprintf( '%s?%s', $arg2, http_build_query( $arg1 ) );
 				}
 			);
 
-		\WP_Mock::userFunction( 'untrailingslashit' )
+		WP_Mock::userFunction( 'untrailingslashit' )
 			->andReturnUsing(
 				function ( $arg ) {
 					return mb_strrchr( $arg, '/', true );
 				}
 			);
 
-		\WP_Mock::userFunction( 'get_admin_url' )
+		WP_Mock::userFunction( 'get_admin_url' )
 			->andReturn( 'https://example.com/wp-admin/' );
 
 		$import->shouldReceive( 'get_post_type' )
@@ -456,7 +459,7 @@ class ImportTest extends TestCase {
 
 		$import->args['tableName'] = 'student';
 
-		\WP_Mock::userFunction( 'get_option' )
+		WP_Mock::userFunction( 'get_option' )
 			->with( 'sql_to_cpt', [] )
 			->andReturn(
 				[
@@ -480,7 +483,7 @@ class ImportTest extends TestCase {
 
 		$import->args['tableName'] = 'student';
 
-		\WP_Mock::userFunction( 'get_option' )
+		WP_Mock::userFunction( 'get_option' )
 			->with( 'sql_to_cpt', [] )
 			->andReturn(
 				[
@@ -491,7 +494,7 @@ class ImportTest extends TestCase {
 				]
 			);
 
-		\WP_Mock::userFunction( 'update_option' )
+		WP_Mock::userFunction( 'update_option' )
 			->andReturn(
 				[
 					'cpts' => [
