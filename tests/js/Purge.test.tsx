@@ -27,6 +27,7 @@ describe( 'Purge Component', () => {
 			setIsLoading: jest.fn(),
 			setSqlNotice: jest.fn(),
 		} );
+
 		render( <Purge /> );
 
 		(
