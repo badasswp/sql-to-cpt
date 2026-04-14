@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Purge } from '../../src/components/All';
+
 import { useDispatch } from '@wordpress/data';
 
 jest.mock( '@wordpress/data', () => ( {
