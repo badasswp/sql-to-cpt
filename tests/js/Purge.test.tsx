@@ -45,6 +45,7 @@ describe( 'Purge Component', () => {
 		} );
 
 		render( <Purge /> );
+		
 		fireEvent.click( screen.getByRole( 'button', { name: 'Purge CPT' } ) );
 		expect( mockSetIsLoading ).toHaveBeenCalledWith( true );
 	} );
