@@ -3,6 +3,7 @@ import { useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
+import { handlePurge } from '../../src/utils';
 
 /**
  * Purge Component.
@@ -16,33 +17,8 @@ import apiFetch from '@wordpress/api-fetch';
  */
 const Purge = (): JSX.Element => {
 	const [ postType, setPostType ] = useState( '' );
-	const { setIsLoading, setSqlNotice } = useDispatch( 'sql-to-cpt' );
 
-	/**
-	 * Purge all records saved
-	 * for a specific imported post type.
-	 *
-	 * @return {Promise<void>}
-	 */
-	const handlePurge = async (): Promise< void > => {
-		setIsLoading( true );
-
-		try {
-			await apiFetch( {
-				path: '/sql-to-cpt/v1/purge',
-				method: 'POST',
-				data: {
-					postType,
-				},
-			} );
-			setIsLoading( false );
-			window.location.reload();
-		} catch ( { message } ) {
-			setIsLoading( false );
-			setSqlNotice( message );
-		}
-	};
-
+	const handleClick = () => handlePurge( postType );
 	return (
 		<div className="sqlt-purge">
 			<select
@@ -55,7 +31,7 @@ const Purge = (): JSX.Element => {
 					return <option key={ index }>{ item }</option>;
 				} ) }
 			</select>
-			<Button variant="tertiary" onClick={ handlePurge }>
+			<Button variant="tertiary" onClick={ handleClick }>
 				{ __( 'Purge CPT', 'sql-to-cpt' ) }
 			</Button>
 		</div>
