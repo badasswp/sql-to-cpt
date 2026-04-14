@@ -28,6 +28,7 @@ describe( 'Purge Component', () => {
 			setSqlNotice: jest.fn(),
 		} );
 		render( <Purge /> );
+
 		(
 			expect( screen.getByRole( 'button', { name: 'Purge CPT' } ) ) as any
 		 ).toBeVisible();
