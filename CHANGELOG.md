@@ -8,6 +8,7 @@
 * Refactor: Used webpack generated dependencies.
 * Refactor: Replaced fully qualified path classes with their `use` counter part
 * Refactor: Replaced `get-400-response` with `get-error-response` and sets `400` as the default status.
+* Test: Updated the `js` unit test.
 * Chore: Pull Request template added.
 
 ## 1.3.4

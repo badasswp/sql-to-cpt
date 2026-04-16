@@ -151,3 +151,35 @@ export const handleImport = async (): Promise< void > => {
 		setSqlNotice( message );
 	}
 };
+
+/**
+ * Handle Purge.
+ *
+ * This function is responsible for handling the
+ * purge operation made by the user.
+ *
+ * @since 1.4.0
+ *
+ * @param {string} postType
+ *
+ * @return Promise<void>
+ */
+export const handlePurge = async ( postType: string ): Promise< void > => {
+	const { setSqlNotice, setIsLoading } = dispatch( 'sql-to-cpt' ) as any;
+	setIsLoading( true );
+
+	try {
+		await apiFetch( {
+			path: '/sql-to-cpt/v1/purge',
+			method: 'POST',
+			data: {
+				postType,
+			},
+		} );
+		setIsLoading( false );
+		window.location.reload();
+	} catch ( { message } ) {
+		setIsLoading( false );
+		setSqlNotice( message );
+	}
+};
