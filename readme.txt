@@ -71,6 +71,7 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 
 = 1.4.0
 * Feat: Setup custom WP store to prevent props drilling across components.
+* Feat: Added translation languages for `Japanese`,`Indonesian`, `Turkish`, `Polish`, `Dutch`,`Danish`, `Brazil` and `Portuguese`.
 * Refactor: Replaced hard coded HTTP verbs with `WP_REST_Server` constant.
 * Refactor: Simplified register mimes.
 * Refactor: Used webpack generated dependencies.

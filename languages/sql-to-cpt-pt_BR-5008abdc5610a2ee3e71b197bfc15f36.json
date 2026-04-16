@@ -1,0 +1,39 @@
+{
+  "translation-revision-date": "2024-10-06 03:27+0100",
+  "generator": "WP-CLI/2.6.0",
+  "source": "dist/app.js",
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "lang": "pt_BR\\n",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "SQL to CPT": [
+        "SQL para CPT"
+      ],
+      "Import SQL File": [
+        "Importar arquivo SQL"
+      ],
+      "Select SQL File": [
+        "Selecionar arquivo SQL"
+      ],
+      "Use SQL": [
+        "Usar SQL"
+      ],
+      "Table": [
+        "Tabela"
+      ],
+      "Columns": [
+        "Colunas"
+      ],
+      "Importing SQL...": [
+        "Importando SQL..."
+      ],
+      "Import Completed!": [
+        "Importação concluída!"
+      ]
+    }
+  }
+}
