@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ImportButton } from '../../src/components/All';
-import { handleUpload, handleImport } from '../../src/utils';
+import { ImportButton } from '../../../src/components/All';
+import { handleUpload, handleImport } from '../../../src/utils';
 
 import { useSelect } from '@wordpress/data';
 
@@ -12,7 +12,7 @@ jest.mock( '@wordpress/i18n', () => ( {
 	__: ( text: string ) => text,
 } ) );
 
-jest.mock( '../../src/utils', () => ( {
+jest.mock( '../../../src/utils', () => ( {
 	handleUpload: jest.fn(),
 	handleImport: jest.fn(),
 } ) );

@@ -18,3 +18,5 @@ src
 assets
 tests
 bin
+playwright.config.js
+playwright.setup.js
