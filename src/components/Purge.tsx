@@ -31,7 +31,7 @@ const Purge = (): JSX.Element => {
 					return <option key={ index }>{ item }</option>;
 				} ) }
 			</select>
-			<Button variant="tertiary" onClick={ handleClick }>
+			<Button variant="tertiary" onClick={ handlePurge }>
 				{ __( 'Purge CPT', 'sql-to-cpt' ) }
 			</Button>
 		</div>
