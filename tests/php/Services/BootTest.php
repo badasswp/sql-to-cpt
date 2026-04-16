@@ -92,14 +92,7 @@ class BootTest extends TestCase {
 		$mock_boot->shouldReceive( 'get_assets' )
 			->andReturn(
 				[
-					'dependencies' => [
-						'react',
-						'react-dom',
-						'wp-api-fetch',
-						'wp-components',
-						'wp-element',
-						'wp-i18n',
-					],
+					'dependencies' => [],
 					'version'      => 'ec9080196954ae49fb68',
 				]
 			);
@@ -125,14 +118,7 @@ class BootTest extends TestCase {
 			->with(
 				'sql-to-cpt',
 				'https://example.com/wp-content/plugins/sql-to-cpt/inc/Services/Boot.php/../../dist/app.js',
-				[
-					'react',
-					'react-dom',
-					'wp-api-fetch',
-					'wp-components',
-					'wp-element',
-					'wp-i18n',
-				],
+				[],
 				'ec9080196954ae49fb68',
 				false,
 			);
@@ -169,7 +155,7 @@ class BootTest extends TestCase {
 			)
 			->andReturn( null );
 
-		$this->boot->register_scripts();
+		$mock_boot->register_scripts();
 
 		$this->assertConditionsMet();
 	}
