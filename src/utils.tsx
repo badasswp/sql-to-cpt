@@ -158,7 +158,7 @@ export const handleImport = async (): Promise< void > => {
  * This function is responsible for handling the
  * purge operation made by the user.
  *
- *  @since 1.4.0
+ * @since 1.4.0
  *
  * @param {string} postType
  *
