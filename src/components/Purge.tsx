@@ -18,7 +18,6 @@ import { handlePurge } from '../../src/utils';
 const Purge = (): JSX.Element => {
 	const [ postType, setPostType ] = useState( '' );
 
-	const handleClick = () => handlePurge( postType );
 	return (
 		<div className="sqlt-purge">
 			<select
