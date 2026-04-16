@@ -3,6 +3,7 @@ import { useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
+
 import { handlePurge } from '../../src/utils';
 
 /**
