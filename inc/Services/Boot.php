@@ -115,15 +115,8 @@ class Boot extends Service implements Kernel {
 	 */
 	protected function get_assets( string $path ): array {
 		$assets = [
-			'version'      => 'ec9080196954ae49fb68',
-			'dependencies' => [
-				'react',
-				'react-dom',
-				'wp-api-fetch',
-				'wp-components',
-				'wp-element',
-				'wp-i18n',
-			],
+			'version'      => strval( time() ),
+			'dependencies' => [],
 		];
 
 		if ( ! file_exists( $path ) ) {
