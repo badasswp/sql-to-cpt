@@ -1,4 +1,7 @@
 import { __ } from '@wordpress/i18n';
+import { select, dispatch } from '@wordpress/data';
+import type { MediaFrame } from '@wordpress/media-utils';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Get Root.
@@ -52,4 +55,128 @@ export const getModalParams = () => {
 		},
 		multiple: false,
 	};
+};
+
+/**
+ * Handle Upload.
+ *
+ * This function is responsible for opening the
+ * WP media modal to enable user select.
+ *
+ * @since 1.0.0
+ *
+ * @return {void}
+ */
+export const handleUpload = (): void => {
+	const wpMediaModal: MediaFrame = wp.media( getModalParams() );
+
+	wpMediaModal
+		.on( 'select', async () => {
+			const args = wpMediaModal
+				.state()
+				.get( 'selection' )
+				.first()
+				.toJSON();
+
+			const { setSqlNotice, setParsedSQL, setIsLoading } = dispatch(
+				'sql-to-cpt'
+			) as any;
+
+			// Reset.
+			setSqlNotice( '' );
+			setIsLoading( true );
+			setParsedSQL( {
+				tableName: '',
+				tableColumns: [],
+				tableRows: [],
+			} );
+
+			// Parse SQL.
+			try {
+				setParsedSQL(
+					await apiFetch( {
+						path: '/sql-to-cpt/v1/parse',
+						method: 'POST',
+						data: {
+							...args,
+						},
+					} )
+				);
+			} catch ( { message } ) {
+				setSqlNotice( message );
+			}
+
+			// Clear Notice.
+			setIsLoading( false );
+		} )
+		.open();
+};
+
+/**
+ * Handle Import.
+ *
+ * This function is responsible for handling the
+ * import made by the user.
+ *
+ * @since 1.1.0
+ *
+ * @return Promise<void>
+ */
+export const handleImport = async (): Promise< void > => {
+	const { getParsedSQL } = select( 'sql-to-cpt' ) as any;
+	const { setSqlNotice, setIsLoading } = dispatch( 'sql-to-cpt' ) as any;
+
+	// Set Notice.
+	setIsLoading( true );
+
+	// Import SQL.
+	try {
+		const url = await apiFetch( {
+			path: '/sql-to-cpt/v1/import',
+			method: 'POST',
+			data: {
+				...getParsedSQL(),
+			},
+		} );
+		if ( url ) {
+			window.location.href = `${ url }`;
+		}
+	} catch ( { message } ) {
+		setSqlNotice( message );
+	}
+
+	// Clear Notice.
+	setIsLoading( false );
+};
+
+/**
+ * Handle Purge.
+ *
+ * This function is responsible for handling the
+ * purge operation made by the user.
+ *
+ * @since 1.4.0
+ *
+ * @param {string} postType
+ *
+ * @return Promise<void>
+ */
+export const handlePurge = async ( postType: string ): Promise< void > => {
+	const { setSqlNotice, setIsLoading } = dispatch( 'sql-to-cpt' ) as any;
+	setIsLoading( true );
+
+	try {
+		await apiFetch( {
+			path: '/sql-to-cpt/v1/purge',
+			method: 'POST',
+			data: {
+				postType,
+			},
+		} );
+		setIsLoading( false );
+		window.location.reload();
+	} catch ( { message } ) {
+		setIsLoading( false );
+		setSqlNotice( message );
+	}
 };

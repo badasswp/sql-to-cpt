@@ -1,0 +1,39 @@
+{
+  "translation-revision-date": "2024-10-06 03:27+0100",
+  "generator": "WP-CLI/2.6.0",
+  "source": "dist/app.js",
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "lang": "pl_PL\\n",
+        "plural-forms": "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
+      },
+      "SQL to CPT": [
+        "SQL do CPT"
+      ],
+      "Import SQL File": [
+        "Importuj plik SQL"
+      ],
+      "Select SQL File": [
+        "Wybierz plik SQL"
+      ],
+      "Use SQL": [
+        "Użyj SQL"
+      ],
+      "Table": [
+        "Tabela"
+      ],
+      "Columns": [
+        "Kolumny"
+      ],
+      "Importing SQL...": [
+        "Importowanie SQL..."
+      ],
+      "Import Completed!": [
+        "Import zakończony!"
+      ]
+    }
+  }
+}

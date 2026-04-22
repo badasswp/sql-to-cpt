@@ -1,12 +1,10 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
+import { useDispatch } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 
-interface PurgeProps {
-	setIsLoading: Function;
-	setSqlNotice: Function;
-}
+import { handlePurge } from '../../src/utils';
 
 /**
  * Purge Component.
@@ -16,33 +14,10 @@ interface PurgeProps {
  *
  * @since 1.3.0
  *
- * @param {Object}   props              - The component props.
- * @param {Function} props.setIsLoading - Function to set the loading state.
- * @param {Function} props.setSqlNotice - Function to set an SQL notice.
- *
  * @return {JSX.Element} The Purge component.
  */
-const Purge = ( { setIsLoading, setSqlNotice }: PurgeProps ): JSX.Element => {
+const Purge = (): JSX.Element => {
 	const [ postType, setPostType ] = useState( '' );
-
-	const handlePurge = async () => {
-		setIsLoading( true );
-
-		try {
-			await apiFetch( {
-				path: '/sql-to-cpt/v1/purge',
-				method: 'POST',
-				data: {
-					postType,
-				},
-			} );
-			setIsLoading( false );
-			window.location.reload();
-		} catch ( { message } ) {
-			setIsLoading( false );
-			setSqlNotice( message );
-		}
-	};
 
 	return (
 		<div className="sqlt-purge">
@@ -56,7 +31,10 @@ const Purge = ( { setIsLoading, setSqlNotice }: PurgeProps ): JSX.Element => {
 					return <option key={ index }>{ item }</option>;
 				} ) }
 			</select>
-			<Button variant="tertiary" onClick={ handlePurge }>
+			<Button
+				variant="tertiary"
+				onClick={ () => handlePurge( postType ) }
+			>
 				{ __( 'Purge CPT', 'sql-to-cpt' ) }
 			</Button>
 		</div>

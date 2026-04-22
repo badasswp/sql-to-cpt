@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
 import '@testing-library/jest-dom';
-import '@testing-library/jest-dom/extend-expect.js';
-import '@wordpress/jest-preset-default/scripts/setup-globals';
+
+jest.mock( '@wordpress/components', () => ( {
+	Button: ( props ) => <button { ...props } />,
+} ) );
