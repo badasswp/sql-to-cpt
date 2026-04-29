@@ -1,8 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Purge } from '../../src/components/All';
-import { handlePurge } from '../../src/utils';
-
-import { useDispatch } from '@wordpress/data';
+import { Purge } from '../../../src/components/All';
+import { handlePurge } from '../../../src/utils';
 
 jest.mock( '@wordpress/data', () => ( {
 	useDispatch: jest.fn(),
@@ -12,7 +10,7 @@ jest.mock( '@wordpress/i18n', () => ( {
 	__: ( text: string ) => text,
 } ) );
 
-jest.mock( '../../src/utils', () => ( {
+jest.mock( '../../../src/utils', () => ( {
 	handlePurge: jest.fn(),
 } ) );
 
