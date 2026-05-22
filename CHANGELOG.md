@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.3
+* Tested up to WP 7.0.
+
+## 1.4.2
+* Chore: Update CI/CD pipeline.
+
 ## 1.4.1
 * Hotfix: Missing js-map file causing plugin breakdown.
 
