@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.5.0
+* Feat: Add `More Plugins` options page.
+
 ## 1.4.3
 * Tested up to WP 7.0.
 
