@@ -2,7 +2,6 @@
   "translation-revision-date": "2024-10-06 00:17+0100",
   "generator": "WP-CLI/2.6.0",
   "source": "dist/app.js",
-  "domain": "messages",
   "locale_data": {
     "messages": {
       "": {

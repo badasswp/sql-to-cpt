@@ -1,7 +1,7 @@
 {
   "translation-revision-date": "2026-06-22 20:30+0000",
-  "generator": "Claude AI",
-  "source": "sql-to-cpt.pot",
+  "generator": "WP-CLI/2.6.0",
+  "source": "dist/app.js",
   "domain": "messages",
   "locale_data": {
     "messages": {
