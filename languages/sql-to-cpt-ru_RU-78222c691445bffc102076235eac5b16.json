@@ -1,0 +1,45 @@
+{
+  "translation-revision-date": "2026-06-22 20:30+0000",
+  "generator": "Claude AI",
+  "source": "sql-to-cpt.pot",
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "plural-forms": "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);",
+        "lang": "ru_RU"
+      },
+      "Import SQL File": [
+        "Импортировать SQL-файл"
+      ],
+      "Select SQL File": [
+        "Выбрать SQL-файл"
+      ],
+      "Use SQL": [
+        "Использовать SQL"
+      ],
+      "Table": [
+        "Таблица"
+      ],
+      "Columns": [
+        "Столбцы"
+      ],
+      "Importing SQL...": [
+        "Импорт SQL..."
+      ],
+      "Import Completed!": [
+        "Импорт завершён!"
+      ],
+      "Upload SQL File": [
+        "Загрузить SQL-файл"
+      ],
+      "Select CPT": [
+        "Выбрать CPT"
+      ],
+      "Purge CPT": [
+        "Очистить CPT"
+      ]
+    }
+  }
+}

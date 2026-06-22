@@ -1,18 +1,15 @@
 {
-  "translation-revision-date": "2024-10-06 03:27+0100",
-  "generator": "WP-CLI/2.6.0",
-  "source": "dist/app.js",
+  "translation-revision-date": "2026-06-22 20:30+0000",
+  "generator": "Claude AI",
+  "source": "sql-to-cpt.pot",
   "domain": "messages",
   "locale_data": {
     "messages": {
       "": {
         "domain": "messages",
-        "lang": "da_DK\\n",
-        "plural-forms": "nplurals=2; plural=(n != 1);"
+        "plural-forms": "Plural-Forms: nplurals=2; plural=(n != 1);",
+        "lang": "da_DK"
       },
-      "SQL to CPT": [
-        "SQL til CPT"
-      ],
       "Import SQL File": [
         "Importer SQL-fil"
       ],
@@ -33,6 +30,15 @@
       ],
       "Import Completed!": [
         "Import fuldført!"
+      ],
+      "Upload SQL File": [
+        "Upload SQL-fil"
+      ],
+      "Select CPT": [
+        "Vælg CPT"
+      ],
+      "Purge CPT": [
+        "Rens CPT"
       ]
     }
   }

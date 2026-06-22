@@ -1,0 +1,45 @@
+{
+  "translation-revision-date": "2026-06-22 20:30+0000",
+  "generator": "Claude AI",
+  "source": "sql-to-cpt.pot",
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "plural-forms": "Plural-Forms: nplurals=1; plural=0;",
+        "lang": "ja"
+      },
+      "Import SQL File": [
+        "SQLファイルをインポート"
+      ],
+      "Select SQL File": [
+        "SQLファイルを選択"
+      ],
+      "Use SQL": [
+        "SQLを使用"
+      ],
+      "Table": [
+        "テーブル"
+      ],
+      "Columns": [
+        "カラム"
+      ],
+      "Importing SQL...": [
+        "SQLをインポート中..."
+      ],
+      "Import Completed!": [
+        "インポート完了！"
+      ],
+      "Upload SQL File": [
+        "SQLファイルをアップロード"
+      ],
+      "Select CPT": [
+        "CPTを選択"
+      ],
+      "Purge CPT": [
+        "CPTを削除"
+      ]
+    }
+  }
+}

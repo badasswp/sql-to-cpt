@@ -71,6 +71,7 @@ Want to add your personal touch? All of our documentation can be found [here](ht
 
 = 1.5.0 =
 * Feat: Add `More Plugins` options page.
+* Fix: Added missing translations for existing languages.
 
 = 1.4.3 =
 * Tested up to WP 7.0.

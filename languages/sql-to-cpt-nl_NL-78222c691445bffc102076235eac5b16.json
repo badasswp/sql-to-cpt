@@ -1,18 +1,15 @@
 {
-  "translation-revision-date": "2024-10-06 03:27+0100",
-  "generator": "WP-CLI/2.6.0",
-  "source": "dist/app.js",
+  "translation-revision-date": "2026-06-22 20:30+0000",
+  "generator": "Claude AI",
+  "source": "sql-to-cpt.pot",
   "domain": "messages",
   "locale_data": {
     "messages": {
       "": {
         "domain": "messages",
-        "lang": "nl_NL\\n",
-        "plural-forms": "nplurals=2; plural=(n != 1);"
+        "plural-forms": "Plural-Forms: nplurals=2; plural=(n != 1);",
+        "lang": "nl_NL"
       },
-      "SQL to CPT": [
-        "SQL naar CPT"
-      ],
       "Import SQL File": [
         "SQL-bestand importeren"
       ],
@@ -33,6 +30,15 @@
       ],
       "Import Completed!": [
         "Import voltooid!"
+      ],
+      "Upload SQL File": [
+        "SQL-bestand uploaden"
+      ],
+      "Select CPT": [
+        "CPT selecteren"
+      ],
+      "Purge CPT": [
+        "CPT verwijderen"
       ]
     }
   }

@@ -1,0 +1,45 @@
+{
+  "translation-revision-date": "2026-06-22 20:30+0000",
+  "generator": "Claude AI",
+  "source": "sql-to-cpt.pot",
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "plural-forms": "Plural-Forms: nplurals=2; plural=(n != 1);",
+        "lang": "it_IT"
+      },
+      "Import SQL File": [
+        "Importa file SQL"
+      ],
+      "Select SQL File": [
+        "Seleziona file SQL"
+      ],
+      "Use SQL": [
+        "Usa SQL"
+      ],
+      "Table": [
+        "Tabella"
+      ],
+      "Columns": [
+        "Colonne"
+      ],
+      "Importing SQL...": [
+        "Importazione SQL in corso..."
+      ],
+      "Import Completed!": [
+        "Importazione completata!"
+      ],
+      "Upload SQL File": [
+        "Carica file SQL"
+      ],
+      "Select CPT": [
+        "Seleziona CPT"
+      ],
+      "Purge CPT": [
+        "Elimina CPT"
+      ]
+    }
+  }
+}

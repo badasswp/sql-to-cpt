@@ -1,0 +1,45 @@
+{
+  "translation-revision-date": "2026-06-22 20:30+0000",
+  "generator": "Claude AI",
+  "source": "sql-to-cpt.pot",
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "plural-forms": "Plural-Forms: nplurals=2; plural=(n != 1);",
+        "lang": "he_IL"
+      },
+      "Import SQL File": [
+        "ייבא קובץ SQL"
+      ],
+      "Select SQL File": [
+        "בחר קובץ SQL"
+      ],
+      "Use SQL": [
+        "השתמש ב-SQL"
+      ],
+      "Table": [
+        "טבלה"
+      ],
+      "Columns": [
+        "עמודות"
+      ],
+      "Importing SQL...": [
+        "מייבא SQL..."
+      ],
+      "Import Completed!": [
+        "הייבוא הושלם!"
+      ],
+      "Upload SQL File": [
+        "העלה קובץ SQL"
+      ],
+      "Select CPT": [
+        "בחר CPT"
+      ],
+      "Purge CPT": [
+        "נקה CPT"
+      ]
+    }
+  }
+}
