@@ -1,5 +1,5 @@
 {
-  "translation-revision-date": "2024-10-06 03:27+0100",
+  "translation-revision-date": "2026-06-22 20:30+0000",
   "generator": "WP-CLI/2.6.0",
   "source": "dist/app.js",
   "domain": "messages",
@@ -7,20 +7,17 @@
     "messages": {
       "": {
         "domain": "messages",
-        "lang": "ja\\n",
-        "plural-forms": "nplurals=1; plural=0;"
+        "plural-forms": "Plural-Forms: nplurals=1; plural=0;",
+        "lang": "ja"
       },
-      "SQL to CPT": [
-        "SQL から CPT"
-      ],
       "Import SQL File": [
-        "SQL ファイルをインポート"
+        "SQLファイルをインポート"
       ],
       "Select SQL File": [
-        "SQL ファイルを選択"
+        "SQLファイルを選択"
       ],
       "Use SQL": [
-        "SQL を使用"
+        "SQLを使用"
       ],
       "Table": [
         "テーブル"
@@ -29,10 +26,19 @@
         "カラム"
       ],
       "Importing SQL...": [
-        "SQL をインポート中..."
+        "SQLをインポート中..."
       ],
       "Import Completed!": [
         "インポート完了！"
+      ],
+      "Upload SQL File": [
+        "SQLファイルをアップロード"
+      ],
+      "Select CPT": [
+        "CPTを選択"
+      ],
+      "Purge CPT": [
+        "CPTを削除"
       ]
     }
   }

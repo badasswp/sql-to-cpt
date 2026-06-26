@@ -1,5 +1,5 @@
 {
-  "translation-revision-date": "2024-10-06 03:27+0100",
+  "translation-revision-date": "2026-06-22 20:30+0000",
   "generator": "WP-CLI/2.6.0",
   "source": "dist/app.js",
   "domain": "messages",
@@ -7,12 +7,9 @@
     "messages": {
       "": {
         "domain": "messages",
-        "lang": "id_ID\\n",
-        "plural-forms": "nplurals=1; plural=0;"
+        "plural-forms": "Plural-Forms: nplurals=1; plural=0;",
+        "lang": "id_ID"
       },
-      "SQL to CPT": [
-        "SQL ke CPT"
-      ],
       "Import SQL File": [
         "Impor File SQL"
       ],
@@ -33,6 +30,15 @@
       ],
       "Import Completed!": [
         "Impor Selesai!"
+      ],
+      "Upload SQL File": [
+        "Unggah File SQL"
+      ],
+      "Select CPT": [
+        "Pilih CPT"
+      ],
+      "Purge CPT": [
+        "Hapus CPT"
       ]
     }
   }
