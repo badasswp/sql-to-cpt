@@ -1,0 +1,45 @@
+{
+  "translation-revision-date": "2026-06-22 20:30+0000",
+  "generator": "WP-CLI/2.6.0",
+  "source": "dist/app.js",
+  "domain": "messages",
+  "locale_data": {
+    "messages": {
+      "": {
+        "domain": "messages",
+        "plural-forms": "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);",
+        "lang": "hr"
+      },
+      "Import SQL File": [
+        "Uvezi SQL datoteku"
+      ],
+      "Select SQL File": [
+        "Odaberi SQL datoteku"
+      ],
+      "Use SQL": [
+        "Koristi SQL"
+      ],
+      "Table": [
+        "Tablica"
+      ],
+      "Columns": [
+        "Stupci"
+      ],
+      "Importing SQL...": [
+        "Uvoz SQL-a..."
+      ],
+      "Import Completed!": [
+        "Uvoz dovršen!"
+      ],
+      "Upload SQL File": [
+        "Prenesi SQL datoteku"
+      ],
+      "Select CPT": [
+        "Odaberi CPT"
+      ],
+      "Purge CPT": [
+        "Očisti CPT"
+      ]
+    }
+  }
+}

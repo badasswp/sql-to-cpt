@@ -23,6 +23,7 @@ use SqlToCpt\Abstracts\Service;
  * @covers \SqlToCpt\Services\Post::__construct
  * @covers \SqlToCpt\Core\Post::__construct
  * @covers \SqlToCpt\Services\Routes::__construct
+ * @covers \SqlToCpt\Services\Admin::__construct
  */
 class ContainerTest extends TestCase {
 	public Container $container;
@@ -105,6 +106,16 @@ class ContainerTest extends TestCase {
 			[
 				Service::$services[ Boot::class ],
 				'register_scripts',
+			]
+		);
+
+		$admin = Service::$services[ Admin::class ];
+
+		WP_Mock::expectActionAdded(
+			'admin_init',
+			[
+				$admin->pluginate,
+				'init',
 			]
 		);
 

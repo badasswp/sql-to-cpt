@@ -26,7 +26,7 @@ const Purge = (): JSX.Element => {
 					setPostType( e.target.value );
 				} }
 			>
-				<option>Select CPT</option>
+				<option>{ __( 'Select CPT', 'sql-to-cpt' ) }</option>
 				{ sqlt.postTypes.map( ( item: string, index: number ) => {
 					return <option key={ index }>{ item }</option>;
 				} ) }

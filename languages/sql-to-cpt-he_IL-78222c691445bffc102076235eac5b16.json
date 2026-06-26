@@ -1,5 +1,5 @@
 {
-  "translation-revision-date": "2024-08-29 02:16+0100",
+  "translation-revision-date": "2026-06-22 20:30+0000",
   "generator": "WP-CLI/2.6.0",
   "source": "dist/app.js",
   "domain": "messages",
@@ -7,20 +7,17 @@
     "messages": {
       "": {
         "domain": "messages",
-        "lang": "he_IL\\n",
-        "plural-forms": "nplurals=2; plural=(n != 1);"
+        "plural-forms": "Plural-Forms: nplurals=2; plural=(n != 1);",
+        "lang": "he_IL"
       },
-      "SQL to CPT": [
-        "SQL ל CPT"
-      ],
       "Import SQL File": [
-        "ייבוא קובץ SQL"
+        "ייבא קובץ SQL"
       ],
       "Select SQL File": [
         "בחר קובץ SQL"
       ],
       "Use SQL": [
-        "שימוש ב- SQL"
+        "השתמש ב-SQL"
       ],
       "Table": [
         "טבלה"
@@ -29,10 +26,19 @@
         "עמודות"
       ],
       "Importing SQL...": [
-        "ייבוא SQL..."
+        "מייבא SQL..."
       ],
       "Import Completed!": [
         "הייבוא הושלם!"
+      ],
+      "Upload SQL File": [
+        "העלה קובץ SQL"
+      ],
+      "Select CPT": [
+        "בחר CPT"
+      ],
+      "Purge CPT": [
+        "נקה CPT"
       ]
     }
   }

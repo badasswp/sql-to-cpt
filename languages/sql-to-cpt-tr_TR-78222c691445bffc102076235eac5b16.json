@@ -1,5 +1,5 @@
 {
-  "translation-revision-date": "2024-10-06 03:27+0100",
+  "translation-revision-date": "2026-06-22 20:30+0000",
   "generator": "WP-CLI/2.6.0",
   "source": "dist/app.js",
   "domain": "messages",
@@ -7,14 +7,11 @@
     "messages": {
       "": {
         "domain": "messages",
-        "lang": "tr_TR\\n",
-        "plural-forms": "nplurals=2; plural=(n != 1);"
+        "plural-forms": "Plural-Forms: nplurals=1; plural=0;",
+        "lang": "tr_TR"
       },
-      "SQL to CPT": [
-        "SQL'den CPT'ye"
-      ],
       "Import SQL File": [
-        "SQL Dosyasını İçe Aktar"
+        "SQL Dosyası İçe Aktar"
       ],
       "Select SQL File": [
         "SQL Dosyası Seç"
@@ -33,6 +30,15 @@
       ],
       "Import Completed!": [
         "İçe Aktarma Tamamlandı!"
+      ],
+      "Upload SQL File": [
+        "SQL Dosyası Yükle"
+      ],
+      "Select CPT": [
+        "CPT Seç"
+      ],
+      "Purge CPT": [
+        "CPT Temizle"
       ]
     }
   }
