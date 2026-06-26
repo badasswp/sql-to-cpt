@@ -1,0 +1,53 @@
+{
+    "packages": [
+        {
+            "name": "badasswp/pluginate",
+            "version": "v1.0.0",
+            "version_normalized": "1.0.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/badasswp/pluginate.git",
+                "reference": "2b28213dcc47ce0dc524e904a4bc8f51341fd5b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/badasswp/pluginate/zipball/2b28213dcc47ce0dc524e904a4bc8f51341fd5b5",
+                "reference": "2b28213dcc47ce0dc524e904a4bc8f51341fd5b5",
+                "shasum": ""
+            },
+            "require-dev": {
+                "10up/wp_mock": "^1.1",
+                "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+                "phpunit/phpunit": "^9.0",
+                "wp-coding-standards/wpcs": "^3.0"
+            },
+            "time": "2026-06-04T14:38:09+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Pluginate\\": "src/",
+                    "Pluginate\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "badasswp",
+                    "email": "badasswpdev@gmail.com"
+                }
+            ],
+            "description": "Awesome tool for installing our WordPress plugins",
+            "support": {
+                "issues": "https://github.com/badasswp/pluginate/issues",
+                "source": "https://github.com/badasswp/pluginate/tree/v1.0.0"
+            },
+            "install-path": "../badasswp/pluginate"
+        }
+    ],
+    "dev": false,
+    "dev-package-names": []
+}
